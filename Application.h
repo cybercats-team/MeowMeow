@@ -22,16 +22,16 @@ class Application {
   
     Image icon;
     Texture texture;
-    Sprite sprit;
+    Sprite sprite;
     Font font;
     Music music;
-    RenderWindow window;
+    RenderWindow* window;
+  
   public:
     Application(Application &other) = delete;
     void operator=(const Application &) = delete;
   
     static Application *create(string resourcePath);
-    static void dispose();
     bool initialize();
     void run();
 };

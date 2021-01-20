@@ -14,110 +14,72 @@ Application* Application::create(string resourcePath) {
   return instance;
 }
 
-void Application::dispose() {
-  if (instance == nullptr) {
-    return;
-  }
-  
-  delete instance;
-}
-
 Application::Application(string withResourcePath) :
   resourcePath(withResourcePath),
-  icon(new Image()),
-  texture(new Texture()),
-  font(new Font()),
-  music(new Music()) {}
+  icon(),
+  texture(),
+  font(),
+  sprite(),
+  music() {}
 
 bool Application::initialize() {
-  if (!icon->loadFromFile(resourcePath + "icon.png") ||
-    !texture->loadFromFile(resourcePath + "cute_image.jpg") ||
-    !font->loadFromFile(resourcePath + "sansation.ttf") ||
-    !music->openFromFile(resourcePath + "nice_music.ogg")
+  if (!icon.loadFromFile(resourcePath + "icon.png") ||
+    !texture.loadFromFile(resourcePath + "cute_image.jpg") ||
+    !font.loadFromFile(resourcePath + "sansation.ttf") ||
+    !music.openFromFile(resourcePath + "nice_music.ogg")
   ) {
     return false;
   }
   
+  vector<VideoMode> modes = VideoMode::getFullscreenModes();
   
-  sprite = new Sprite();
-  sprite->setTexture(*texture);
+  window = new RenderWindow(modes[0], "SFML window", Style::Fullscreen);
+  window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+  
+  sprite.setTexture(texture);
   
   return true;
 }
 
 void Application::run() {
-  // Create the main window
-  RenderWindow window(VideoMode(800, 600), "SFML window");
-
-  // Set the Icon
-  Image icon;
-  if (!icon.loadFromFile(resourcePath + "icon.png")) {
-      return EXIT_FAILURE;
-  }
-  window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-  // Load a sprite to display
-  Texture texture;
-  if (!texture.loadFromFile(resourcePath + "cute_image.jpg")) {
-      return EXIT_FAILURE;
-  }
-  Sprite sprite(texture);
-
-  // Create a graphical text to display
-  Font font;
-  if (!font.loadFromFile(resourcePath + "sansation.ttf")) {
-      return EXIT_FAILURE;
-  }
   Text text("Hello SFML", font, 50);
   text.setFillColor(Color::Black);
-
-  // Load a music to play
-  Music music;
-  if (!music.openFromFile(resourcePath + "nice_music.ogg")) {
-      return EXIT_FAILURE;
-  }
 
   // Play the music
   music.play();
 
   // Start the game loop
-  while (window.isOpen())
+  while (window->isOpen())
   {
       // Process events
       Event event;
-      while (window.pollEvent(event))
+      while (window->pollEvent(event))
       {
           // Close window: exit
           if (event.type == Event::Closed) {
-              window.close();
+              window->close();
           }
 
           // Escape pressed: exit
           if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-              window.close();
+              window->close();
           }
       }
 
       // Clear screen
-      window.clear();
+      window->clear();
 
       // Draw the sprite
-      window.draw(sprite);
+      window->draw(sprite);
 
       // Draw the string
-      window.draw(text);
+      window->draw(text);
 
       // Update the window
-      window.display();
+      window->display();
   }
-
-  return EXIT_SUCCESS;
 }
 
 Application::~Application() {
-  delete icon;
-  delete texture;
-  delete sprite;
-  delete font;
-  delete music;
+  delete window;
 }
