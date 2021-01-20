@@ -14,17 +14,26 @@ using namespace std;
 class Application {
   
   protected:
-    Application(string withResourcePath) : resourcePath(withResourcePath) {}
+    Application(string withResourcePath);
+    ~Application();
   
     static Application* instance;
     string resourcePath;
-    
+  
+    Image icon;
+    Texture texture;
+    Sprite sprit;
+    Font font;
+    Music music;
+    RenderWindow window;
   public:
     Application(Application &other) = delete;
     void operator=(const Application &) = delete;
   
     static Application *create(string resourcePath);
-    int run();
+    static void dispose();
+    bool initialize();
+    void run();
 };
 
 

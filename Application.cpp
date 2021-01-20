@@ -14,7 +14,38 @@ Application* Application::create(string resourcePath) {
   return instance;
 }
 
-int Application::run() {
+void Application::dispose() {
+  if (instance == nullptr) {
+    return;
+  }
+  
+  delete instance;
+}
+
+Application::Application(string withResourcePath) :
+  resourcePath(withResourcePath),
+  icon(new Image()),
+  texture(new Texture()),
+  font(new Font()),
+  music(new Music()) {}
+
+bool Application::initialize() {
+  if (!icon->loadFromFile(resourcePath + "icon.png") ||
+    !texture->loadFromFile(resourcePath + "cute_image.jpg") ||
+    !font->loadFromFile(resourcePath + "sansation.ttf") ||
+    !music->openFromFile(resourcePath + "nice_music.ogg")
+  ) {
+    return false;
+  }
+  
+  
+  sprite = new Sprite();
+  sprite->setTexture(*texture);
+  
+  return true;
+}
+
+void Application::run() {
   // Create the main window
   RenderWindow window(VideoMode(800, 600), "SFML window");
 
@@ -81,4 +112,12 @@ int Application::run() {
   }
 
   return EXIT_SUCCESS;
+}
+
+Application::~Application() {
+  delete icon;
+  delete texture;
+  delete sprite;
+  delete font;
+  delete music;
 }
