@@ -8,6 +8,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "ResourceManager.h"
+
 using namespace sf;
 using namespace std;
 
@@ -18,13 +20,7 @@ class Application {
     ~Application();
   
     static Application* instance;
-    string resourcePath;
-  
-    Image icon;
-    Texture texture;
-    Sprite sprite;
-    Font font;
-    Music music;
+    ResourceManager resourceManager;
     RenderWindow* window;
   
   public:
