@@ -35,7 +35,7 @@ inline char ResourceManager::ds() {
 }
 
 inline bool ResourceManager::hasExtension(const string& resourcePath) {
-  size_t dotPosition = resourcePath.find_last_of('.');
+  size_t dotPosition = resourcePath.rfind('.');
 
   if (dotPosition == string::npos) {
     return false;

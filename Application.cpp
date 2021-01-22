@@ -25,7 +25,7 @@ bool Application::initialize() {
     return false;
   }
   
-  if (!resourceManager.load(appIcon, "icons/appIcon.png")) {
+  if (!resourceManager.load(appIcon, "icons/appIcon")) {
     return false;
   }
   
@@ -41,16 +41,18 @@ void Application::run() {
   Font font;
   Texture texture;
   Music music;
+  Clock clock;
 
-  resourceManager.load(font, "sansation.ttf");
-  resourceManager.load(texture, "skybox/landscape.png");
-  resourceManager.load(music, "intro_theme.ogg");
+  resourceManager.load(font, "sansation");
+  resourceManager.load(texture, "skybox/landscape");
+  resourceManager.load(music, "intro_theme");
 
   Sprite sprite(texture);
   Text text("Hello SFML", font, 50);
   text.setFillColor(Color::Black);
   
   float i = 0;
+  const Int64 oneBySixty = 1000000 / 60;
 
   // Play the music
   music.play();
@@ -74,22 +76,27 @@ void Application::run() {
           }
       }
     
-      sprite.setPosition(i, i);
 
-      // Clear screen
-      window->clear();
+      if (clock.getElapsedTime().asMicroseconds() >= oneBySixty) {
+        sprite.setPosition(i, i);
 
-      // Draw the sprite
-      window->draw(sprite);
+        // Clear screen
+        window->clear();
 
-      // Draw the string
-      window->draw(text);      
-    
-      // Update the window
-      window->display();
-    
-      i++;
-      if (i > 1000) i = 0;
+        // Draw the sprite
+        window->draw(sprite);
+
+        // Draw the string
+        window->draw(text);
+
+        // Update the window
+        window->display();
+
+        i++;
+        if (i > 1000) i = 0;
+
+        clock.restart();
+      }
   }
 }
 

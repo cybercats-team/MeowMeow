@@ -35,7 +35,7 @@ class ResourceManager {
 
     map<ResourceType, ResourceInfo> resourceTypesInfo = {
       {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
-      {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".jpeg" }},
+      {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
       {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
       {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
       {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }}
