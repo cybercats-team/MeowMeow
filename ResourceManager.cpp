@@ -8,66 +8,23 @@
 
 #include "ResourceManager.h"
 
-ResourceManager::ResourceManager(string basePath) :
-  resourcePath(basePath),
-  loadedImages(),
-  loadedTextures(),
-  loadedFonts() {}
+ResourceManager::ResourceManager(string resourcesPath) : basePath(move(resourcesPath)) {}
 
-Image ResourceManager::loadImage(string path) {
-  if (loadedImages.find(path) != loadedImages.end()) {
-    return loadedImages[path];
-  }
-  
-  Image image;
-    
-  if (!image.loadFromFile(expandPath(path, "images"))) {
-    throw runtime_error("Unable to load image " + path);
-  }
-    
-  loadedImages[path] = image;
-  return image;
+bool ResourceManager::load(Image& image, const string& path) {
+  return image.loadFromFile(expandPath(path, ResourceType::Image));
 }
 
-Texture ResourceManager::loadTexture(string path) {
-  if (loadedTextures.find(path) != loadedTextures.end()) {
-    return loadedTextures[path];
-  }
-  
-  Texture texture;
-    
-  if (!texture.loadFromFile(expandPath(path, "textures"))) {
-    throw runtime_error("Unable to load texture " + path);
-  }
-    
-  loadedTextures[path] = texture;
-  return texture;
+bool ResourceManager::load(Texture& texture, const string& path) {
+  return texture.loadFromFile(expandPath(path, ResourceType::Texture));
 }
 
-Font ResourceManager::loadFont(string path) {
-  if (loadedFonts.find(path) != loadedFonts.end()) {
-    return loadedFonts[path];
-  }
-  
-  Font font;
-    
-  if (!font.loadFromFile(expandPath(path, "fonts"))) {
-    throw runtime_error("Unable to load font " + path);
-  }
-    
-  loadedFonts[path] = font;
-  return font;
+bool ResourceManager::load(Font& font, const string& path) {
+  return font.loadFromFile(expandPath(path, ResourceType::Font));
 }
 
-/*Music ResourceManager::loadMusic(string path) {
-  Music music;
-    
-  if (!music.openFromFile(expandPath(path, "music"))) {
-    throw runtime_error("Unable to load image " + path);
-  }
-    
-  return music;
-}*/
+bool ResourceManager::load(Music& music, const string& path) {
+  return music.openFromFile(expandPath(path, ResourceType::Music));
+}
 
 inline char ResourceManager::ds() {
 #ifdef _WIN32
@@ -77,9 +34,27 @@ inline char ResourceManager::ds() {
 #endif
 }
 
-string ResourceManager::expandPath(string path, string resourceType) {
-  string expandedPath = resourcePath + resourceType + ds() + path;
-  
-  replace(expandedPath.begin(), expandedPath.end(), '/', ds());
-  return expandedPath;
+inline bool ResourceManager::hasExtension(const string& resourcePath) {
+  size_t dotPosition = resourcePath.find_last_of('.');
+
+  if (dotPosition == string::npos) {
+    return false;
+  }
+
+  return dotPosition >= (resourcePath.length() - 5);
+}
+
+string ResourceManager::expandPath(const string& path, ResourceType resourceType) {
+  string appendedPath = path;
+  ResourceInfo& info = resourceTypesInfo[resourceType];
+
+  if (!hasExtension(appendedPath)) {
+    appendedPath += info.defaultExtension;
+  }
+
+  if (ds() != '/') {
+    replace(appendedPath.begin(), appendedPath.end(), '/', ds());
+  }
+
+  return basePath + info.resourceTypePath + ds() + appendedPath;
 }

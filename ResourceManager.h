@@ -15,23 +15,44 @@
 using namespace sf;
 using namespace std;
 
+enum class ResourceType {
+  Image,
+  Texture,
+  Font,
+  Music,
+  Sfx
+};
+
+typedef struct {
+  string resourceTypePath;
+  string defaultExtension;
+} ResourceInfo;
+
 class ResourceManager {
   
   private:
-    map<string, Image> loadedImages;
-    map<string, Texture> loadedTextures;
-    map<string, Font> loadedFonts;
-    string resourcePath;
-    char ds();
-  
-    string expandPath(string resourcePath, string resourceType);
+    string basePath;
+
+    map<ResourceType, ResourceInfo> resourceTypesInfo = {
+      {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
+      {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".jpeg" }},
+      {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
+      {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
+      {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }}
+    };
+
+    // private FS helpers
+    static char ds();
+    static bool hasExtension(const string& resourcePath);
+    string expandPath(const string& resourcePath, ResourceType resourceType);
   
   public:
-    ResourceManager(string basePath);
-    Image loadImage(string path);
-    Texture loadTexture(string path);
-    Font loadFont(string path);
-    //Music loadMusic(string path);
+    explicit ResourceManager(string  basePath);
+
+    bool load(Image& image, const string& path);
+    bool load(Texture& texture, const string& path);
+    bool load(Font& font, const string& path);
+    bool load(Music& music, const string& path);
 };
 
 #endif /* ResourceManager_h */

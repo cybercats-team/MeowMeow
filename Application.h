@@ -16,12 +16,12 @@ using namespace std;
 class Application {
   
   protected:
-    Application(string withResourcePath);
+    explicit Application(string withResourcePath);
     ~Application();
   
     static Application* instance;
     ResourceManager resourceManager;
-    RenderWindow* window;
+    RenderWindow* window = nullptr;
   
   public:
     Application(Application &other) = delete;

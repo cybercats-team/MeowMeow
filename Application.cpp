@@ -8,24 +8,16 @@ Application* Application::instance = nullptr;
 
 Application* Application::create(string resourcePath) {
   if (instance == nullptr) {
-    instance = new Application(resourcePath);
+    instance = new Application(move(resourcePath));
   }
   
   return instance;
 }
 
 Application::Application(string withResourcePath) :
-  resourceManager(withResourcePath) {}
+  resourceManager(move(withResourcePath)) {}
 
 bool Application::initialize() {
-  /*if (!icon.loadFromFile(resourcePath + "icon.png") ||
-    !texture.loadFromFile(resourcePath + "cute_image.jpg") ||
-    !font.loadFromFile(resourcePath + "sansation.ttf") ||
-    !music.openFromFile(resourcePath + "nice_music.ogg")
-  ) {
-    return false;
-  }*/
-  
   Image appIcon;
   vector<VideoMode> modes = VideoMode::getFullscreenModes();
   
@@ -33,9 +25,7 @@ bool Application::initialize() {
     return false;
   }
   
-  try {
-    appIcon = resourceManager.loadImage("icons/appIcon.png");
-  } catch (...) {
+  if (!resourceManager.load(appIcon, "icons/appIcon.png")) {
     return false;
   }
   
@@ -44,29 +34,32 @@ bool Application::initialize() {
   window = new RenderWindow(modes[0], "SFML window", Style::Fullscreen);
   window->setIcon(size.x, size.y, appIcon.getPixelsPtr());
   
-  //sprite.setTexture(texture);
   return true;
 }
 
 void Application::run() {
-  Font font = resourceManager.loadFont("sansation.ttf");
-  Texture texture = resourceManager.loadTexture("skybox/landscape.png");
-  //Music music = resourceManager.loadMusic("intro_theme.ogg");
-  
+  Font font;
+  Texture texture;
+  Music music;
+
+  resourceManager.load(font, "sansation.ttf");
+  resourceManager.load(texture, "skybox/landscape.png");
+  resourceManager.load(music, "intro_theme.ogg");
+
   Sprite sprite(texture);
   Text text("Hello SFML", font, 50);
   text.setFillColor(Color::Black);
   
-  int i = 0;
+  float i = 0;
 
   // Play the music
-  //music.play();
+  music.play();
 
   // Start the game loop
   while (window->isOpen())
   {
       // Process events
-      Event event;
+      Event event{};
     
       while (window->pollEvent(event))
       {
