@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "ResourceManager.h"
+#include "TextureManager.h"
 
 using namespace sf;
 using namespace std;
@@ -21,6 +22,7 @@ class Application {
   
     static Application* instance;
     ResourceManager resourceManager;
+    TextureManager textureManager;
     RenderWindow* window = nullptr;
   
   public:

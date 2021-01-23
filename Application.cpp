@@ -15,7 +15,8 @@ Application* Application::create(string resourcePath) {
 }
 
 Application::Application(string withResourcePath) :
-  resourceManager(move(withResourcePath)) {}
+  resourceManager(move(withResourcePath)),
+  textureManager(resourceManager) {}
 
 bool Application::initialize() {
   Image appIcon;

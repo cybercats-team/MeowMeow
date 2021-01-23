@@ -20,7 +20,8 @@ enum class ResourceType {
   Texture,
   Font,
   Music,
-  Sfx
+  Sfx,
+  TextureBundle
 };
 
 typedef struct {
@@ -38,17 +39,19 @@ class ResourceManager {
       {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
       {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
       {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
-      {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }}
+      {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }},
+      {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bndl" }}
     };
 
     // private FS helpers
     static char ds();
     static bool hasExtension(const string& resourcePath);
-    string expandPath(const string& resourcePath, ResourceType resourceType);
+    
   
   public:
     explicit ResourceManager(string  basePath);
-
+    string getResourcePath(const string& resourcePath, ResourceType resourceType);
+  
     bool load(Image& image, const string& path);
     bool load(Texture& texture, const string& path);
     bool load(Font& font, const string& path);

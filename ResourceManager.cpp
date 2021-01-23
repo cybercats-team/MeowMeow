@@ -11,19 +11,19 @@
 ResourceManager::ResourceManager(string resourcesPath) : basePath(move(resourcesPath)) {}
 
 bool ResourceManager::load(Image& image, const string& path) {
-  return image.loadFromFile(expandPath(path, ResourceType::Image));
+  return image.loadFromFile(getResourcePath(path, ResourceType::Image));
 }
 
 bool ResourceManager::load(Texture& texture, const string& path) {
-  return texture.loadFromFile(expandPath(path, ResourceType::Texture));
+  return texture.loadFromFile(getResourcePath(path, ResourceType::Texture));
 }
 
 bool ResourceManager::load(Font& font, const string& path) {
-  return font.loadFromFile(expandPath(path, ResourceType::Font));
+  return font.loadFromFile(getResourcePath(path, ResourceType::Font));
 }
 
 bool ResourceManager::load(Music& music, const string& path) {
-  return music.openFromFile(expandPath(path, ResourceType::Music));
+  return music.openFromFile(getResourcePath(path, ResourceType::Music));
 }
 
 inline char ResourceManager::ds() {
@@ -44,7 +44,7 @@ inline bool ResourceManager::hasExtension(const string& resourcePath) {
   return dotPosition >= (resourcePath.length() - 5);
 }
 
-string ResourceManager::expandPath(const string& path, ResourceType resourceType) {
+string ResourceManager::getResourcePath(const string& path, ResourceType resourceType) {
   string appendedPath = path;
   ResourceInfo& info = resourceTypesInfo[resourceType];
 
