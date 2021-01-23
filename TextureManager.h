@@ -40,7 +40,8 @@ typedef struct {
 typedef struct {
   unsigned int left;
   unsigned int top;
-  struct SpriteSize;
+  unsigned int width;
+  unsigned int height;
 } SpriteRect;
 
 typedef struct {
@@ -61,7 +62,7 @@ typedef struct {
 typedef struct {
   bool animated = false;
   unsigned int animationDuration = 0;
-  unsigned int framesCount;
+  unsigned int framesCount = 1;
   SpriteFrame frame;
 } SpriteInfo;
 
