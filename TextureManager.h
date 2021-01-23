@@ -10,41 +10,70 @@
 #define TextureManager_hpp
 
 #include "ResourceManager.h"
+#include "Object.h"
+
+#define TEXTURE_BUNDLE_MAGIC "BUNDLE"
 
 using namespace std;
 
-typedef char BundleMagic[3];
-
-const BundleMagic TextureBundleMagic = "BN";
-const BundleMagic TextureBundleTextureMagic = "TX";
-const BundleMagic TextureBundleSpriteMagic = "SP";
-
-enum class TextureBundleType {
-  Terrain,
-  MobileObject
+enum class BundleType {
+  TexturesList,
+  TextureInfo
 };
 
 typedef struct {
-  BundleMagic magic;
-  unsigned int texturesCount;
+  char magic[7] = TEXTURE_BUNDLE_MAGIC;
+  BundleType bundleType;
+  ObjectType itemType;
+  unsigned int itemsCount;
 } TextureBundleHeader;
 
 typedef struct {
-  BundleMagic magic;
-  unsigned int spriteSize;
-  unsigned int spritesCount;
-} TextureBundleTextureHeader;
+  char infoPath[RESOURCE_MAX_PATH];
+} TextureItem;
 
-typedef unsigned int FramesCount;
+typedef struct {
+  unsigned int width;
+  unsigned int height;
+} SpriteSize;
+
+typedef struct {
+  unsigned int left;
+  unsigned int top;
+  struct SpriteSize;
+} SpriteRect;
+
+typedef struct {
+  SpriteRect rect;
+  SpriteRect rect2x;
+  SpriteRect rect4x;
+} SpriteFrame;
+
+typedef struct {
+  char path[RESOURCE_MAX_PATH];
+  char path2x[RESOURCE_MAX_PATH];
+  char path4x[RESOURCE_MAX_PATH];
+  SpriteSize spriteSize;
+  SpriteSize spriteSize2x;
+  SpriteSize spriteSize4x;
+  unsigned int spritesCount;
+} TextureInfo;
+
+typedef struct {
+  bool animated = false;
+  unsigned int animationDuration;
+  unsigned int framesCount;
+  SpriteFrame frame;
+} SpriteInfo;
 
 class TextureManager {
   
   private:
     ResourceManager& resourceManager;
   
-    map<TextureBundleType, string> textureBundles = {
-      {TextureBundleType::Terrain, "terrains"},
-      {TextureBundleType::MobileObject, "mobileObjects"}
+    map<ObjectType, string> textureBundles = {
+      {ObjectType::Terrain, "terrains"},
+      {ObjectType::MobileObject, "mobileObjects"}
     };
   
   public:

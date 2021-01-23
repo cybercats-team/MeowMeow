@@ -12,6 +12,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#define RESOURCE_MAX_PATH 256
+
 using namespace sf;
 using namespace std;
 
