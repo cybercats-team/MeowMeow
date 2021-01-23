@@ -56,7 +56,6 @@ typedef struct {
   SpriteSize spriteSize;
   SpriteSize spriteSize2x;
   SpriteSize spriteSize4x;
-  unsigned int spritesCount;
 } TextureInfo;
 
 typedef struct {
