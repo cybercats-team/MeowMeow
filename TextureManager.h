@@ -13,11 +13,7 @@
 
 using namespace std;
 
-typedef char BundleMagic[3];
-
-const BundleMagic TextureBundleMagic = "BN";
-const BundleMagic TextureBundleTextureMagic = "TX";
-const BundleMagic TextureBundleSpriteMagic = "SP";
+const char TextureBundleMagic[7] = "BUNDLE";
 
 enum class TextureBundleType {
   Terrain,
@@ -25,17 +21,14 @@ enum class TextureBundleType {
 };
 
 typedef struct {
-  BundleMagic magic;
+  char magic[7];
   unsigned int texturesCount;
 } TextureBundleHeader;
 
 typedef struct {
-  BundleMagic magic;
   unsigned int spriteSize;
   unsigned int spritesCount;
-} TextureBundleTextureHeader;
-
-typedef unsigned int FramesCount;
+} TextureHeader;
 
 class TextureManager {
   
