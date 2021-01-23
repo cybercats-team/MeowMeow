@@ -60,7 +60,7 @@ typedef struct {
 
 typedef struct {
   bool animated = false;
-  unsigned int animationDuration;
+  unsigned int animationDuration = 0;
   unsigned int framesCount;
   SpriteFrame frame;
 } SpriteInfo;
