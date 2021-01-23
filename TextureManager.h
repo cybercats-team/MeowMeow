@@ -24,7 +24,7 @@ enum class BundleType {
 typedef struct {
   char magic[7] = TEXTURE_BUNDLE_MAGIC;
   BundleType bundleType;
-  ObjectType itemType;
+  ObjectType objectType;
   unsigned int itemsCount;
 } TextureBundleHeader;
 
