@@ -8,11 +8,20 @@
 
 #include "ResourceManager.h"
 
+map<ResourceType, const ResourceInfo> ResourceManager::resourceTypesInfo = {
+  {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
+  {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
+  {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
+  {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
+  {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }},
+  {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bundle" }}
+};
+
 ResourceManager::ResourceManager(string resourcesPath) : basePath(move(resourcesPath)) {}
 
 string ResourceManager::getResourcePath(const string& path, ResourceType resourceType) {
   string appendedPath = path;
-  ResourceInfo& info = resourceTypesInfo[resourceType];
+  const ResourceInfo& info = resourceTypesInfo[resourceType];
 
   if (!hasExtension(appendedPath)) {
     appendedPath += info.defaultExtension;
