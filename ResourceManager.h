@@ -9,6 +9,7 @@
 #ifndef ResourceManager_h
 #define ResourceManager_h
 
+#include <fstream>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -58,6 +59,7 @@ class ResourceManager {
     bool load(Texture& texture, const string& path);
     bool load(Font& font, const string& path);
     bool load(Music& music, const string& path);
+    bool load(ifstream& file, const string& path, ResourceType resourceType);
 };
 
 #endif /* ResourceManager_h */

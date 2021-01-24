@@ -9,8 +9,11 @@
 #ifndef TextureManager_hpp
 #define TextureManager_hpp
 
+#include <fstream>
+
 #include "ResourceManager.h"
 #include "Object.h"
+#include "Debug.h"
 
 #define TEXTURE_BUNDLE_MAGIC "BUNDLE"
 
@@ -69,15 +72,15 @@ typedef struct {
 class TextureManager {
   
   private:
+    static const map<ObjectType, string> textureListsPath;
+    
     ResourceManager& resourceManager;
-  
-    map<ObjectType, string> textureBundles = {
-      {ObjectType::Terrain, "terrains"},
-      {ObjectType::MobileObject, "mobileObjects"}
-    };
-  
+    map<ObjectType, vector<string>> textureBundlesPath;
+    
+    bool openBundle(ifstream &file, const string& path, TextureBundleHeader& header);
   public:
     TextureManager(ResourceManager& resourceManager);
+    bool initialize();
 };
 
 #endif /* TextureManager_hpp */

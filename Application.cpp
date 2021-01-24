@@ -26,10 +26,14 @@ bool Application::initialize() {
     return false;
   }
   
-  if (!resourceManager.load(appIcon, "icons/appIcon")) {
+  if (!textureManager.initialize()) {
     return false;
   }
   
+  if (!resourceManager.load(appIcon, "icons/appIcon")) {
+    return false;
+  }
+    
   Vector2u size = appIcon.getSize();
     
   window = new RenderWindow(modes[0], "SFML window", Style::Fullscreen);
