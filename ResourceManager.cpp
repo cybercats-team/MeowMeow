@@ -66,5 +66,5 @@ inline bool ResourceManager::hasExtension(const string& resourcePath) {
     return false;
   }
 
-  return dotPosition >= (resourcePath.length() - 5);
+  return dotPosition >= (resourcePath.length() - 7);
 }
