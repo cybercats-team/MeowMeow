@@ -9,27 +9,25 @@
 #include <SFML/Graphics.hpp>
 
 #include "ResourceManager.h"
-#include "TextureManager.h"
-
-using namespace sf;
-using namespace std;
+#include "SpriteManager.h"
 
 class Application {
-  
+
   protected:
-    explicit Application(string withResourcePath);
+
+    explicit Application(std::string withResourcePath);
     ~Application();
   
     static Application* instance;
     ResourceManager resourceManager;
-    TextureManager textureManager;
-    RenderWindow* window = nullptr;
+    SpriteManager textureManager;
+    sf::RenderWindow* window = nullptr;
   
   public:
     Application(Application &other) = delete;
     void operator=(const Application &) = delete;
   
-    static Application *create(string resourcePath);
+    static Application *create(std::string resourcePath);
     bool initialize();
     void run();
 };

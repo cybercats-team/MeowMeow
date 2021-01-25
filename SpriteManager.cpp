@@ -1,30 +1,32 @@
 //
-//  TextureManager.cpp
+//  SpriteManager.cpp
 //  MeowMeow
 //
 //  Created by Alex Serdukov on 23.01.2021.
 //  Copyright © 2021 Alex Serdukov. All rights reserved.
 //
 
-#include "TextureManager.h"
+#include "SpriteManager.h"
 
-const map<ObjectType, string> TextureManager::textureListsPath = {
+const std::map<ObjectType, std::string> SpriteManager::bundlesPath = {
   {ObjectType::Terrain, "terrain"},
   {ObjectType::MobileObject, "mobileObjects"}
 };
 
-TextureManager::TextureManager(ResourceManager& resourceManager) :
+SpriteManager::SpriteManager(ResourceManager& resourceManager) :
   resourceManager(resourceManager),
-  textureBundlesPath({
+  spriteSetsPaths({
     {ObjectType::Terrain, {}},
     {ObjectType::MobileObject, {}}
   }) {}
 
-bool TextureManager::initialize() {
-  for (auto& [objectType, path]: textureListsPath) {
+bool SpriteManager::initialize() {
+  using namespace std;
+
+  for (auto& [objectType, path]: bundlesPath) {
     ifstream listFile;
-    TextureBundleHeader header {};
-    TextureItem textureItem {};
+    BundleHeader header {};
+    TextureInfo textureItem {};
 
     debugPrint("Loading bundle " + path);
     
@@ -36,7 +38,7 @@ bool TextureManager::initialize() {
       listFile.read((char *) &textureItem, sizeof(textureItem));
       
       string texturePath(textureItem.infoPath);
-      textureBundlesPath[objectType].push_back(texturePath);
+      spriteSetsPaths[objectType].push_back(texturePath);
       debugPrint("Added texture ref " + texturePath);
     }
     
@@ -46,7 +48,7 @@ bool TextureManager::initialize() {
   return true;
 }
 
-bool TextureManager::openBundle(ifstream &file, const string& path, TextureBundleHeader& header) {
+bool SpriteManager::openBundle(std::ifstream &file, const std::string& path, BundleHeader& header) {
   if (!resourceManager.load(file, path, ResourceType::TextureBundle)) {
     debugPrint("Failed to open bundle file");
     return false;

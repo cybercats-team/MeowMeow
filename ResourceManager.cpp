@@ -8,7 +8,7 @@
 
 #include "ResourceManager.h"
 
-map<ResourceType, const ResourceInfo> ResourceManager::resourceTypesInfo = {
+std::map<ResourceType, const ResourceInfo> ResourceManager::typesInfo = {
   {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
   {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
   {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
@@ -17,11 +17,13 @@ map<ResourceType, const ResourceInfo> ResourceManager::resourceTypesInfo = {
   {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bundle" }}
 };
 
-ResourceManager::ResourceManager(string resourcesPath) : basePath(move(resourcesPath)) {}
+ResourceManager::ResourceManager(std::string resourcesPath) : basePath(move(resourcesPath)) {}
 
-string ResourceManager::getResourcePath(const string& path, ResourceType resourceType) {
+std::string ResourceManager::getResourcePath(const std::string& path, ResourceType resourceType) {
+  using namespace std;
+
   string appendedPath = path;
-  const ResourceInfo& info = resourceTypesInfo[resourceType];
+  const ResourceInfo& info = typesInfo[resourceType];
 
   if (!hasExtension(appendedPath)) {
     appendedPath += info.defaultExtension;
@@ -34,23 +36,25 @@ string ResourceManager::getResourcePath(const string& path, ResourceType resourc
   return basePath + info.resourceTypePath + ds() + appendedPath;
 }
 
-bool ResourceManager::load(Image& image, const string& path) {
+bool ResourceManager::load(sf::Image& image, const std::string& path) {
   return image.loadFromFile(getResourcePath(path, ResourceType::Image));
 }
 
-bool ResourceManager::load(Texture& texture, const string& path) {
+bool ResourceManager::load(sf::Texture& texture, const std::string& path) {
   return texture.loadFromFile(getResourcePath(path, ResourceType::Texture));
 }
 
-bool ResourceManager::load(Font& font, const string& path) {
+bool ResourceManager::load(sf::Font& font, const std::string& path) {
   return font.loadFromFile(getResourcePath(path, ResourceType::Font));
 }
 
-bool ResourceManager::load(Music& music, const string& path) {
+bool ResourceManager::load(sf::Music& music, const std::string& path) {
   return music.openFromFile(getResourcePath(path, ResourceType::Music));
 }
 
-bool ResourceManager::load(ifstream& file, const string& path, ResourceType resourceType) {
+bool ResourceManager::load(std::ifstream& file, const std::string& path, ResourceType resourceType) {
+  using namespace std;
+
   file.open(getResourcePath(path, resourceType), ifstream::in | ifstream::binary);
   
   if (!file) {
@@ -68,7 +72,9 @@ inline char ResourceManager::ds() {
 #endif
 }
 
-inline bool ResourceManager::hasExtension(const string& resourcePath) {
+inline bool ResourceManager::hasExtension(const std::string& resourcePath) {
+  using namespace std;
+
   size_t dotPosition = resourcePath.rfind('.');
 
   if (dotPosition == string::npos) {

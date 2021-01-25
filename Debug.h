@@ -14,11 +14,9 @@
 #include <iostream>
 #endif
 
-using namespace std;
-
-inline void debugPrint(string message) {
+inline void debugPrint(std::string message) {
 #ifdef DEBUG
-  cout << message << endl;
+  std::cout << message << endl;
 #endif
 }
 

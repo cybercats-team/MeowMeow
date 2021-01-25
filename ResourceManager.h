@@ -15,9 +15,6 @@
 
 #define RESOURCE_MAX_PATH 256
 
-using namespace sf;
-using namespace std;
-
 enum class ResourceType {
   Image,
   Texture,
@@ -28,31 +25,31 @@ enum class ResourceType {
 };
 
 typedef struct {
-  string resourceTypePath;
-  string defaultExtension;
+  std::string resourceTypePath;
+  std::string defaultExtension;
 } ResourceInfo;
 
 class ResourceManager {
   
   private:
-    static map<ResourceType, const ResourceInfo> resourceTypesInfo;
-  
-    string basePath;
+    static std::map<ResourceType, const ResourceInfo> typesInfo;
+
+  std::string basePath;
 
     // private FS helpers
     static char ds();
-    static bool hasExtension(const string& resourcePath);
+    static bool hasExtension(const std::string& resourcePath);
     
   
   public:
-    explicit ResourceManager(string  basePath);
-    string getResourcePath(const string& resourcePath, ResourceType resourceType);
+    explicit ResourceManager(std::string  basePath);
+    std::string getResourcePath(const std::string& resourcePath, ResourceType resourceType);
   
-    bool load(Image& image, const string& path);
-    bool load(Texture& texture, const string& path);
-    bool load(Font& font, const string& path);
-    bool load(Music& music, const string& path);
-    bool load(ifstream& file, const string& path, ResourceType resourceType);
+    bool load(sf::Image& image, const std::string& path);
+    bool load(sf::Texture& texture, const std::string& path);
+    bool load(sf::Font& font, const std::string& path);
+    bool load(sf::Music& music, const std::string& path);
+    bool load(std::ifstream& file, const std::string& path, ResourceType resourceType);
 };
 
 #endif /* ResourceManager_h */

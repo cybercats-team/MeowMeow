@@ -6,7 +6,7 @@
 
 Application* Application::instance = nullptr;
 
-Application* Application::create(string resourcePath) {
+Application* Application::create(std::string resourcePath) {
   if (instance == nullptr) {
     instance = new Application(move(resourcePath));
   }
@@ -14,11 +14,14 @@ Application* Application::create(string resourcePath) {
   return instance;
 }
 
-Application::Application(string withResourcePath) :
+Application::Application(std::string withResourcePath) :
   resourceManager(move(withResourcePath)),
   textureManager(resourceManager) {}
 
 bool Application::initialize() {
+  using namespace std;
+  using namespace sf;
+
   Image appIcon;
   vector<VideoMode> modes = VideoMode::getFullscreenModes();
   
@@ -43,6 +46,8 @@ bool Application::initialize() {
 }
 
 void Application::run() {
+  using namespace sf;
+
   Font font;
   Texture texture;
   Music music;
