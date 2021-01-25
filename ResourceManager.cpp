@@ -8,7 +8,7 @@
 
 #include "ResourceManager.h"
 
-ResourceManager::ResourceManager(std::string resourcesPath) : basePath(move(resourcesPath)) {}
+ResourceManager::ResourceManager(std::string resourcesPath) : basePath(std::move(resourcesPath)) {}
 
 std::string ResourceManager::getResourcePath(const std::string& path, ResourceType resourceType) {
   using namespace std;

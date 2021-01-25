@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "SpriteManager.h"
 
+#include "Debug.h"
+
 class Application {
 
   protected:
@@ -20,7 +22,7 @@ class Application {
   
     static Application* instance;
     ResourceManager resourceManager;
-    SpriteManager textureManager;
+    SpriteManager spriteManager;
     sf::RenderWindow* window = nullptr;
   
   public:

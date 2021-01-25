@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "ResourceManager.h"
+#include "SpriteSet.h"
 #include "Object.h"
 #include "Debug.h"
 
@@ -34,40 +35,7 @@ typedef struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
 } TextureItem;
 
-typedef struct SpriteSize {
-  unsigned int width = 0;
-  unsigned int height = 0;
-} SpriteSize;
-
-typedef struct SpriteRect: SpriteSize {
-  unsigned int left = 0;
-  unsigned int top = 0;
-} SpriteRect;
-
-typedef struct SpriteFrame {
-  SpriteRect rect{};
-  SpriteRect rect2x{};
-  SpriteRect rect4x{};
-} SpriteFrame;
-
-typedef struct SpriteSetInfo {
-  char path[RESOURCE_MAX_PATH] = "";
-  char path2x[RESOURCE_MAX_PATH] = "";
-  char path4x[RESOURCE_MAX_PATH] = "";
-  SpriteSize spriteSize{};
-  SpriteSize spriteSize2x{};
-  SpriteSize spriteSize4x{};
-} SpriteSetInfo;
-
-typedef struct SpriteInfo {
-  bool animated = false;
-  unsigned int animationDuration = 0;
-  unsigned int framesCount = 1;
-  SpriteFrame frame{};
-} SpriteInfo;
-
 class SpriteManager {
-  
   private:
     const std::map<ObjectType, std::string> bundlesPath = {
       {ObjectType::Terrain, "terrain"},
@@ -81,6 +49,7 @@ class SpriteManager {
   public:
     explicit SpriteManager(ResourceManager& resourceManager);
     bool initialize();
+    bool load(SpriteSet& spriteSet, ObjectType objectType, unsigned int index);
 };
 
 #endif /* TextureManager_hpp */

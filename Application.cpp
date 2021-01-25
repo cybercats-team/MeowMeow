@@ -7,6 +7,8 @@
 Application* Application::instance = nullptr;
 
 Application* Application::create(std::string resourcePath) {
+  using namespace std;
+
   if (instance == nullptr) {
     instance = new Application(move(resourcePath));
   }
@@ -15,8 +17,8 @@ Application* Application::create(std::string resourcePath) {
 }
 
 Application::Application(std::string withResourcePath) :
-  resourceManager(move(withResourcePath)),
-  textureManager(resourceManager) {}
+  resourceManager(std::move(withResourcePath)),
+  spriteManager(resourceManager) {}
 
 bool Application::initialize() {
   using namespace std;
@@ -29,7 +31,7 @@ bool Application::initialize() {
     return false;
   }
   
-  if (!textureManager.initialize()) {
+  if (!spriteManager.initialize()) {
     return false;
   }
   
@@ -41,7 +43,7 @@ bool Application::initialize() {
     
   window = new RenderWindow(modes[0], "SFML window", Style::Fullscreen);
   window->setIcon(size.x, size.y, appIcon.getPixelsPtr());
-  
+
   return true;
 }
 

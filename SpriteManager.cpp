@@ -59,3 +59,61 @@ bool SpriteManager::openBundle(std::ifstream &file, const std::string& path, Bun
   
   return true;
 }
+
+bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned int index) {
+  using namespace std;
+
+  debugPrint("Loading " +
+    (string) (objectType == ObjectType::Terrain ? "terrain" : "mobile object") +
+    " sprite set #" +
+    to_string(index)
+  );
+
+  vector<string>& paths = spriteSetsPaths[objectType];
+
+  if (index > paths.size()) {
+    debugPrint("Sprite set #" + to_string(index) + "not exists");
+    return false;
+  }
+
+  ifstream spriteFile;
+  BundleHeader header {};
+  string& path = paths[index];
+
+  debugPrint("Loading bundle " + path);
+
+  if (!openBundle(spriteFile, path, header)) {
+    return false;
+  }
+
+  unsigned int spritesCount = header.itemsCount;
+
+  spriteSet.spritesCount = spritesCount;
+  spriteFile.read((char *) &spriteSet.info, sizeof(spriteSet.info));
+
+  for (unsigned int spriteIndex = 0; spriteIndex < spritesCount; spriteIndex++) {
+    SpriteInfo spriteInfo{};
+
+    spriteFile.read((char *) &spriteInfo, sizeof(spriteInfo));
+    spriteSet.sprites.push_back(spriteInfo);
+
+    if (!spriteInfo.animated) {
+      continue;
+    }
+
+    unsigned int framesCount = spriteInfo.framesCount;
+    vector<SpriteFrame> frames{};
+
+    for (unsigned int frameIndex = 0; frameIndex < framesCount; frameIndex++) {
+      SpriteFrame frame{};
+
+      spriteFile.read((char *) &frame, sizeof(frame));
+      frames.push_back(frame);
+    }
+
+    spriteSet.frames.push_back(frames);
+  }
+
+  spriteFile.close();
+  return true;
+}
