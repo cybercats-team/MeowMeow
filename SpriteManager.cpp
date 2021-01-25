@@ -8,11 +8,6 @@
 
 #include "SpriteManager.h"
 
-const std::map<ObjectType, std::string> SpriteManager::bundlesPath = {
-  {ObjectType::Terrain, "terrain"},
-  {ObjectType::MobileObject, "mobileObjects"}
-};
-
 SpriteManager::SpriteManager(ResourceManager& resourceManager) :
   resourceManager(resourceManager),
   spriteSetsPaths({

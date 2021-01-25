@@ -32,9 +32,16 @@ typedef struct {
 class ResourceManager {
   
   private:
-    static std::map<ResourceType, const ResourceInfo> typesInfo;
+    std::map<ResourceType, const ResourceInfo> typesInfo = {
+      {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
+      {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
+      {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
+      {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
+      {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }},
+      {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bundle" }}
+    };
 
-  std::string basePath;
+    std::string basePath;
 
     // private FS helpers
     static char ds();

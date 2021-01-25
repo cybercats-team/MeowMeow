@@ -69,7 +69,10 @@ typedef struct SpriteInfo {
 class SpriteManager {
   
   private:
-    static const std::map<ObjectType, std::string> bundlesPath;
+    const std::map<ObjectType, std::string> bundlesPath = {
+      {ObjectType::Terrain, "terrain"},
+      {ObjectType::MobileObject, "mobileObjects"}
+    };
     
     ResourceManager& resourceManager;
     std::map<ObjectType, std::vector<std::string>> spriteSetsPaths;

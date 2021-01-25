@@ -8,15 +8,6 @@
 
 #include "ResourceManager.h"
 
-std::map<ResourceType, const ResourceInfo> ResourceManager::typesInfo = {
-  {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
-  {ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" }},
-  {ResourceType::Font, { .resourceTypePath = "fonts", .defaultExtension = ".ttf" }},
-  {ResourceType::Music, { .resourceTypePath = "music", .defaultExtension = ".ogg" }},
-  {ResourceType::Sfx, { .resourceTypePath = "sounds", .defaultExtension = ".wav" }},
-  {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bundle" }}
-};
-
 ResourceManager::ResourceManager(std::string resourcesPath) : basePath(move(resourcesPath)) {}
 
 std::string ResourceManager::getResourcePath(const std::string& path, ResourceType resourceType) {
