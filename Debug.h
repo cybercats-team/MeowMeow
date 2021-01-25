@@ -16,7 +16,9 @@
 
 inline void debugPrint(std::string message) {
 #ifdef DEBUG
-  std::cout << message << endl;
+  using namespace std;
+  
+  cout << message << endl;
 #endif
 }
 
