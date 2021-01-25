@@ -8,12 +8,9 @@
 
 #include "SpriteManager.h"
 
-SpriteManager::SpriteManager(ResourceManager& resourceManager) :
-  resourceManager(resourceManager),
-  spriteSetsPaths({
-    {ObjectType::Terrain, {}},
-    {ObjectType::MobileObject, {}}
-  }) {}
+SpriteManager::SpriteManager(ResourceManager& resourceManager, Screen& screen) :
+  screen(screen),
+  resourceManager(resourceManager) {}
 
 bool SpriteManager::initialize() {
   using namespace std;
@@ -88,6 +85,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 
   unsigned int spritesCount = header.itemsCount;
 
+  spriteSet.scale = screen.scale;
   spriteSet.spritesCount = spritesCount;
   spriteFile.read((char *) &spriteSet.info, sizeof(spriteSet.info));
 

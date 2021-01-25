@@ -5,6 +5,7 @@
 #ifndef MEOWMEOW_SPRITESET_H
 #define MEOWMEOW_SPRITESET_H
 
+#include "Screen.h"
 #include "ResourceManager.h"
 
 typedef struct SpriteSize {
@@ -19,17 +20,17 @@ typedef struct SpriteRect: SpriteSize {
 
 typedef struct SpriteFrame {
   SpriteRect rect{};
-  SpriteRect rect2x{};
-  SpriteRect rect4x{};
+  SpriteRect rect2k{};
+  SpriteRect rect4k{};
 } SpriteFrame;
 
 typedef struct SpriteSetInfo {
   char path[RESOURCE_MAX_PATH] = "";
-  char path2x[RESOURCE_MAX_PATH] = "";
-  char path4x[RESOURCE_MAX_PATH] = "";
+  char path2k[RESOURCE_MAX_PATH] = "";
+  char path4k[RESOURCE_MAX_PATH] = "";
   SpriteSize spriteSize{};
-  SpriteSize spriteSize2x{};
-  SpriteSize spriteSize4x{};
+  SpriteSize spriteSize2k{};
+  SpriteSize spriteSize4k{};
 } SpriteSetInfo;
 
 typedef struct SpriteInfo {
@@ -41,6 +42,7 @@ typedef struct SpriteInfo {
 
 class SpriteSet {
   private:
+    ScreenScale scale = ScreenScale::FullHD;
     unsigned int spritesCount = 0;
     const SpriteSetInfo info{};
     std::vector<SpriteInfo> sprites{};
@@ -50,8 +52,10 @@ class SpriteSet {
   public:
     [[nodiscard]] unsigned int getSpritesCount() const;
     [[nodiscard]] const SpriteSetInfo& getInfo() const;
-    [[nodiscard]] SpriteInfo& getSprite(unsigned int index) const;
-    [[nodiscard]] SpriteFrame& getFrame(unsigned int spriteIndex, unsigned int index) const;
+    [[nodiscard]] const std::string getTexturePath() const;
+    [[nodiscard]] const SpriteSize& getSpriteSize() const;
+    [[nodiscard]] const SpriteInfo& getSpriteInfo(unsigned int index) const;
+    [[nodiscard]] const SpriteRect& getFrameRect(unsigned int spriteIndex, unsigned int index = 0) const;
 };
 
 #endif //MEOWMEOW_SPRITESET_H

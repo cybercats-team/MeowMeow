@@ -17,32 +17,28 @@ Application* Application::create(std::string resourcePath) {
 }
 
 Application::Application(std::string withResourcePath) :
+  screen(),
   resourceManager(std::move(withResourcePath)),
-  spriteManager(resourceManager) {}
+  spriteManager(resourceManager, screen) {}
 
 bool Application::initialize() {
   using namespace std;
   using namespace sf;
-
+  
   Image appIcon;
-  vector<VideoMode> modes = VideoMode::getFullscreenModes();
-  
-  if (modes.empty()) {
+
+  if (
+    !screen.initialize() ||
+    !spriteManager.initialize() ||
+    !resourceManager.load(appIcon, "icons/appIcon")
+  ) {
     return false;
   }
   
-  if (!spriteManager.initialize()) {
-    return false;
-  }
-  
-  if (!resourceManager.load(appIcon, "icons/appIcon")) {
-    return false;
-  }
-    
   Vector2u size = appIcon.getSize();
     
-  window = new RenderWindow(modes[0], "SFML window", Style::Fullscreen);
-  window->setIcon(size.x, size.y, appIcon.getPixelsPtr());
+  window.create(screen.selectedMode, "SFML window", Style::Fullscreen);
+  window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
 
   return true;
 }
@@ -70,21 +66,21 @@ void Application::run() {
   music.play();
 
   // Start the game loop
-  while (window->isOpen())
+  while (window.isOpen())
   {
       // Process events
       Event event{};
     
-      while (window->pollEvent(event))
+      while (window.pollEvent(event))
       {
           // Close window: exit
           if (event.type == Event::Closed) {
-              window->close();
+              window.close();
           }
 
           // Escape pressed: exit
           if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-              window->close();
+              window.close();
           }
       }
     
@@ -93,16 +89,16 @@ void Application::run() {
         sprite.setPosition(i, i);
 
         // Clear screen
-        window->clear();
+        window.clear();
 
         // Draw the sprite
-        window->draw(sprite);
+        window.draw(sprite);
 
         // Draw the string
-        window->draw(text);
+        window.draw(text);
 
         // Update the window
-        window->display();
+        window.display();
 
         i++;
         if (i > 1000) i = 0;
@@ -110,8 +106,4 @@ void Application::run() {
         clock.restart();
       }
   }
-}
-
-Application::~Application() {
-  delete window;
 }

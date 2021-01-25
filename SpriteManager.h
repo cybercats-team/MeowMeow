@@ -12,6 +12,7 @@
 #include <fstream>
 #include <cstring>
 
+#include "Screen.h"
 #include "ResourceManager.h"
 #include "SpriteSet.h"
 #include "Object.h"
@@ -40,14 +41,19 @@ class SpriteManager {
     const std::map<ObjectType, std::string> bundlesPath = {
       {ObjectType::Terrain, "terrain"},
       {ObjectType::MobileObject, "mobileObjects"}
+    };    
+    
+    std::map<ObjectType, std::vector<std::string>> spriteSetsPaths = {
+      {ObjectType::Terrain, {}},
+      {ObjectType::MobileObject, {}}
     };
     
+    Screen& screen;
     ResourceManager& resourceManager;
-    std::map<ObjectType, std::vector<std::string>> spriteSetsPaths;
     
     bool openBundle(std::ifstream &file, const std::string& path, BundleHeader& header);
   public:
-    explicit SpriteManager(ResourceManager& resourceManager);
+    SpriteManager(ResourceManager& resourceManager, Screen& screen);
     bool initialize();
     bool load(SpriteSet& spriteSet, ObjectType objectType, unsigned int index);
 };

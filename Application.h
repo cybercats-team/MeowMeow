@@ -8,22 +8,22 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "Screen.h"
 #include "ResourceManager.h"
 #include "SpriteManager.h"
 
 #include "Debug.h"
 
 class Application {
-
   protected:
-
     explicit Application(std::string withResourcePath);
-    ~Application();
   
     static Application* instance;
-    ResourceManager resourceManager;
+    
+    Screen screen;
     SpriteManager spriteManager;
-    sf::RenderWindow* window = nullptr;
+    ResourceManager resourceManager;
+    sf::RenderWindow window{};
   
   public:
     Application(Application &other) = delete;
