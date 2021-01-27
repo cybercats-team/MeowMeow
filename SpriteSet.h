@@ -37,7 +37,6 @@ typedef struct SpriteInfo {
   bool animated = false;
   unsigned int animationDuration = 0;
   unsigned int framesCount = 1;
-  SpriteFrame frame{};
 } SpriteInfo;
 
 class SpriteSet {

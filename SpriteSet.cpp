@@ -42,7 +42,7 @@ const SpriteInfo& SpriteSet::getSpriteInfo(unsigned int index) const {
 
 const SpriteRect& SpriteSet::getFrameRect(unsigned int spriteIndex, unsigned int index) const {
   const SpriteInfo& spriteInfo = getSpriteInfo(spriteIndex);
-  const SpriteFrame& frame = spriteInfo.animated ? frames[spriteIndex][index] : spriteInfo.frame;
+  const SpriteFrame& frame = frames[spriteIndex][spriteInfo.animated ? index : 0];
   
   switch (scale) {
     case ScreenScale::RetinaOr2K:
