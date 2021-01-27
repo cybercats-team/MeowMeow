@@ -69,7 +69,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
   vector<string>& paths = spriteSetsPaths[objectType];
 
   if (index > paths.size()) {
-    debugPrint("Sprite set #" + to_string(index) + "not exists");
+    debugPrint("SpriteObject set #" + to_string(index) + "not exists");
     return false;
   }
 
@@ -83,35 +83,72 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
     return false;
   }
 
-  unsigned int spritesCount = header.itemsCount;
+  SpriteSetInfo info{};
+  spriteFile.read((char *) &info, sizeof(info));
 
-  spriteSet.scale = screen.scale;
+  unsigned int spritesCount = header.itemsCount;
+  string texturePath = getTexturePath(info);
+
   spriteSet.spritesCount = spritesCount;
-  spriteFile.read((char *) &spriteSet.info, sizeof(spriteSet.info));
+  spriteSet.spriteSize = getSpriteSize(info);
 
   for (unsigned int spriteIndex = 0; spriteIndex < spritesCount; spriteIndex++) {
     SpriteInfo spriteInfo{};
+    vector<SpriteRect> frames{};
 
     spriteFile.read((char *) &spriteInfo, sizeof(spriteInfo));
     spriteSet.sprites.push_back(spriteInfo);
 
-    if (!spriteInfo.animated) {
-      continue;
-    }
-
-    unsigned int framesCount = spriteInfo.framesCount;
-    vector<SpriteFrame> frames{};
+    unsigned int framesCount = spriteInfo.animated ? spriteInfo.framesCount : 1;
 
     for (unsigned int frameIndex = 0; frameIndex < framesCount; frameIndex++) {
       SpriteFrame frame{};
 
       spriteFile.read((char *) &frame, sizeof(frame));
-      frames.push_back(frame);
+      frames.push_back(getSpriteRect(frame));
     }
 
     spriteSet.frames.push_back(frames);
   }
 
   spriteFile.close();
-  return true;
+
+  debugPrint("Loading texture " + texturePath);
+
+  return resourceManager.load(spriteSet.texture, texturePath);
+}
+
+SpriteSize SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
+  switch (screen.scale) {
+    case ScreenScale::RetinaOr2K:
+      return info.spriteSize2k;
+    case ScreenScale::UltraHD:
+      return info.spriteSize4k;
+    default:
+      return info.spriteSize;
+  }
+}
+
+SpriteRect SpriteManager::getSpriteRect(SpriteFrame &frame) const {
+  switch (screen.scale) {
+    case ScreenScale::RetinaOr2K:
+      return frame.rect2k;
+    case ScreenScale::UltraHD:
+      return frame.rect4k;
+    default:
+      return frame.rect;
+  }
+}
+
+std::string SpriteManager::getTexturePath(SpriteSetInfo &info) const {
+  using namespace std;
+
+  switch (screen.scale) {
+    case ScreenScale::RetinaOr2K:
+      return string(info.path2k);
+    case ScreenScale::UltraHD:
+      return string(info.path4k);
+    default:
+      return string(info.path);
+  }
 }

@@ -36,6 +36,21 @@ typedef struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
 } TextureItem;
 
+typedef struct SpriteFrame {
+  SpriteRect rect{};
+  SpriteRect rect2k{};
+  SpriteRect rect4k{};
+} SpriteFrame;
+
+typedef struct SpriteSetInfo {
+  char path[RESOURCE_MAX_PATH] = "";
+  char path2k[RESOURCE_MAX_PATH] = "";
+  char path4k[RESOURCE_MAX_PATH] = "";
+  SpriteSize spriteSize{};
+  SpriteSize spriteSize2k{};
+  SpriteSize spriteSize4k{};
+} SpriteSetInfo;
+
 class SpriteManager {
   private:
     const std::map<ObjectType, std::string> bundlesPath = {
@@ -52,6 +67,9 @@ class SpriteManager {
     ResourceManager& resourceManager;
     
     bool openBundle(std::ifstream &file, const std::string& path, BundleHeader& header);
+    SpriteSize getSpriteSize(SpriteSetInfo &info) const;
+    SpriteRect getSpriteRect(SpriteFrame &frame) const;
+    std::string getTexturePath(SpriteSetInfo &info) const;
   public:
     SpriteManager(ResourceManager& resourceManager, Screen& screen);
     bool initialize();
