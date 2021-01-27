@@ -23,8 +23,24 @@ class SpriteObject :
   private SpriteInfo,
   public sf::Drawable
 {
-  void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-};
+  private:
+    sf::Sprite sprite{};
+    std::vector<sf::IntRect> frames{};
+    unsigned int currentFrame = 0;
 
+    void setFrameRect(unsigned int frame);
+    SpriteObject& operator<<(const SpriteSize&);
+
+    friend class SpriteSet;
+  public:
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void setFrame(unsigned int frame);
+    [[nodiscard]] unsigned int getWidth() const;
+    [[nodiscard]] unsigned int getHeight() const;
+    [[nodiscard]] bool isAnimated() const;
+    [[nodiscard]] unsigned int getAnimationDuration() const;
+    [[nodiscard]] unsigned int getFramesCount() const;
+};
 
 #endif //MEOWMEOW_SPRITEOBJECT_H

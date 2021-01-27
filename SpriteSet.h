@@ -25,6 +25,7 @@ class SpriteSet {
     friend class SpriteManager;
   public:
     [[nodiscard]] unsigned int getSpritesCount() const;
+    void getSprite(SpriteObject& spriteObject, unsigned int index);
 };
 
 #endif //MEOWMEOW_SPRITESET_H
