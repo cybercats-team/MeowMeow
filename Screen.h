@@ -28,8 +28,9 @@ class Screen {
     friend class SpriteManager;
   public:
     bool initialize();
-    [[nodiscard]] const sf::VideoMode& getSelectedMode() const;
-    [[nodiscard]] const ScreenScale getScale() const;
+    [[nodiscard]] ScreenScale getScale() const;
+    [[nodiscard]] unsigned int getWidth() const;
+    [[nodiscard]] unsigned int getHeight() const;
 };
 
 #endif /* Screen_h */

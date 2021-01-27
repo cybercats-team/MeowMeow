@@ -52,7 +52,7 @@ class SpriteSet {
   public:
     [[nodiscard]] unsigned int getSpritesCount() const;
     [[nodiscard]] const SpriteSetInfo& getInfo() const;
-    [[nodiscard]] const std::string getTexturePath() const;
+    [[nodiscard]] std::string getTexturePath() const;
     [[nodiscard]] const SpriteSize& getSpriteSize() const;
     [[nodiscard]] const SpriteInfo& getSpriteInfo(unsigned int index) const;
     [[nodiscard]] const SpriteRect& getFrameRect(unsigned int spriteIndex, unsigned int index = 0) const;

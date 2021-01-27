@@ -12,7 +12,7 @@ const SpriteSetInfo& SpriteSet::getInfo() const {
   return info;
 }
 
-const std::string SpriteSet::getTexturePath() const {
+std::string SpriteSet::getTexturePath() const {
   using namespace std;
   
   switch (scale) {

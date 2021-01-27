@@ -18,9 +18,9 @@ bool Screen::initialize() {
     return false;
   }
   
-  selectedMode = move(modes[0]);
+  selectedMode = modes[0];
   
-  float screenWidth = selectedMode.width;
+  unsigned int screenWidth = selectedMode.width;
   
   if (screenWidth < 1920) {
     return false;
@@ -42,10 +42,14 @@ bool Screen::initialize() {
   return true;
 }
 
-const sf::VideoMode& Screen::getSelectedMode() const {
-  return selectedMode;
+ScreenScale Screen::getScale() const {
+  return scale;
 }
 
-const ScreenScale Screen::getScale() const {
-  return scale;
+unsigned int Screen::getWidth() const {
+  return selectedMode.width;
+}
+
+unsigned int Screen::getHeight() const {
+  return selectedMode.height;
 }
