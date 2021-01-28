@@ -21,13 +21,16 @@ class SpriteSet {
     SpriteSize spriteSize{};
     std::vector<SpriteInfo> sprites{};
     std::vector<std::vector<SpriteRect>> frames{};
+  
+    void fillFrames(std::vector<sf::IntRect>& targetFrames, unsigned int spriteIndex);
 
     friend class SpriteManager;
   public:
     [[nodiscard]] unsigned int getSpritesCount() const;
-    void getSprite(SpriteObject& spriteObject, unsigned int index);
     [[nodiscard]] unsigned int getSpriteWidth() const;
     [[nodiscard]] unsigned int getSpriteHeight() const;
+    SpriteObject getSprite(unsigned int index);
+    void getSprite(SpriteObject& spriteObject, unsigned int index);
 };
 
 #endif //MEOWMEOW_SPRITESET_H

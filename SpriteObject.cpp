@@ -4,6 +4,11 @@
 
 #include "SpriteObject.h"
 
+SpriteObject::SpriteObject() : sf::Transformable(), SpriteSize({}), SpriteInfo({}), frames({}), sprite() {}
+
+SpriteObject::SpriteObject(const sf::Texture& texture, const SpriteSize& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
+  : sf::Transformable(), SpriteSize(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture) {};
+
 unsigned int SpriteObject::getWidth() const {
   return width;
 }
@@ -49,21 +54,5 @@ void SpriteObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 }
 
 void SpriteObject::setFrameRect(unsigned int frame) {
-  //  debugPrint("set frame rect" + std::to_string(frame));
   sprite.setTextureRect(frames[frame]);
-}
-
-SpriteObject &SpriteObject::operator<<(const SpriteSize& size) {
-  width = size.width;
-  height = size.height;
-
-  return *this;
-}
-
-SpriteObject &SpriteObject::operator<<(const SpriteInfo& info) {
-  animated = info.animated;
-  animationDuration = info.animationDuration;
-  framesCount = info.framesCount;
-
-  return *this;
 }

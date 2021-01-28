@@ -26,17 +26,16 @@ class SpriteObject :
   public sf::Transformable
 {
   private:
-    sf::Sprite sprite{};
-    std::vector<sf::IntRect> frames{};
+    sf::Sprite sprite;
+    std::vector<sf::IntRect> frames;
     unsigned int currentFrame = 0;
 
     void setFrameRect(unsigned int frame);
-    SpriteObject& operator<<(const SpriteSize&);
-    SpriteObject& operator<<(const SpriteInfo&);
 
     friend class SpriteSet;
   public:
-
+    SpriteObject();
+    SpriteObject(const sf::Texture& texture, const SpriteSize& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setFrame(unsigned int frame);
     void nextFrame();

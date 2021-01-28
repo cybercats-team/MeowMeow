@@ -21,16 +21,38 @@ void SpriteSet::getSprite(SpriteObject &spriteObject, unsigned int index) {
   using namespace std;
 
   SpriteInfo& info = sprites[index];
-  vector<SpriteRect>& spriteFrames = frames[index];
-  
-  spriteObject << spriteSize << info;
   spriteObject.sprite.setTexture(texture);
   
-  for (auto& frame: spriteFrames) {
+  spriteObject.width = spriteSize.width;
+  spriteObject.height = spriteSize.height;
+  spriteObject.animated = info.animated;
+  spriteObject.framesCount = info.framesCount;
+  spriteObject.animationDuration = info.animationDuration;
+    
+  fillFrames(spriteObject.frames, index);
+  spriteObject.setFrameRect(0);
+}
+
+SpriteObject SpriteSet::getSprite(unsigned int index) {
+  using namespace sf;
+  using namespace std;
+  
+  SpriteInfo& info = sprites[index];
+  vector<IntRect> spriteFrames{};
+  
+  fillFrames(spriteFrames, index);
+  return SpriteObject(texture, spriteSize, info, spriteFrames);
+}
+
+void SpriteSet::fillFrames(std::vector<sf::IntRect>& targetFrames, unsigned int spriteIndex) {
+  using namespace sf;
+  using namespace std;
+  
+  vector<SpriteRect>& sourceFrames = frames[spriteIndex];
+  
+  for (auto& frame: sourceFrames) {
     IntRect rect(frame.left, frame.top, frame.width, frame.height);
     
-    spriteObject.frames.push_back(rect);
+    targetFrames.push_back(rect);
   }
-  
-  spriteObject.setFrameRect(0);
 }
