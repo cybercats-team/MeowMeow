@@ -103,8 +103,8 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 
     for (unsigned int frameIndex = 0; frameIndex < framesCount; frameIndex++) {
       SpriteFrame frame{};
-
-      spriteFile.read((char *) &frame, sizeof(frame));
+      
+      spriteFile.read((char *) &frame, sizeof(frame));      
       frames.push_back(getSpriteRect(frame));
     }
 

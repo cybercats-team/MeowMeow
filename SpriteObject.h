@@ -6,6 +6,7 @@
 #define MEOWMEOW_SPRITEOBJECT_H
 
 #include <SFML/Graphics.hpp>
+#include "Debug.h"
 
 typedef struct SpriteSize {
   unsigned int width = 0;
@@ -21,7 +22,8 @@ typedef struct SpriteInfo {
 class SpriteObject :
   private SpriteSize,
   private SpriteInfo,
-  public sf::Drawable
+  public sf::Drawable,
+  public sf::Transformable
 {
   private:
     sf::Sprite sprite{};
@@ -30,12 +32,14 @@ class SpriteObject :
 
     void setFrameRect(unsigned int frame);
     SpriteObject& operator<<(const SpriteSize&);
+    SpriteObject& operator<<(const SpriteInfo&);
 
     friend class SpriteSet;
   public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setFrame(unsigned int frame);
+    void nextFrame();
     [[nodiscard]] unsigned int getWidth() const;
     [[nodiscard]] unsigned int getHeight() const;
     [[nodiscard]] bool isAnimated() const;

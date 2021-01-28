@@ -26,6 +26,8 @@ class SpriteSet {
   public:
     [[nodiscard]] unsigned int getSpritesCount() const;
     void getSprite(SpriteObject& spriteObject, unsigned int index);
+    [[nodiscard]] unsigned int getSpriteWidth() const;
+    [[nodiscard]] unsigned int getSpriteHeight() const;
 };
 
 #endif //MEOWMEOW_SPRITESET_H
