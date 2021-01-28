@@ -61,19 +61,15 @@ void Application::run() {
   
   SpriteObject grass{};
   SpriteObject fence[6] = {
-    SpriteObject(),
-    SpriteObject(),
-    SpriteObject(),
-    SpriteObject(),
-    SpriteObject(),
-    SpriteObject()
+    fenceSet.getSprite(0),
+    fenceSet.getSprite(1),
+    fenceSet.getSprite(2),
+    fenceSet.getSprite(3),
+    fenceSet.getSprite(4),
+    fenceSet.getSprite(5),
   };
   
   grassSet.getSprite(grass, 0);
-  
-  for (int i = 0; i < 6; i++) {
-    fenceSet.getSprite(fence[i], i);
-  }
   
   const Int64 frameInterval = (Int64) (1000.0 * (
     (float) grass.getAnimationDuration() /

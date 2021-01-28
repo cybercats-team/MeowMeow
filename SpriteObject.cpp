@@ -7,7 +7,10 @@
 SpriteObject::SpriteObject() : sf::Transformable(), SpriteSize({}), SpriteInfo({}), frames({}), sprite() {}
 
 SpriteObject::SpriteObject(const sf::Texture& texture, const SpriteSize& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
-  : sf::Transformable(), SpriteSize(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture) {};
+  : sf::Transformable(), SpriteSize(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
+{
+  setFrameRect(0);
+};
 
 unsigned int SpriteObject::getWidth() const {
   return width;
