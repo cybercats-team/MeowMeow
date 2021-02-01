@@ -39,6 +39,7 @@ bool Application::initialize() {
     
   window.create(screen.selectedMode, "SFML window", Style::Fullscreen);
   window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
+  window.setFramerateLimit(60);
 
   return true;
 }
