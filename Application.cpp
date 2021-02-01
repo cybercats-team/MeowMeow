@@ -139,7 +139,7 @@ void Application::run() {
     
       // Draw the lake
       for (unsigned int y = 0; y < 4; y++) {
-        for (unsigned int x = 0; x < 4; x++) {          
+        for (unsigned int x = 0; x < 4; x++) {
           water[4 * y + x].setPosition((5 + x) * width, (5 + y) * height);
           window.draw(water[4 * y + x]);
         }
