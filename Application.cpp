@@ -49,31 +49,34 @@ void Application::run() {
 
   Clock clock{};
   SpriteSet grassSet{};
-  SpriteSet fenceSet{};
+  SpriteSet boxSet{};
+  SpriteSet waterSet{};
   
   if (
       !spriteManager.load(grassSet, ObjectType::Terrain, 0) ||
-      !spriteManager.load(fenceSet, ObjectType::Terrain, 1)
+      !spriteManager.load(boxSet, ObjectType::Terrain, 1) ||
+      !spriteManager.load(waterSet, ObjectType::Terrain, 2)
   ) {
     window.close();
     return;
   }
   
   SpriteObject grass{};
-  SpriteObject fence[6] = {
-    fenceSet.getSprite(0),
-    fenceSet.getSprite(1),
-    fenceSet.getSprite(2),
-    fenceSet.getSprite(3),
-    fenceSet.getSprite(4),
-    fenceSet.getSprite(5),
-  };
-  
   grassSet.getSprite(grass, 0);
   
+  vector<SpriteObject> box{};
+  for (int i = 0; i < 3; i++) {
+    box.push_back(boxSet.getSprite(i));
+  }
+  
+  vector<SpriteObject> water{};
+  for (int i = 0; i < 16; i++) {
+    water.push_back(waterSet.getSprite(i));
+  }
+  
   const Int64 frameInterval = (Int64) (1000.0 * (
-    (float) grass.getAnimationDuration() /
-    (float) grass.getFramesCount()
+    (float) water[0].getAnimationDuration() /
+    (float) water[0].getFramesCount()
   ));
   
   debugPrint("Frame interval " + to_string(frameInterval));
@@ -106,37 +109,39 @@ void Application::run() {
     
 
       if (clock.getElapsedTime().asMicroseconds() >= frameInterval) {
-        grass.nextFrame();
+        for (auto& sprite: water) {
+          sprite.nextFrame();
+        }
+        
         clock.restart();
-      }        
+      }
 
       // Clear screen
       window.clear();
-      
 
-      // Draw the sprite
+      // Draw the map
       for (unsigned int x = 0; x < tilesX; x++) {
         for (unsigned int y = 0; y < tilesY; y++) {
-          for (int i = 0; i < 6; i++) {
-            fence[i].setPosition(x * width, y * height);
-          }
-          
           grass.setPosition(x * width, y * height);
           window.draw(grass);
           
-          if (x == 0 && y == 0) {
-            window.draw(fence[0]);
-          } else if (x == (tilesX - 1) && y == 0) {
-            window.draw(fence[3]);
-          } else if (x == 0 && y == (tilesY - 1)) {
-            window.draw(fence[2]);
-          } else if (x == (tilesX - 1) && y == (tilesY - 1)) {
-            window.draw(fence[5]);
-          } else if (x == 0 || x == (tilesX - 1)) {
-            window.draw(fence[1]);
-          } else if (y == 0 || y == (tilesY - 1)) {
-            window.draw(fence[4]);
+          // Draw corners
+          if ((x == 0 || x == tilesX - 1) && (y == 0 || y == tilesY - 1)) {
+            box[2].setPosition(x * width, y * height);
+            window.draw(box[2]);
+          } else if (x == 0 || x == tilesX - 1 || y == 0 || y == tilesY - 1) {
+            // Draw borders
+            box[(x + y) % 4 == 0 ? 0 : 1].setPosition(x * width, y * height);
+            window.draw(box[(x + y) % 4 == 0 ? 0 : 1]);
           }
+        }
+      }
+    
+      // Draw the lake
+      for (unsigned int y = 0; y < 4; y++) {
+        for (unsigned int x = 0; x < 4; x++) {          
+          water[4 * y + x].setPosition((5 + x) * width, (5 + y) * height);
+          window.draw(water[4 * y + x]);
         }
       }
       
