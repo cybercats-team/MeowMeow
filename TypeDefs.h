@@ -29,7 +29,8 @@ enum class ResourceType {
 
 enum class BundleType {
   TexturesList,
-  TextureInfo
+  TextureInfo,
+  LevelMap
 };
 
 enum class ObjectType {
@@ -41,6 +42,17 @@ typedef struct ResourceInfo {
   std::string resourceTypePath;
   std::string defaultExtension;
 } ResourceInfo;
+
+typedef struct BundleHeader {
+  char magic[7] = TEXTURE_BUNDLE_MAGIC;
+  BundleType bundleType = BundleType::TexturesList;
+  ObjectType objectType = ObjectType::Terrain;
+  unsigned int itemsCount = 0;
+} BundleHeader;
+
+typedef struct TextureInfo {
+  char infoPath[RESOURCE_MAX_PATH] = "";
+} TextureItem;
 
 typedef struct SpriteSize {
   unsigned int width = 0;
@@ -57,17 +69,6 @@ typedef struct SpriteRect: SpriteSize {
   unsigned int left = 0;
   unsigned int top = 0;
 } SpriteRect;
-
-typedef struct BundleHeader {
-  char magic[7] = TEXTURE_BUNDLE_MAGIC;
-  BundleType bundleType = BundleType::TexturesList;
-  ObjectType objectType = ObjectType::Terrain;
-  unsigned int itemsCount = 0;
-} BundleHeader;
-
-typedef struct TextureInfo {
-  char infoPath[RESOURCE_MAX_PATH] = "";
-} TextureItem;
 
 typedef struct SpriteFrame {
   SpriteRect rect{};
