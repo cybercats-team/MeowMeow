@@ -88,6 +88,7 @@ void Application::run() {
   const unsigned int tilesY = screen.getHeight() / height;
   
   debugPrint("Sprite size " + to_string(width) + "x" + to_string(height));
+  debugPrint("Tiles count " + to_string(tilesX) + "x" + to_string(tilesY));
 
   // Start the game loop
   while (window.isOpen())
