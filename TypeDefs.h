@@ -1,5 +1,5 @@
 //
-//  Object.h
+//  TypeDefs.h
 //  MeowMeow
 //
 //  Created by Alex Serdukov on 1/23/21.
