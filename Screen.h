@@ -11,13 +11,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "TypeDefs.h"
 #include "Debug.h"
-
-enum class ScreenScale {
-  FullHD,
-  RetinaOr2K,
-  UltraHD
-};
 
 class Screen {
   private:

@@ -13,24 +13,10 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#define RESOURCE_MAX_PATH 256
+#include "TypeDefs.h"
+#include "Debug.h"
 
-enum class ResourceType {
-  Image,
-  Texture,
-  Font,
-  Music,
-  Sfx,
-  TextureBundle
-};
-
-typedef struct {
-  std::string resourceTypePath;
-  std::string defaultExtension;
-} ResourceInfo;
-
-class ResourceManager {
-  
+class ResourceManager {  
   private:
     std::map<ResourceType, const ResourceInfo> typesInfo = {
       {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},
@@ -46,8 +32,6 @@ class ResourceManager {
     // private FS helpers
     static char ds();
     static bool hasExtension(const std::string& resourcePath);
-    
-  
   public:
     explicit ResourceManager(std::string  basePath);
     std::string getResourcePath(const std::string& resourcePath, ResourceType resourceType);
@@ -57,6 +41,7 @@ class ResourceManager {
     bool load(sf::Font& font, const std::string& path);
     bool load(sf::Music& music, const std::string& path);
     bool load(std::ifstream& file, const std::string& path, ResourceType resourceType);
+    bool load(std::ifstream& file, BundleHeader& header, const std::string& path);
 };
 
 #endif /* ResourceManager_h */

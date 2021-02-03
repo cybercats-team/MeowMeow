@@ -15,41 +15,8 @@
 #include "Screen.h"
 #include "ResourceManager.h"
 #include "SpriteSet.h"
-#include "Object.h"
+#include "TypeDefs.h"
 #include "Debug.h"
-
-#define TEXTURE_BUNDLE_MAGIC "BUNDLE"
-
-enum class BundleType {
-  TexturesList,
-  TextureInfo
-};
-
-typedef struct BundleHeader {
-  char magic[7] = TEXTURE_BUNDLE_MAGIC;
-  BundleType bundleType = BundleType::TexturesList;
-  ObjectType objectType = ObjectType::Terrain;
-  unsigned int itemsCount = 0;
-} BundleHeader;
-
-typedef struct TextureInfo {
-  char infoPath[RESOURCE_MAX_PATH] = "";
-} TextureItem;
-
-typedef struct SpriteFrame {
-  SpriteRect rect{};
-  SpriteRect rect2k{};
-  SpriteRect rect4k{};
-} SpriteFrame;
-
-typedef struct SpriteSetInfo {
-  char path[RESOURCE_MAX_PATH] = "";
-  char path2k[RESOURCE_MAX_PATH] = "";
-  char path4k[RESOURCE_MAX_PATH] = "";
-  SpriteSize spriteSize{};
-  SpriteSize spriteSize2k{};
-  SpriteSize spriteSize4k{};
-} SpriteSetInfo;
 
 class SpriteManager {
   private:
@@ -66,7 +33,6 @@ class SpriteManager {
     Screen& screen;
     ResourceManager& resourceManager;
     
-    bool openBundle(std::ifstream &file, const std::string& path, BundleHeader& header);
     SpriteSize getSpriteSize(SpriteSetInfo &info) const;
     SpriteRect getSpriteRect(SpriteFrame &frame) const;
     std::string getTexturePath(SpriteSetInfo &info) const;

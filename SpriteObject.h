@@ -6,18 +6,9 @@
 #define MEOWMEOW_SPRITEOBJECT_H
 
 #include <SFML/Graphics.hpp>
+
+#include "TypeDefs.h"
 #include "Debug.h"
-
-typedef struct SpriteSize {
-  unsigned int width = 0;
-  unsigned int height = 0;
-} SpriteSize;
-
-typedef struct SpriteInfo {
-  bool animated = false;
-  unsigned int animationDuration = 0;
-  unsigned int framesCount = 1;
-} SpriteInfo;
 
 class SpriteObject :
   private SpriteSize,

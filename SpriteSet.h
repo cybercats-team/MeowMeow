@@ -7,12 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "TypeDefs.h"
 #include "SpriteObject.h"
-
-typedef struct SpriteRect: SpriteSize {
-  unsigned int left = 0;
-  unsigned int top = 0;
-} SpriteRect;
 
 class SpriteSet {
   private:

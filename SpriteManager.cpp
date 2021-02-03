@@ -22,7 +22,7 @@ bool SpriteManager::initialize() {
 
     debugPrint("Loading bundle " + path);
     
-    if (!openBundle(listFile, path, header)) {
+    if (!resourceManager.load(listFile, header, path)) {
       return false;
     }
     
@@ -35,23 +35,6 @@ bool SpriteManager::initialize() {
     }
     
     listFile.close();    
-  }
-  
-  return true;
-}
-
-bool SpriteManager::openBundle(std::ifstream &file, const std::string& path, BundleHeader& header) {
-  if (!resourceManager.load(file, path, ResourceType::TextureBundle)) {
-    debugPrint("Failed to open bundle file");
-    return false;
-  }
-  
-  file.read((char *) &header, sizeof(header));
-  
-  if (strcmp(header.magic, TEXTURE_BUNDLE_MAGIC) != 0) {
-    debugPrint("Bundle signature not match");
-    file.close();
-    return false;
   }
   
   return true;
@@ -79,7 +62,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 
   debugPrint("Loading bundle " + path);
 
-  if (!openBundle(spriteFile, path, header)) {
+  if (!resourceManager.load(spriteFile, header, path)) {
     return false;
   }
 
