@@ -14,9 +14,9 @@ class SpriteSet {
   private:
     unsigned int spritesCount = 0;
     sf::Texture texture{};
-    SpriteSize spriteSize{};
+    Dimensions spriteSize{};
     std::vector<SpriteInfo> sprites{};
-    std::vector<std::vector<SpriteRect>> frames{};
+    std::vector<std::vector<Rectangle>> frames{};
   
     void fillFrames(std::vector<sf::IntRect>& targetFrames, unsigned int spriteIndex);
 

@@ -50,14 +50,10 @@ typedef struct BundleHeader {
   unsigned int itemsCount = 0;
 } BundleHeader;
 
-typedef struct TextureInfo {
-  char infoPath[RESOURCE_MAX_PATH] = "";
-} TextureItem;
-
-typedef struct SpriteSize {
+typedef struct Dimensions {
   unsigned int width = 0;
   unsigned int height = 0;
-} SpriteSize;
+} Dimensions;
 
 typedef struct SpriteInfo {
   bool animated = false;
@@ -65,24 +61,50 @@ typedef struct SpriteInfo {
   unsigned int framesCount = 1;
 } SpriteInfo;
 
-typedef struct SpriteRect: SpriteSize {
+typedef struct Rectangle: Dimensions {
   unsigned int left = 0;
   unsigned int top = 0;
-} SpriteRect;
+} Rectangle;
 
 typedef struct SpriteFrame {
-  SpriteRect rect{};
-  SpriteRect rect2k{};
-  SpriteRect rect4k{};
+  Rectangle rect{};
+  Rectangle rect2k{};
+  Rectangle rect4k{};
 } SpriteFrame;
+
+typedef struct SpriteRef {
+  ObjectType objectType = ObjectType::Terrain;
+  unsigned int spriteSetIndex = 0;
+  unsigned int spriteIndex = 0;
+} SpriteRef;
+
+typedef struct TileInfo {
+  unsigned int layers = 1;
+} TileInfo;
+
+typedef struct AggredatedMapInfo {
+  unsigned int width = 0;
+  unsigned int height = 0;
+  Dimensions tileSize{};
+} AggredatedMapInfo;
+
+typedef struct TextureInfo {
+  char infoPath[RESOURCE_MAX_PATH] = "";
+} TextureItem;
 
 typedef struct SpriteSetInfo {
   char path[RESOURCE_MAX_PATH] = "";
   char path2k[RESOURCE_MAX_PATH] = "";
   char path4k[RESOURCE_MAX_PATH] = "";
-  SpriteSize spriteSize{};
-  SpriteSize spriteSize2k{};
-  SpriteSize spriteSize4k{};
+  Dimensions spriteSize{};
+  Dimensions spriteSize2k{};
+  Dimensions spriteSize4k{};
 } SpriteSetInfo;
+
+typedef struct MapInfo: public AggredatedMapInfo {
+  Dimensions tileSize2k{};
+  Dimensions tileSize4k{};
+  SpriteRef borderTile{};
+} MapInfo;
 
 #endif /* TypeDefs_h */

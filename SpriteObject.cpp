@@ -4,10 +4,10 @@
 
 #include "SpriteObject.h"
 
-SpriteObject::SpriteObject() : sf::Transformable(), SpriteSize({}), SpriteInfo({}), frames({}), sprite() {}
+SpriteObject::SpriteObject() : sf::Transformable(), Dimensions({}), SpriteInfo({}), frames({}), sprite() {}
 
-SpriteObject::SpriteObject(const sf::Texture& texture, const SpriteSize& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
-  : sf::Transformable(), SpriteSize(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
+SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
+  : sf::Transformable(), Dimensions(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
 {
   setFrameRect(0);
 };

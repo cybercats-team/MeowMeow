@@ -11,7 +11,7 @@
 #include "Debug.h"
 
 class SpriteObject :
-  private SpriteSize,
+  private Dimensions,
   private SpriteInfo,
   public sf::Drawable,
   public sf::Transformable
@@ -26,7 +26,7 @@ class SpriteObject :
     friend class SpriteSet;
   public:
     SpriteObject();
-    SpriteObject(const sf::Texture& texture, const SpriteSize& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames);
+    SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setFrame(unsigned int frame);
     void nextFrame();

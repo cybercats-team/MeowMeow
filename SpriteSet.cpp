@@ -48,7 +48,7 @@ void SpriteSet::fillFrames(std::vector<sf::IntRect>& targetFrames, unsigned int 
   using namespace sf;
   using namespace std;
   
-  vector<SpriteRect>& sourceFrames = frames[spriteIndex];
+  vector<Rectangle>& sourceFrames = frames[spriteIndex];
   
   for (auto& frame: sourceFrames) {
     IntRect rect(frame.left, frame.top, frame.width, frame.height);

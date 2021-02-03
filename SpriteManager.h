@@ -33,8 +33,8 @@ class SpriteManager {
     Screen& screen;
     ResourceManager& resourceManager;
     
-    SpriteSize getSpriteSize(SpriteSetInfo &info) const;
-    SpriteRect getSpriteRect(SpriteFrame &frame) const;
+    Dimensions getSpriteSize(SpriteSetInfo &info) const;
+    Rectangle getSpriteRect(SpriteFrame &frame) const;
     std::string getTexturePath(SpriteSetInfo &info) const;
   public:
     SpriteManager(ResourceManager& resourceManager, Screen& screen);

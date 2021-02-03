@@ -77,7 +77,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 
   for (unsigned int spriteIndex = 0; spriteIndex < spritesCount; spriteIndex++) {
     SpriteInfo spriteInfo{};
-    vector<SpriteRect> frames{};
+    vector<Rectangle> frames{};
 
     spriteFile.read((char *) &spriteInfo, sizeof(spriteInfo));
     spriteSet.sprites.push_back(spriteInfo);
@@ -101,7 +101,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
   return resourceManager.load(spriteSet.texture, texturePath);
 }
 
-SpriteSize SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
+Dimensions SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
   switch (screen.scale) {
     case ScreenScale::RetinaOr2K:
       return info.spriteSize2k;
@@ -112,7 +112,7 @@ SpriteSize SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
   }
 }
 
-SpriteRect SpriteManager::getSpriteRect(SpriteFrame &frame) const {
+Rectangle SpriteManager::getSpriteRect(SpriteFrame &frame) const {
   switch (screen.scale) {
     case ScreenScale::RetinaOr2K:
       return frame.rect2k;
