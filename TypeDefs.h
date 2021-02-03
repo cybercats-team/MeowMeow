@@ -101,7 +101,7 @@ typedef struct SpriteSetInfo {
   Dimensions spriteSize4k{};
 } SpriteSetInfo;
 
-typedef struct MapInfo: public AggredatedMapInfo {
+typedef struct MapInfo: AggredatedMapInfo {
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
   SpriteRef borderTile{};
