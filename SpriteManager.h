@@ -10,7 +10,6 @@
 #define TextureManager_hpp
 
 #include <fstream>
-#include <cstring>
 
 #include "Screen.h"
 #include "ResourceManager.h"

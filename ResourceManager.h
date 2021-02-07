@@ -10,6 +10,7 @@
 #define ResourceManager_h
 
 #include <fstream>
+#include <cstring>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
