@@ -10,6 +10,7 @@
 #define TypeDefs_h
 
 #define RESOURCE_MAX_PATH 256
+#define RESOURCE_MAX_TITLE 256
 #define TEXTURE_BUNDLE_MAGIC "BUNDLE"
 
 enum class ScreenScale {
@@ -30,6 +31,7 @@ enum class ResourceType {
 enum class BundleType {
   TexturesList,
   TextureInfo,
+  LevelsList,
   LevelMap
 };
 
@@ -61,7 +63,7 @@ typedef struct SpriteInfo {
   unsigned int framesCount = 1;
 } SpriteInfo;
 
-typedef struct Rectangle: Dimensions {
+typedef struct Rectangle: public Dimensions {
   unsigned int left = 0;
   unsigned int top = 0;
 } Rectangle;
@@ -71,6 +73,16 @@ typedef struct SpriteFrame {
   Rectangle rect2k{};
   Rectangle rect4k{};
 } SpriteFrame;
+
+typedef struct RealmInfo {
+  char realmName[RESOURCE_MAX_TITLE] = "";
+  unsigned int levelsCount = 0;
+} RealmInfo;
+
+typedef struct LevelInfo {
+  char levelName[RESOURCE_MAX_TITLE] = "";
+  char path[RESOURCE_MAX_PATH] = ""; 
+} LevelInfo;
 
 typedef struct SpriteRef {
   ObjectType objectType = ObjectType::Terrain;
@@ -101,7 +113,7 @@ typedef struct SpriteSetInfo {
   Dimensions spriteSize4k{};
 } SpriteSetInfo;
 
-typedef struct MapInfo: AggredatedMapInfo {
+typedef struct MapInfo: public AggredatedMapInfo {
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
   SpriteRef borderTile{};
