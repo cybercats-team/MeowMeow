@@ -9,8 +9,7 @@
 #include "SpriteManager.h"
 
 SpriteManager::SpriteManager(ResourceManager& resourceManager, Screen& screen) :
-  screen(screen),
-  resourceManager(resourceManager) {}
+  BundleManager(resourceManager, screen) {}
 
 bool SpriteManager::initialize() {
   using namespace std;
@@ -102,7 +101,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 }
 
 Dimensions SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
-  switch (screen.scale) {
+  switch (screenScale) {
     case ScreenScale::RetinaOr2K:
       return info.spriteSize2k;
     case ScreenScale::UltraHD:
@@ -113,7 +112,7 @@ Dimensions SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
 }
 
 Rectangle SpriteManager::getSpriteRect(SpriteFrame &frame) const {
-  switch (screen.scale) {
+  switch (screenScale) {
     case ScreenScale::RetinaOr2K:
       return frame.rect2k;
     case ScreenScale::UltraHD:
@@ -126,7 +125,7 @@ Rectangle SpriteManager::getSpriteRect(SpriteFrame &frame) const {
 std::string SpriteManager::getTexturePath(SpriteSetInfo &info) const {
   using namespace std;
 
-  switch (screen.scale) {
+  switch (screenScale) {
     case ScreenScale::RetinaOr2K:
       return string(info.path2k);
     case ScreenScale::UltraHD:

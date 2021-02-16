@@ -20,7 +20,7 @@ class Screen {
     ScreenScale scale = ScreenScale::FullHD;
   
     friend class Application;
-    friend class SpriteManager;
+    friend class BundleManager;
   public:
     bool initialize();
     [[nodiscard]] ScreenScale getScale() const;

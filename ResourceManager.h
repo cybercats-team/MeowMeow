@@ -17,7 +17,7 @@
 #include "TypeDefs.h"
 #include "Debug.h"
 
-class ResourceManager {  
+class ResourceManager {
   private:
     std::map<ResourceType, const ResourceInfo> typesInfo = {
       {ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" }},

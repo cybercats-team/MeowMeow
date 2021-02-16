@@ -11,13 +11,12 @@
 
 #include <fstream>
 
-#include "Screen.h"
-#include "ResourceManager.h"
+#include "BundleManager.h"
 #include "SpriteSet.h"
 #include "TypeDefs.h"
 #include "Debug.h"
 
-class SpriteManager {
+class SpriteManager: public BundleManager {
   private:
     const std::map<ObjectType, std::string> bundlesPath = {
       {ObjectType::Terrain, "terrain"},
@@ -28,9 +27,6 @@ class SpriteManager {
       {ObjectType::Terrain, {}},
       {ObjectType::MobileObject, {}}
     };
-    
-    Screen& screen;
-    ResourceManager& resourceManager;
     
     Dimensions getSpriteSize(SpriteSetInfo &info) const;
     Rectangle getSpriteRect(SpriteFrame &frame) const;
