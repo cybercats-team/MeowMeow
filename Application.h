@@ -11,6 +11,7 @@
 #include "Screen.h"
 #include "ResourceManager.h"
 #include "SpriteManager.h"
+#include "LevelManager.h"
 
 #include "Debug.h"
 
@@ -21,8 +22,9 @@ class Application {
     static Application* instance;
     
     Screen screen;
-    SpriteManager spriteManager;
     ResourceManager resourceManager;
+    SpriteManager spriteManager;
+    LevelManager levelManager;
     sf::RenderWindow window{};
   
   public:
