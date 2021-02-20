@@ -40,6 +40,11 @@ enum class ObjectType {
   MobileObject
 };
 
+enum class TileType {
+  Terrain,
+  Obstacle
+};
+
 typedef struct ResourceInfo {
   std::string resourceTypePath{};
   std::string defaultExtension{};
@@ -92,6 +97,7 @@ typedef struct SpriteRef {
 
 typedef struct TileInfo {
   unsigned int layers = 1;
+  TileType type = TileType::Terrain;
 } TileInfo;
 
 typedef struct AggredatedMapInfo {
