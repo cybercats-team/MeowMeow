@@ -41,8 +41,8 @@ enum class ObjectType {
 };
 
 typedef struct ResourceInfo {
-  std::string resourceTypePath;
-  std::string defaultExtension;
+  std::string resourceTypePath{};
+  std::string defaultExtension{};
 } ResourceInfo;
 
 typedef struct BundleHeader {

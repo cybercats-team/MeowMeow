@@ -79,6 +79,6 @@ void LevelManager::fillLevelNames(std::vector<std::string>& levelNames, unsigned
   using namespace std;
   
   for (auto& levelInfo: levels[realmId]) {
-    levelNames.push_back(string(levelInfo.levelName));
+    levelNames.emplace_back(levelInfo.levelName);
   }
 }
