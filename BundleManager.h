@@ -20,6 +20,7 @@ class BundleManager {
     BundleManager(ResourceManager& resourceManager, Screen& screen) :
       screenScale(screen.scale),
       resourceManager(resourceManager) {}
+    virtual bool initialize() = 0;
 };
 
 #endif /* BundleManager_h */

@@ -31,6 +31,7 @@ bool Application::initialize() {
   if (
     !screen.initialize() ||
     !spriteManager.initialize() ||
+    !levelManager.initialize() ||
     !resourceManager.load(appIcon, "icons/appIcon")
   ) {
     return false;

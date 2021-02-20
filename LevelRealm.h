@@ -19,8 +19,11 @@ class LevelRealm {
     std::string realmName;
     std::vector<std::string> levelNames;
     unsigned int levelsCount;
+  
+    friend class LevelManager;
   public:
-    LevelRealm(RealmInfo& realmInfo, std::vector<LevelInfo>& levels);
+    LevelRealm();
+    LevelRealm(std::string realmName, unsigned int levelsCount, std::vector<std::string>& levelNames);
     [[nodiscard]] unsigned int getLevelsCount() const;
     [[nodiscard]] std::string getName() const;
     [[nodiscard]] std::string getLevelName(unsigned int level) const;

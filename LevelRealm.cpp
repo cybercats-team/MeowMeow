@@ -8,17 +8,12 @@
 
 #include "LevelRealm.h"
 
-LevelRealm::LevelRealm(RealmInfo& realmInfo, std::vector<LevelInfo>& levels) :
-  realmName(realmInfo.realmName),
-  levelsCount(realmInfo.levelsCount),
-  levelNames({})
-{
-  for (auto& levelInfo: levels) {
-    std::string levelName(levelInfo.levelName);
-      
-    levelNames.push_back(levelName);
-  }
-}
+LevelRealm::LevelRealm() : realmName(), levelsCount(0), levelNames({}) {}
+
+LevelRealm::LevelRealm(std::string realmName, unsigned int levelsCount, std::vector<std::string>& levelNames) :
+  realmName(realmName),
+  levelsCount(levelsCount),
+  levelNames(std::move(levelNames)) {}
 
 unsigned int LevelRealm::getLevelsCount() const {
   return levelsCount;

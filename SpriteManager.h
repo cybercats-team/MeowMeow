@@ -33,7 +33,7 @@ class SpriteManager: public BundleManager {
     std::string getTexturePath(SpriteSetInfo &info) const;
   public:
     SpriteManager(ResourceManager& resourceManager, Screen& screen);
-    bool initialize();
+    bool initialize() override;
     bool load(SpriteSet& spriteSet, ObjectType objectType, unsigned int index);
 };
 
