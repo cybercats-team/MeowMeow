@@ -100,13 +100,9 @@ typedef struct TileInfo {
   TileType type = TileType::Terrain;
 } TileInfo;
 
-typedef struct AggredatedMapInfo {
-  unsigned int width = 0;
-  unsigned int height = 0;
-  unsigned int spriteRefsCount = 0;
-  unsigned int borderTile = 0;
+typedef struct AggregatedMapInfo: public Dimensions {
   Dimensions tileSize{};
-} AggredatedMapInfo;
+} AggregatedMapInfo;
 
 typedef struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
@@ -121,7 +117,9 @@ typedef struct SpriteSetInfo {
   Dimensions spriteSize4k{};
 } SpriteSetInfo;
 
-typedef struct MapInfo: public AggredatedMapInfo {
+typedef struct MapInfo: public AggregatedMapInfo {
+  unsigned int spriteRefsCount = 0;
+  unsigned int borderTile = 0;
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
 } MapInfo;
