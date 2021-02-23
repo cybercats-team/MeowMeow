@@ -103,6 +103,7 @@ typedef struct TileInfo {
 } TileInfo;
 
 typedef struct AggregatedMapInfo: public Dimensions {
+  unsigned int borderTile = 0;
   Dimensions tileSize{};
 } AggregatedMapInfo;
 
@@ -121,7 +122,6 @@ typedef struct SpriteSetInfo {
 
 typedef struct MapInfo: public AggregatedMapInfo {
   unsigned int spriteRefsCount = 0;
-  unsigned int borderTile = 0;
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
 } MapInfo;
