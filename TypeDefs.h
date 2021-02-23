@@ -9,6 +9,8 @@
 #ifndef TypeDefs_h
 #define TypeDefs_h
 
+#include <string>
+
 #define RESOURCE_MAX_PATH 256
 #define RESOURCE_MAX_TITLE 256
 #define TEXTURE_BUNDLE_MAGIC "BUNDLE"

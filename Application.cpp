@@ -20,7 +20,7 @@ Application::Application(std::string withResourcePath) :
   screen(),
   resourceManager(std::move(withResourcePath)),
   spriteManager(resourceManager, screen),
-  levelManager(resourceManager, screen) {}
+  levelManager(spriteManager, resourceManager, screen) {}
 
 bool Application::initialize() {
   using namespace std;

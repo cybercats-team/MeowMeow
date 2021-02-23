@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "BundleManager.h"
+#include "SpriteManager.h"
 #include "TypeDefs.h"
 #include "LevelRealm.h"
 
@@ -20,10 +21,11 @@ class LevelManager: public BundleManager {
     const std::string bundlePath = "levels";
     std::vector<RealmInfo> realms;
     std::vector<std::vector<LevelInfo>> levels;
-  
-    void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
+    SpriteManager& spriteManager;
+
+  void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
   public:
-    LevelManager(ResourceManager& resourceManager, Screen& screen);
+    LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen);
     bool initialize() override;
     
     unsigned int getRealmsCount();

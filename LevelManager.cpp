@@ -8,8 +8,9 @@
 
 #include "LevelManager.h"
 
-LevelManager::LevelManager(ResourceManager& resourceManager, Screen& screen):
+LevelManager::LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen):
   BundleManager(resourceManager, screen),
+  spriteManager(spriteManager),
   realms({}),
   levels({}) {}
 
