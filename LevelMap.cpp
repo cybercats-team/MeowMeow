@@ -9,3 +9,8 @@ LevelMap::LevelMap():
   sprites(),
   tiles(),
   tileSprites() {}
+
+void LevelMap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+  
+}
+

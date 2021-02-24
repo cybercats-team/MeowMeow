@@ -11,10 +11,16 @@
 
 #include <vector>
 
+#include "Debug.h"
+#include "TypeDefs.h"
+
+#include "LevelRealm.h"
+#include "LevelMap.h"
+#include "SpriteSet.h"
+#include "SpriteObject.h"
+
 #include "BundleManager.h"
 #include "SpriteManager.h"
-#include "TypeDefs.h"
-#include "LevelRealm.h"
 
 class LevelManager: public BundleManager {
   private:
@@ -23,7 +29,11 @@ class LevelManager: public BundleManager {
     std::vector<std::vector<LevelInfo>> levels;
     SpriteManager& spriteManager;
 
-  void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
+    void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
+    Dimensions getTileSize(MapInfo &info) const;
+    
+    bool loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int count);
+    void loadTiles(std::ifstream& levelFile, LevelMap& levelMap);
   public:
     LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen);
     bool initialize() override;
@@ -32,7 +42,7 @@ class LevelManager: public BundleManager {
     void getRealm(LevelRealm& realm, unsigned int realmId);
     LevelRealm getRealm(unsigned int realmId);
   
-    
+    bool load(LevelMap& levelMap, unsigned int realmId, unsigned int levelId);
 };
 
 #endif /* LevelManager_h */

@@ -54,11 +54,13 @@ void Application::run() {
   SpriteSet grassSet{};
   SpriteSet boxSet{};
   SpriteSet waterSet{};
+  LevelMap level{};
   
   if (
       !spriteManager.load(grassSet, ObjectType::Terrain, 0) ||
       !spriteManager.load(boxSet, ObjectType::Terrain, 1) ||
-      !spriteManager.load(waterSet, ObjectType::Terrain, 2)
+      !spriteManager.load(waterSet, ObjectType::Terrain, 2) ||
+      !levelManager.load(level, 0, 0)
   ) {
     window.close();
     return;
