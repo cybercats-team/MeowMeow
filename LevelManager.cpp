@@ -114,6 +114,8 @@ bool LevelManager::load(LevelMap& levelMap, unsigned int realmId, unsigned int l
     
   loadTiles(levelFile, levelMap);
   levelFile.close();
+  
+  levelMap.layout(screen);
   return true;
 }
 
@@ -126,14 +128,7 @@ void LevelManager::fillLevelNames(std::vector<std::string>& levelNames, unsigned
 }
 
 Dimensions LevelManager::getTileSize(MapInfo &info) const {
-  switch (screenScale) {
-    case ScreenScale::RetinaOr2K:
-      return info.tileSize2k;
-    case ScreenScale::UltraHD:
-      return info.tileSize4k;
-    default:
-      return info.tileSize;
-  }
+  return screenQuery(info.tileSize, info.tileSize2k, info.tileSize4k);
 }
 
 bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int count) {
@@ -141,16 +136,10 @@ bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, uns
   
   levelMap.sprites.clear();
   
-  map<ObjectType, map<unsigned int, SpriteSet>> spriteSets = {
-    {ObjectType::Terrain, {}},
-    {ObjectType::MobileObject, {}}
-  };
-  
   for (unsigned int spriteIndex = 0; spriteIndex < count; spriteIndex++) {
     SpriteRef ref{};
     levelFile.read((char *) &ref, sizeof(ref));
-    
-    SpriteObject sprite{};
+        
     map<unsigned int, SpriteSet>& setsRef = spriteSets[ref.objectType];
     
     if (setsRef.count(ref.spriteSetIndex) == 0) {
@@ -163,9 +152,14 @@ bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, uns
       setsRef[ref.spriteSetIndex] = spriteSet;
     }
     
-    setsRef[ref.spriteSetIndex].getSprite(sprite, ref.spriteIndex);
+    SpriteObject sprite{};
+    SpriteSet& spriteSetRef = setsRef[ref.spriteSetIndex];
+    
+    spriteSetRef.getSprite(sprite, ref.spriteIndex);        
     levelMap.sprites.push_back(sprite);
   }
+  
+  // TODO: dispose unused sprite set from the previous level
   
   return true;
 }
@@ -199,6 +193,7 @@ void LevelManager::loadTiles(std::ifstream& levelFile, LevelMap& levelMap) {
       rowSprites.push_back(colSprites);      
     }
     
+    levelMap.tileSprites.push_back(rowSprites);
     levelMap.tiles.push_back(rowTiles);
   }
 }

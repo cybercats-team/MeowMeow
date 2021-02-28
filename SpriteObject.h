@@ -13,8 +13,7 @@
 class SpriteObject :
   private Dimensions,
   private SpriteInfo,
-  public sf::Drawable,
-  public sf::Transformable
+  public sf::Drawable
 {
   private:
     sf::Sprite sprite;

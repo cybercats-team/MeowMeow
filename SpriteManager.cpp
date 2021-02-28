@@ -101,36 +101,15 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 }
 
 Dimensions SpriteManager::getSpriteSize(SpriteSetInfo &info) const {
-  switch (screenScale) {
-    case ScreenScale::RetinaOr2K:
-      return info.spriteSize2k;
-    case ScreenScale::UltraHD:
-      return info.spriteSize4k;
-    default:
-      return info.spriteSize;
-  }
+  return screenQuery(info.spriteSize, info.spriteSize2k, info.spriteSize4k);
 }
 
 Rectangle SpriteManager::getSpriteRect(SpriteFrame &frame) const {
-  switch (screenScale) {
-    case ScreenScale::RetinaOr2K:
-      return frame.rect2k;
-    case ScreenScale::UltraHD:
-      return frame.rect4k;
-    default:
-      return frame.rect;
-  }
+  return screenQuery(frame.rect, frame.rect2k, frame.rect4k);
 }
 
 std::string SpriteManager::getTexturePath(SpriteSetInfo &info) const {
-  using namespace std;
+  char* path = screenQuery(info.path, info.path2k, info.path4k);
 
-  switch (screenScale) {
-    case ScreenScale::RetinaOr2K:
-      return string(info.path2k);
-    case ScreenScale::UltraHD:
-      return string(info.path4k);
-    default:
-      return string(info.path);
-  }
+  return std::string(path);
 }

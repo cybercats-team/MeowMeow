@@ -6,10 +6,12 @@
 #define MEOWMEOW_LEVELMAP_H
 
 #include <vector>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 #include "TypeDefs.h"
 #include "SpriteObject.h"
+#include "Screen.h"
 
 class LevelMap :
   private AggregatedMapInfo,
@@ -19,11 +21,18 @@ class LevelMap :
     std::vector<SpriteObject> sprites;
     std::vector<std::vector<TileInfo>> tiles;
     std::vector<std::vector<std::vector<unsigned int>>> tileSprites;
+  
+    sf::Vector2f startPos;
+    sf::Vector2f nextCol;
+    sf::Vector2f nextRow;
+    sf::Vector2i borderSizes;
+    sf::Vector2f borderPos;
 
     friend class LevelManager;
   public:
     LevelMap();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void layout(Screen& screen);
 };
 
 

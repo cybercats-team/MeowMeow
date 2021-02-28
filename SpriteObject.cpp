@@ -4,10 +4,10 @@
 
 #include "SpriteObject.h"
 
-SpriteObject::SpriteObject() : sf::Transformable(), Dimensions({}), SpriteInfo({}), frames({}), sprite() {}
+SpriteObject::SpriteObject() : Dimensions({}), SpriteInfo({}), frames({}), sprite() {}
 
 SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
-  : sf::Transformable(), Dimensions(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
+  : Dimensions(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
 {
   setFrameRect(0);
 };
@@ -52,7 +52,6 @@ void SpriteObject::nextFrame() {
 }
 
 void SpriteObject::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-  states.transform *= getTransform();
   target.draw(sprite, states);
 }
 

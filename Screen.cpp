@@ -37,7 +37,7 @@ bool Screen::initialize() {
     to_string(screenWidth) + "x" +
     to_string(selectedMode.height) + ", " +
     to_string(selectedMode.bitsPerPixel) + "-bit colors " +
-    to_string(static_cast<int>(scale)) + " scale"
+    to_string(static_cast<int>(scale) + 1) + "x scale"
   );
   
   return true;

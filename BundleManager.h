@@ -14,11 +14,23 @@
 
 class BundleManager {
   protected:
-    ScreenScale screenScale;
+    Screen& screen;
     ResourceManager& resourceManager;
+  
+    template<typename T>
+    T screenQuery(T value, T value2k, T value4k) const {
+      switch (screen.getScale()) {
+        case ScreenScale::RetinaOr2K:
+          return value2k;
+        case ScreenScale::UltraHD:
+          return value4k;
+        default:
+          return value;
+      }
+    }
   public:
     BundleManager(ResourceManager& resourceManager, Screen& screen) :
-      screenScale(screen.scale),
+      screen(screen),
       resourceManager(resourceManager) {}
     virtual bool initialize() = 0;
 };

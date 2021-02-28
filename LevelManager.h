@@ -25,9 +25,14 @@
 class LevelManager: public BundleManager {
   private:
     const std::string bundlePath = "levels";
+    SpriteManager& spriteManager;
+  
     std::vector<RealmInfo> realms;
     std::vector<std::vector<LevelInfo>> levels;
-    SpriteManager& spriteManager;
+    std::map<ObjectType, std::map<unsigned int, SpriteSet>> spriteSets = {
+      {ObjectType::Terrain, {}},
+      {ObjectType::MobileObject, {}}
+    };
 
     void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
     Dimensions getTileSize(MapInfo &info) const;
