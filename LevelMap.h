@@ -22,11 +22,21 @@ class LevelMap :
     std::vector<std::vector<TileInfo>> tiles;
     std::vector<std::vector<std::vector<unsigned int>>> tileSprites;
   
-    sf::Vector2f startPos;
+    sf::FloatRect screenView;
+    sf::FloatRect mapView;
+    sf::FloatRect borderView;
+    sf::Vector2f newLine;
     sf::Vector2f nextCol;
     sf::Vector2f nextRow;
-    sf::Vector2i borderSizes;
-    sf::Vector2f borderPos;
+    sf::Vector2f nextBorderRow;
+    sf::Vector2f nextBorderCol;
+    float borderColHeight;
+  
+    void layoutMap();
+    void layoutBorder();
+    void drawMap(sf::RenderTarget &target, sf::RenderStates states) const;
+    void drawBorders(sf::RenderTarget &target, sf::RenderStates states) const;
+    void drawSideBorders(sf::RenderTarget &target, sf::RenderStates states) const;
 
     friend class LevelManager;
   public:
@@ -34,6 +44,5 @@ class LevelMap :
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void layout(Screen& screen);
 };
-
 
 #endif //MEOWMEOW_LEVELMAP_H
