@@ -131,16 +131,26 @@ Dimensions LevelManager::getTileSize(MapInfo &info) const {
   return screenQuery(info.tileSize, info.tileSize2k, info.tileSize4k);
 }
 
-bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int count) {
+bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int spritesCount) {
   using namespace std;
+  
+  map<ObjectType, vector<unsigned int>> mapSpriteSets = {
+    {ObjectType::Terrain, {}},
+    {ObjectType::MobileObject, {}}
+  };
   
   levelMap.sprites.clear();
   
-  for (unsigned int spriteIndex = 0; spriteIndex < count; spriteIndex++) {
+  for (unsigned int spriteIndex = 0; spriteIndex < spritesCount; spriteIndex++) {
     SpriteRef ref{};
     levelFile.read((char *) &ref, sizeof(ref));
         
     map<unsigned int, SpriteSet>& setsRef = spriteSets[ref.objectType];
+    vector<unsigned int>& mapSetsRef = mapSpriteSets[ref.objectType];
+        
+    if (count(mapSetsRef.begin(), mapSetsRef.end(), ref.spriteSetIndex) == 0) {
+      mapSetsRef.push_back(ref.spriteSetIndex);
+    }
     
     if (setsRef.count(ref.spriteSetIndex) == 0) {
       SpriteSet spriteSet{};
@@ -159,8 +169,7 @@ bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, uns
     levelMap.sprites.push_back(sprite);
   }
   
-  // TODO: dispose unused sprite set from the previous level
-  
+  disposeSpritesUnused(mapSpriteSets);
   return true;
 }
 
@@ -195,5 +204,36 @@ void LevelManager::loadTiles(std::ifstream& levelFile, LevelMap& levelMap) {
     
     levelMap.tileSprites.push_back(rowSprites);
     levelMap.tiles.push_back(rowTiles);
+  }
+}
+
+void LevelManager::disposeSpritesUnused(std::map<ObjectType, std::vector<unsigned int>>& spriteSetsUsed) {
+  using namespace std;
+  
+  map<ObjectType, vector<unsigned int>> unusedSpriteSets = {
+    {ObjectType::Terrain, {}},
+    {ObjectType::MobileObject, {}}
+  };
+  
+  for (const auto& typesSets: spriteSets) {
+    ObjectType objectType = typesSets.first;
+    vector<unsigned int>& mapSetsRef = spriteSetsUsed[objectType];
+    
+    for (const auto& sets: spriteSets[objectType]) {
+      unsigned int spriteSetId = sets.first;
+      
+      if (count(mapSetsRef.begin(), mapSetsRef.end(), spriteSetId) == 0) {
+        unusedSpriteSets[objectType].push_back(spriteSetId);
+      }
+    }
+  }
+  
+  for (const auto& typesSets: unusedSpriteSets) {
+    ObjectType objectType = typesSets.first;
+    map<unsigned int, SpriteSet>& setsRef = spriteSets[objectType];
+    
+    for (const auto& spriteSetId: unusedSpriteSets[objectType]) {
+      setsRef.erase(spriteSetId);
+    }
   }
 }
