@@ -7,7 +7,9 @@
 
 #include <vector>
 #include <cmath>
+
 #include <SFML/Graphics.hpp>
+#include "Layoutable.h"
 
 #include "TypeDefs.h"
 #include "SpriteObject.h"
@@ -15,7 +17,8 @@
 
 class LevelMap :
   private AggregatedMapInfo,
-  public sf::Drawable
+  public sf::Drawable,
+  public Layoutable
 {
   private:
     std::vector<SpriteObject> sprites;
@@ -39,10 +42,11 @@ class LevelMap :
     void drawSideBorders(sf::RenderTarget &target, sf::RenderStates states) const;
 
     friend class LevelManager;
+    friend class LevelScene;
   public:
     LevelMap();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void layout(Screen& screen);
+    void layout(Screen& screen) override;
 };
 
 #endif //MEOWMEOW_LEVELMAP_H

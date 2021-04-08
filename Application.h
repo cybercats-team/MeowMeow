@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "SpriteManager.h"
 #include "LevelManager.h"
+#include "LevelScene.h"
 
 #include "Debug.h"
 

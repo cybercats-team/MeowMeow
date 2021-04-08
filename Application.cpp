@@ -57,6 +57,8 @@ void Application::run() {
     return;
   }
   
+  LevelScene scene(level);
+  
   /*const Int64 frameInterval = (Int64) (1000.0 * (
     (float) water[0].getAnimationDuration() /
     (float) water[0].getFramesCount()
@@ -95,7 +97,7 @@ void Application::run() {
       window.clear();
     
       // Draw the map
-      window.draw(level);
+      window.draw(scene);
             
       // Update the window
       window.display();
