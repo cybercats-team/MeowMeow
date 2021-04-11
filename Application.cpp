@@ -60,15 +60,11 @@ void Application::run() {
   
   LevelScene scene(level);
   
+  // Layout
+  container.onMount();
+  
   // push scene to the container
   container.pushScene(scene);
-  
-  /*const Int64 frameInterval = (Int64) (1000.0 * (
-    (float) water[0].getAnimationDuration() /
-    (float) water[0].getFramesCount()
-  ));
-  
-  debugPrint("Frame interval " + to_string(frameInterval));*/
   
   // Start the game loop
   while (window.isOpen())
@@ -93,15 +89,6 @@ void Application::run() {
           container.onEvent(event);
       }
 
-      /*if (clock.getElapsedTime().asMicroseconds() >= frameInterval) {
-        for (auto& sprite: water) {
-          sprite.nextFrame();
-        }
-        
-        clock.restart();
-      }*/
-
-      // Clear screen
       window.clear();
     
       container.onBeforeRender();

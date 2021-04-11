@@ -12,14 +12,10 @@ Container::Container(Screen& screen) :
   screen(screen), scenes({}) {}
 
 void Container::pushScene(Scene& scene) {
-  scene.layout(screen);
   scenes.push_back(scene);
-}
-
-void Container::layout(Screen& screen) {
-  for (Scene& scene: scenes) {
-    scene.layout(screen);
-  }
+  
+  scene.onMount();
+  scene.layout(screen);
 }
 
 void Container::onBeforeEvent() {

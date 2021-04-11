@@ -15,14 +15,13 @@ class Animatable {
   public:
     virtual void setFrame(unsigned int frame) = 0;
     virtual void nextFrame() = 0;
-    virtual bool isAnimated() const = 0;
     virtual unsigned int getAnimationDuration() const = 0;
     virtual unsigned int getFramesCount() const = 0;
 };
 
 typedef struct AnimationState {
-  const Animatable& animatable;
   const sf::Int64 frameInterval;
+  Animatable& animatable;  
   sf::Int64 lastFrame;
   
   AnimationState(Animatable& animatable) :

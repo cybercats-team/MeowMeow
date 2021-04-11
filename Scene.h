@@ -17,7 +17,8 @@ class Scene :
   public Layoutable
 {
   public:
-    void layout(Screen& screen) override {} 
+    void layout(Screen& screen) override {}
+    virtual void onMount() {}
     virtual void onBeforeEvent() {}
     virtual void onEvent(sf::Event& event) {}
     virtual void onBeforeRender() {}

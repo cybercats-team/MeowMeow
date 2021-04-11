@@ -24,7 +24,6 @@ class Container : public Scene {
     Container(Screen& screen);
     void pushScene(Scene& scene);
   
-    void layout(Screen& screen) override;
     void onBeforeEvent() override;
     void onEvent(sf::Event& event) override;
     void onBeforeRender() override;

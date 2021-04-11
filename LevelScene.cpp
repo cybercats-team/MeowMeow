@@ -9,22 +9,45 @@
 #include "LevelScene.h"
 
 LevelScene::LevelScene(LevelMap& map) :
-  map(std::move(map)),
+  map(map),
   maxFrameInterval(0),
-  animated({})
+  animated({}),
+  animateTimer()
 {
   for (auto& sprite: map.sprites) {
-    if (!sprite.isAnimated()) continue;
-    
-    AnimationState state(sprite);
-    animated.push_back(state);
-    
-    if (maxFrameInterval == 0) {
-      maxFrameInterval = state.frameInterval;
-      continue;
+    if (sprite.isAnimated()) {
+      pushAnimatable(sprite);
     }
-    
-    maxFrameInterval = Utils::lcm(maxFrameInterval, state.frameInterval);
+  }
+}
+
+void LevelScene::onMount() {
+  animateTimer.restart();
+}
+
+void LevelScene::layout(Screen& screen) {
+  map.layout(screen);
+}
+
+void LevelScene::onBeforeRender() {
+  onAnimate();
+}
+
+void LevelScene::onAnimate() {
+  using namespace sf;
+  
+  Int64 elapsedTime = animateTimer.getElapsedTime().asMicroseconds();
+  bool animationFinished = elapsedTime >= maxFrameInterval;
+  
+  for (auto& state: animated) {
+    if ((elapsedTime - state.lastFrame) >= state.frameInterval) {
+      state.lastFrame = animationFinished ? 0 : elapsedTime;
+      state.animatable.nextFrame();
+    }
+  }
+  
+  if (animationFinished) {
+    animateTimer.restart();
   }
 }
 
@@ -32,6 +55,14 @@ void LevelScene::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   map.draw(target, states);
 }
 
-void LevelScene::layout(Screen& screen) {
-  map.layout(screen);
+void LevelScene::pushAnimatable(Animatable& sprite) {
+  AnimationState state(sprite);
+  animated.push_back(state);
+  
+  if (maxFrameInterval == 0) {
+    maxFrameInterval = state.frameInterval;
+    return;
+  }
+  
+  maxFrameInterval = Utils::lcm(maxFrameInterval, state.frameInterval);
 }
