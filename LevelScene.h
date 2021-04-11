@@ -11,10 +11,13 @@
 
 #include "Scene.h"
 #include "LevelMap.h"
+#include "Utils.h"
 
 class LevelScene : public Scene {
   private:
-    LevelMap map{};
+    LevelMap map;
+    std::vector<AnimationState> animated;
+    sf::Int64 maxFrameInterval;
   public:
     LevelScene(LevelMap& map);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

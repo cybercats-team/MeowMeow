@@ -9,6 +9,8 @@
 #ifndef Animatable_h
 #define Animatable_h
 
+#include <SFML/System.hpp>
+
 class Animatable {
   public:
     virtual void setFrame(unsigned int frame) = 0;
@@ -17,5 +19,19 @@ class Animatable {
     virtual unsigned int getAnimationDuration() const = 0;
     virtual unsigned int getFramesCount() const = 0;
 };
+
+typedef struct AnimationState {
+  const Animatable& animatable;
+  const sf::Int64 frameInterval;
+  sf::Int64 lastFrame;
+  
+  AnimationState(Animatable& animatable) :
+    lastFrame(0),
+    animatable(animatable),
+    frameInterval((sf::Int64) (1000.0 * (
+      (float) animatable.getAnimationDuration() /
+      (float) animatable.getFramesCount()
+    ))) {}
+} AnimationState;
 
 #endif /* Animatable_h */

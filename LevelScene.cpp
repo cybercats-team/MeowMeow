@@ -8,7 +8,25 @@
 
 #include "LevelScene.h"
 
-LevelScene::LevelScene(LevelMap& map) : map(std::move(map)) {}
+LevelScene::LevelScene(LevelMap& map) :
+  map(std::move(map)),
+  maxFrameInterval(0),
+  animated({})
+{
+  for (auto& sprite: map.sprites) {
+    if (!sprite.isAnimated()) continue;
+    
+    AnimationState state(sprite);
+    animated.push_back(state);
+    
+    if (maxFrameInterval == 0) {
+      maxFrameInterval = state.frameInterval;
+      continue;
+    }
+    
+    maxFrameInterval = Utils::lcm(maxFrameInterval, state.frameInterval);
+  }
+}
 
 void LevelScene::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   map.draw(target, states);
