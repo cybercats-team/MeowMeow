@@ -20,7 +20,8 @@ Application::Application(std::string withResourcePath) :
   screen(),
   resourceManager(std::move(withResourcePath)),
   spriteManager(resourceManager, screen),
-  levelManager(spriteManager, resourceManager, screen) {}
+  levelManager(spriteManager, resourceManager, screen),
+  container(screen) {}
 
 bool Application::initialize() {
   using namespace std;
@@ -59,16 +60,21 @@ void Application::run() {
   
   LevelScene scene(level);
   
+  // push scene to the container
+  container.pushScene(scene);
+  
   /*const Int64 frameInterval = (Int64) (1000.0 * (
     (float) water[0].getAnimationDuration() /
     (float) water[0].getFramesCount()
   ));
   
   debugPrint("Frame interval " + to_string(frameInterval));*/
-    
+  
   // Start the game loop
   while (window.isOpen())
   {
+      container.onBeforeEvent();
+    
       // Process events
       Event event{};
     
@@ -83,7 +89,9 @@ void Application::run() {
           if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
               window.close();
           }
-      }    
+        
+          container.onEvent(event);
+      }
 
       /*if (clock.getElapsedTime().asMicroseconds() >= frameInterval) {
         for (auto& sprite: water) {
@@ -96,8 +104,10 @@ void Application::run() {
       // Clear screen
       window.clear();
     
-      // Draw the map
-      window.draw(scene);
+      container.onBeforeRender();
+    
+      // Draw the scenes
+      window.draw(container);
             
       // Update the window
       window.display();

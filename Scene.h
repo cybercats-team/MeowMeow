@@ -14,6 +14,13 @@
 
 class Scene :
   public sf::Drawable,
-  public Layoutable {};
+  public Layoutable
+{
+  public:
+    void layout(Screen& screen) override {} 
+    virtual void onBeforeEvent() {}
+    virtual void onEvent(sf::Event& event) {}
+    virtual void onBeforeRender() {}
+};
 
 #endif /* Scene_h */

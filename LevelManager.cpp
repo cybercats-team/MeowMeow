@@ -115,7 +115,6 @@ bool LevelManager::load(LevelMap& levelMap, unsigned int realmId, unsigned int l
   loadTiles(levelFile, levelMap);
   levelFile.close();
   
-  levelMap.layout(screen);
   return true;
 }
 
