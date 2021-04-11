@@ -7,13 +7,15 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Animatable.h"
 #include "TypeDefs.h"
 #include "Debug.h"
 
 class SpriteObject :
   private Dimensions,
   private SpriteInfo,
-  public sf::Drawable
+  public sf::Drawable,
+  public Animatable
 {
   private:
     sf::Sprite sprite;
@@ -27,13 +29,13 @@ class SpriteObject :
     SpriteObject();
     SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void setFrame(unsigned int frame);
-    void nextFrame();
+    void setFrame(unsigned int frame) override;
+    void nextFrame() override;
     [[nodiscard]] unsigned int getWidth() const;
     [[nodiscard]] unsigned int getHeight() const;
-    [[nodiscard]] bool isAnimated() const;
-    [[nodiscard]] unsigned int getAnimationDuration() const;
-    [[nodiscard]] unsigned int getFramesCount() const;
+    [[nodiscard]] bool isAnimated() const override;
+    [[nodiscard]] unsigned int getAnimationDuration() const override;
+    [[nodiscard]] unsigned int getFramesCount() const override;
 };
 
 #endif //MEOWMEOW_SPRITEOBJECT_H
