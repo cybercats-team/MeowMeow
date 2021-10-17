@@ -2,14 +2,14 @@
 // Created by cyberneticist on 27.01.21.
 //
 
-#ifndef MEOWMEOW_SPRITEOBJECT_H
-#define MEOWMEOW_SPRITEOBJECT_H
+#ifndef SpriteObject_h
+#define SpriteObject_h
 
 #include <SFML/Graphics.hpp>
 
-#include "Animatable.h"
-#include "TypeDefs.h"
-#include "Debug.h"
+#include "../interfaces/Animatable.h"
+#include "../interfaces/TypeDefs.h"
+#include "../Debug.h"
 
 class SpriteObject :
   private Dimensions,
@@ -38,4 +38,4 @@ class SpriteObject :
     [[nodiscard]] unsigned int getFramesCount() const override;
 };
 
-#endif //MEOWMEOW_SPRITEOBJECT_H
+#endif //SpriteObject_h

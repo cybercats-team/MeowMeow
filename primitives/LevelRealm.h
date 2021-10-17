@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include "TypeDefs.h"
+#include "../interfaces/TypeDefs.h"
 
 class LevelRealm {
   private:

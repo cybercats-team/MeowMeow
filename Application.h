@@ -2,18 +2,18 @@
 // Created by cyberneticist on 20.01.21.
 //
 
-#ifndef MEOWMEOW_APPLICATION_H
-#define MEOWMEOW_APPLICATION_H
+#ifndef Application_h
+#define Application_h
 
 #include <SFML/Graphics.hpp>
 
-#include "Screen.h"
-#include "ResourceManager.h"
-#include "SpriteManager.h"
-#include "LevelManager.h"
+#include "primitives/Screen.h"
+#include "services/ResourceManager.h"
+#include "services/SpriteManager.h"
+#include "services/LevelManager.h"
 #include "Container.h"
 
-#include "LevelScene.h"
+#include "scenes/LevelScene.h"
 
 #include "Debug.h"
 
@@ -40,4 +40,4 @@ class Application {
 };
 
 
-#endif //MEOWMEOW_APPLICATION_H
+#endif //Application_h

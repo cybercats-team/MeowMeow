@@ -14,8 +14,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "TypeDefs.h"
-#include "Debug.h"
+#include "../interfaces/TypeDefs.h"
+#include "../Debug.h"
 
 class ResourceManager {
   private:

@@ -11,9 +11,9 @@
 
 #include <SFML/System.hpp>
 
-#include "Scene.h"
-#include "LevelMap.h"
-#include "Utils.h"
+#include "../interfaces/Scene.h"
+#include "../primitives/LevelMap.h"
+#include "../Utils.h"
 
 class LevelScene : public Scene {
   private:

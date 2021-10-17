@@ -2,16 +2,16 @@
 // Created by cyberneticist on 24.02.21.
 //
 
-#ifndef MEOWMEOW_LEVELMAP_H
-#define MEOWMEOW_LEVELMAP_H
+#ifndef LevelMap_h
+#define LevelMap_h
 
 #include <vector>
 #include <cmath>
 
 #include <SFML/Graphics.hpp>
-#include "Layoutable.h"
+#include "../interfaces/Layoutable.h"
 
-#include "TypeDefs.h"
+#include "../interfaces/TypeDefs.h"
 #include "SpriteObject.h"
 #include "Screen.h"
 
@@ -49,4 +49,4 @@ class LevelMap :
     void layout(Screen& screen) override;
 };
 
-#endif //MEOWMEOW_LEVELMAP_H
+#endif //LevelMap_h

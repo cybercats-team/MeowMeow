@@ -9,8 +9,8 @@
 #ifndef BundleManager_h
 #define BundleManager_h
 
-#include "Screen.h"
-#include "ResourceManager.h"
+#include "../primitives/Screen.h"
+#include "../services/ResourceManager.h"
 
 class BundleManager {
   protected:

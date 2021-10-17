@@ -6,15 +6,15 @@
 //  Copyright © 2021 Alex Serdukov. All rights reserved.
 //
 
-#ifndef TextureManager_hpp
-#define TextureManager_hpp
+#ifndef SpriteManager_h
+#define SpriteManager_h
 
 #include <fstream>
 
-#include "BundleManager.h"
-#include "SpriteSet.h"
-#include "TypeDefs.h"
-#include "Debug.h"
+#include "../interfaces/BundleManager.h"
+#include "../primitives/SpriteSet.h"
+#include "../interfaces/TypeDefs.h"
+#include "../Debug.h"
 
 class SpriteManager: public BundleManager {
   private:
@@ -37,4 +37,4 @@ class SpriteManager: public BundleManager {
     bool load(SpriteSet& spriteSet, ObjectType objectType, unsigned int index);
 };
 
-#endif /* TextureManager_hpp */
+#endif /* SpriteManager_h */

@@ -12,8 +12,8 @@
 #include <list>
 #include <functional>
 
-#include "Screen.h"
-#include "Scene.h"
+#include "primitives/Screen.h"
+#include "interfaces/Scene.h"
 
 class Container : public Scene {
   private:

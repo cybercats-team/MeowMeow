@@ -11,15 +11,15 @@
 
 #include <vector>
 
-#include "Debug.h"
-#include "TypeDefs.h"
+#include "../Debug.h"
+#include "../interfaces/TypeDefs.h"
 
-#include "LevelRealm.h"
-#include "LevelMap.h"
-#include "SpriteSet.h"
-#include "SpriteObject.h"
+#include "../primitives/LevelRealm.h"
+#include "../primitives/LevelMap.h"
+#include "../primitives/SpriteSet.h"
+#include "../primitives/SpriteObject.h"
 
-#include "BundleManager.h"
+#include "../interfaces/BundleManager.h"
 #include "SpriteManager.h"
 
 class LevelManager: public BundleManager {

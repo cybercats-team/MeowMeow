@@ -9,7 +9,7 @@
 #ifndef Layoutable_h
 #define Layoutable_h
 
-#include "Screen.h"
+#include "../primitives/Screen.h"
 
 class Layoutable {
   public:

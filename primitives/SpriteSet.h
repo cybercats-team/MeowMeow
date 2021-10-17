@@ -2,12 +2,12 @@
 // Created by cyberneticist on 25.01.21.
 //
 
-#ifndef MEOWMEOW_SPRITESET_H
-#define MEOWMEOW_SPRITESET_H
+#ifndef SpriteSet_h
+#define SpriteSet_h
 
 #include <SFML/Graphics.hpp>
 
-#include "TypeDefs.h"
+#include "../interfaces/TypeDefs.h"
 #include "SpriteObject.h"
 
 class SpriteSet {
@@ -29,4 +29,4 @@ class SpriteSet {
     void getSprite(SpriteObject& spriteObject, unsigned int index);
 };
 
-#endif //MEOWMEOW_SPRITESET_H
+#endif //SpriteSet_h
