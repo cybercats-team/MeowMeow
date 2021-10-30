@@ -20,8 +20,7 @@ Application::Application(std::string withResourcePath) :
   screen(),
   resourceManager(std::move(withResourcePath)),
   spriteManager(resourceManager, screen),
-  levelManager(spriteManager, resourceManager, screen),
-  container(screen) {}
+  levelManager(spriteManager, resourceManager, screen) {}
 
 bool Application::initialize() {
   using namespace std;
@@ -61,15 +60,15 @@ void Application::run() {
   LevelScene scene(level);
   
   // Layout
-  container.onMount();
+  //container.onMount();
   
   // push scene to the container
-  container.pushScene(scene);
+  //container.pushScene(scene);
   
   // Start the game loop
   while (window.isOpen())
   {
-      container.onBeforeEvent();
+      //container.onBeforeEvent();
     
       // Process events
       Event event{};
@@ -86,15 +85,15 @@ void Application::run() {
               window.close();
           }
         
-          container.onEvent(event);
+          //container.onEvent(event);
       }
 
       window.clear();
     
-      container.onBeforeRender();
+      //container.onBeforeRender();
     
       // Draw the scenes
-      window.draw(container);
+      //window.draw(container);
             
       // Update the window
       window.display();

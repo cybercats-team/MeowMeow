@@ -21,7 +21,7 @@ LevelScene::LevelScene(LevelMap& map) :
   }
 }
 
-void LevelScene::onMount() {
+void LevelScene::onPresented() {
   animateTimer.restart();
 }
 

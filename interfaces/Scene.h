@@ -11,17 +11,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "Layoutable.h"
+#include "Presentable.h"
 
 class Scene :
   public sf::Drawable,
-  public Layoutable
+  public Layoutable,
+  public Presentable
 {
   public:
     void layout(Screen& screen) override {}
-    virtual void onMount() {}
-    virtual void onBeforeEvent() {}
-    virtual void onEvent(sf::Event& event) {}
-    virtual void onBeforeRender() {}
+    void onPresented() override {}
+    void onBeforeEvent() override {}
+    void onEvent(sf::Event& event) override {}
+    void onBeforeRender() override {}
 };
 
 #endif /* Scene_h */

@@ -14,7 +14,7 @@ Container::Container(Screen& screen) :
 void Container::pushScene(Scene& scene) {
   scenes.push_back(scene);
   
-  scene.onMount();
+  scene.onPresented();
   scene.layout(screen);
 }
 

@@ -11,7 +11,6 @@
 #include "services/ResourceManager.h"
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
-#include "Container.h"
 
 #include "scenes/LevelScene.h"
 
@@ -27,7 +26,7 @@ class Application {
     ResourceManager resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
-    Container container;
+    //Container container;
     sf::RenderWindow window{};
   
   public:

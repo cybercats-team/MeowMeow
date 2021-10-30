@@ -26,7 +26,7 @@ class LevelScene : public Scene {
     void onAnimate();
   public:
     LevelScene(LevelMap& map);
-    void onMount() override;
+    void onPresented() override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void layout(Screen& screen) override;
