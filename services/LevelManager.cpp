@@ -48,7 +48,7 @@ bool LevelManager::initialize() {
   return true;
 }
 
-unsigned int LevelManager::getRealmsCount() {
+unsigned long LevelManager::getRealmsCount() {
   return realms.size();
 }
 
@@ -147,7 +147,7 @@ bool LevelManager::loadSprites(std::ifstream& levelFile, LevelMap& levelMap, uns
     map<unsigned int, SpriteSet>& setsRef = spriteSets[ref.objectType];
     vector<unsigned int>& mapSetsRef = mapSpriteSets[ref.objectType];
         
-    if (count(mapSetsRef.begin(), mapSetsRef.end(), ref.spriteSetIndex) == 0) {
+    if (!Array::includes(mapSetsRef, ref.spriteSetIndex)) {
       mapSetsRef.push_back(ref.spriteSetIndex);
     }
     
@@ -221,7 +221,7 @@ void LevelManager::disposeSpritesUnused(std::map<ObjectType, std::vector<unsigne
     for (const auto& sets: spriteSets[objectType]) {
       unsigned int spriteSetId = sets.first;
       
-      if (count(mapSetsRef.begin(), mapSetsRef.end(), spriteSetId) == 0) {
+      if (!Array::includes(mapSetsRef, spriteSetId)) {
         unusedSpriteSets[objectType].push_back(spriteSetId);
       }
     }

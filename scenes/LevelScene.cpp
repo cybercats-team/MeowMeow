@@ -64,5 +64,5 @@ void LevelScene::pushAnimatable(Animatable& sprite) {
     return;
   }
   
-  maxFrameInterval = Utils::lcm(maxFrameInterval, state.frameInterval);
+  maxFrameInterval = Math::lcm(maxFrameInterval, state.frameInterval);
 }

@@ -1,17 +1,17 @@
 //
-//  Utils.h
+//  Math.h
 //  MeowMeow
 //
-//  Created by Alex Serdukov on 11.04.2021.
+//  Created by Alex Serdukov on 31.10.2021.
 //  Copyright © 2021 Alex Serdukov. All rights reserved.
 //
 
-#ifndef Utils_h
-#define Utils_h
+#ifndef Math_h
+#define Math_h
 
 #include <SFML/System.hpp>
 
-class Utils {
+class Math {
   public:
     static sf::Int64 gcd(sf::Int64 a, sf::Int64 b) {
       using namespace sf;
@@ -34,4 +34,4 @@ class Utils {
     }
 };
 
-#endif /* Utils_h */
+#endif /* Math_h */

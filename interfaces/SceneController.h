@@ -9,7 +9,7 @@
 #ifndef SceneController_h
 #define SceneController_h
 
-#include <list>
+#include <vector>
 #include <functional>
 
 #include <SFML/Graphics.hpp>
@@ -26,11 +26,20 @@ class SceneController :
 {
   private:
     Screen& screen;
-    std::list<std::reference_wrapper<Scene>> scenes;
+    std::vector<std::reference_wrapper<Scene>> scenes;
+    unsigned int focusedScene;
   
   public:
     SceneController(Screen& screen);
     void present(Scene& scene);
+    void pushScene(Scene& scene);
+    
+    // TODO: focus by instance
+    //void focus(Scene& scene);
+  
+    void focus(unsigned long sceneIndex);
+    bool hasFocused();
+    Scene& getFocused();
   
     void onBeforeEvent() override {};
     void onEvent(sf::Event& event) override {};

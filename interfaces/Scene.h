@@ -21,6 +21,8 @@ class Scene :
   public:
     void layout(Screen& screen) override {}
     void onPresented() override {}
+    void onFocused() override {}
+    void onBlurred() override {}
     void onBeforeEvent() override {}
     void onEvent(sf::Event& event) override {}
     void onBeforeRender() override {}

@@ -9,13 +9,41 @@
 #include "SceneController.h"
 
 SceneController::SceneController(Screen& screen) :
-  screen(screen), scenes({}) {}
+  screen(screen), scenes({}), focusedScene(-1) {}
 
 void SceneController::present(Scene& scene) {
+  pushScene(scene);
+  focus(scenes.size() - 1);
+}
+
+void SceneController::pushScene(Scene& scene) {
   scenes.push_back(scene);
   
   scene.onPresented();
   scene.layout(screen);
+}
+
+void SceneController::focus(unsigned long sceneIndex) {
+  
+  if (hasFocused()) {
+    Scene& focused = getFocused();
+    
+    focused.onBlurred();
+  }
+  
+  if (sceneIndex < scenes.size()) {
+    Scene& scene = scenes[sceneIndex];
+    
+    scene.onFocused();
+  }
+}
+
+bool SceneController::hasFocused() {
+  return focusedScene >= 0;
+}
+
+Scene& SceneController::getFocused() {
+  return scenes[focusedScene];
 }
 
 void SceneController::onBeforeRender() {

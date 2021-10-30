@@ -13,7 +13,7 @@
 
 #include "../interfaces/Scene.h"
 #include "../primitives/LevelMap.h"
-#include "../Utils.h"
+#include "../utils/Math.h"
 
 class LevelScene : public Scene {
   private:

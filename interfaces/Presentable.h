@@ -15,6 +15,8 @@ class Presentable
 {
   public:
     virtual void onPresented() = 0;
+    virtual void onFocused() = 0;
+    virtual void onBlurred() = 0;
     virtual void onBeforeEvent() = 0;
     virtual void onEvent(sf::Event& event) = 0;
     virtual void onBeforeRender() = 0;
