@@ -26,6 +26,7 @@ class Scene :
     void onBeforeEvent() override {}
     void onEvent(sf::Event& event) override {}
     void onBeforeRender() override {}
+    void onDisposed() override {}
 };
 
 #endif /* Scene_h */

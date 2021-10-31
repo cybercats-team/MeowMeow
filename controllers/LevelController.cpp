@@ -7,3 +7,12 @@
 //
 
 #include "LevelController.h"
+
+/*LevelMap level{};
+
+if (!levelManager.load(level, 0, 0)) {
+  window.close();
+  return;
+}
+
+LevelScene scene(level);*/

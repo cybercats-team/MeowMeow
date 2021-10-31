@@ -9,12 +9,13 @@
 
 #include "primitives/Screen.h"
 #include "services/ResourceManager.h"
-#include "services/SpriteManager.h"
-#include "services/LevelManager.h"
-
-#include "scenes/LevelScene.h"
+#include "interfaces/SceneController.h"
+#include "AppState.h"
 
 #include "Debug.h"
+
+#include "primitives/LevelMap.h" // TODO: remove
+#include "scenes/LevelScene.h"  // TODO: remove
 
 class Application {
   protected:
@@ -24,9 +25,8 @@ class Application {
     
     Screen screen;
     ResourceManager resourceManager;
-    SpriteManager spriteManager;
-    LevelManager levelManager;
-    //Container container;
+    Container container;
+    AppState appState;
     sf::RenderWindow window{};
   
   public:

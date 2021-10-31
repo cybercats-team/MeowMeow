@@ -92,7 +92,6 @@ void LevelMap::drawBorders(sf::RenderTarget &target, sf::RenderStates states) co
   using namespace std;
   
   const SpriteObject& border = sprites[borderTile];
-  const unsigned int borderHeight = (unsigned int) borderView.height;
   vector<Transformable> positions = { Transformable(), Transformable() };
   
   positions[0].setPosition(borderView.left, borderView.top);
@@ -115,7 +114,6 @@ void LevelMap::drawSideBorders(sf::RenderTarget &target, sf::RenderStates states
   using namespace std;
   
   const SpriteObject& border = sprites[borderTile];
-  const unsigned int borderWidth = (unsigned int) borderView.width;
   vector<Transformable> positions = { Transformable(), Transformable() };
   
   positions[0].setPosition(borderView.left, mapView.top);

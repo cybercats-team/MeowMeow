@@ -9,25 +9,23 @@
 #ifndef Container_h
 #define Container_h
 
-#include <list>
-#include <functional>
-
 #include "primitives/Screen.h"
-#include "interfaces/Scene.h"
+#include "services/ResourceManager.h"
+#include "services/SpriteManager.h"
+#include "services/LevelManager.h"
 
-class Container : public Scene {
+class Container {
   private:
     Screen& screen;
-    std::list<std::reference_wrapper<Scene>> scenes;
+    ResourceManager& resourceManager;
+    SpriteManager spriteManager;
+    LevelManager levelManager;
   
+    friend class AppState;
+    friend class Application; // TODO: remove
   public:
-    Container(Screen& screen);
-    void pushScene(Scene& scene);
-  
-    void onBeforeEvent() override;
-    void onEvent(sf::Event& event) override;
-    void onBeforeRender() override;
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    Container(Screen& screen, ResourceManager& resourceManager);
+    bool initialize();
 };
 
 #endif /* Container_h */

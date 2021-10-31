@@ -25,31 +25,44 @@ class Array {
       using namespace std;
       
       return count_if(list.begin(), list.end(), [&](const reference_wrapper<T> &listItem) {
-        return listItem.get() == item;
+        T& wrappedItem = listItem.get();
+        
+        return &wrappedItem == &item;
       }) > 0;
     }
   
     template<typename T>
-    static unsigned long indexOf(std::vector<T> list, T item) {
+    static long indexOf(std::vector<T> list, T item) {
       auto indexId = std::find(list.begin(), list.end(), item);
       
       return getIndex(indexId);
     }
   
     template<typename T>
-    static unsigned long indexOf(std::vector<std::reference_wrapper<T>> list, T& item) {
+    static long indexOf(std::vector<std::reference_wrapper<T>> list, T& item) {
       using namespace std;
       
       auto indexId = find_if(list.begin(), list.end(), [&](const reference_wrapper<T> &listItem) {
-        return listItem.get() == item;
+        T& wrappedItem = listItem.get();
+        
+        return &wrappedItem == &item;
       });
       
-      return getIndex<reference_wrapper<T>>(indexId);
+      return getIndex<reference_wrapper<T>>(list, indexId);
+    }
+  
+    template <typename T>
+    static void remove(std::vector<T>& list, size_t index)
+    {
+        auto indexId = list.begin();
+        
+        std::advance(indexId, index);
+        list.erase(indexId);
     }
   
   private:
     template<typename T>
-    static unsigned long getIndex(std::vector<T> list, typename std::vector<T>::iterator indexId) {
+    static long getIndex(std::vector<T> list, typename std::vector<T>::iterator indexId) {
       if (indexId == list.end()) {
         return -1;
       }

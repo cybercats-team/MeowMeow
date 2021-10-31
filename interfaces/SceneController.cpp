@@ -13,7 +13,7 @@ SceneController::SceneController(Screen& screen) :
 
 void SceneController::present(Scene& scene) {
   pushScene(scene);
-  focus(scenes.size() - 1);
+  focusTop();
 }
 
 void SceneController::pushScene(Scene& scene) {
@@ -23,17 +23,66 @@ void SceneController::pushScene(Scene& scene) {
   scene.layout(screen);
 }
 
-void SceneController::focus(unsigned long sceneIndex) {
+void SceneController::removeAll() {
+  clearFocused();
   
-  if (hasFocused()) {
-    Scene& focused = getFocused();
-    
-    focused.onBlurred();
+  for (Scene& scene: scenes) {
+    scene.onDisposed();
   }
+  
+  scenes.clear();
+}
+
+void SceneController::remove(Scene& scene) {
+  long sceneIndex = Array::indexOf(scenes, scene);
+  
+  if (sceneIndex >= 0) {
+    remove(sceneIndex);
+  }
+}
+
+void SceneController::remove(long sceneIndex) {
+  if (sceneIndex >= scenes.size()) {
+    return;
+  }
+  
+  Scene& scene = scenes[sceneIndex];
+  
+  if (hasFocused() && (sceneIndex == focusedScene)) {
+    clearFocused();
+  }
+  
+  scene.onDisposed();
+  Array::remove(scenes, sceneIndex);
+  
+  if (!hasFocused()) {
+    focusTop();
+  }
+}
+
+void SceneController::focusTop() {
+  unsigned long scenesCount = scenes.size();
+  
+  if (scenesCount > 0) {
+    focus(scenesCount - 1);
+  }
+}
+
+void SceneController::focus(Scene& scene) {
+  long sceneIndex = Array::indexOf(scenes, scene);
+  
+  if (sceneIndex >= 0) {
+    focus(sceneIndex);
+  }
+}
+
+void SceneController::focus(long sceneIndex) {
+  clearFocused();
   
   if (sceneIndex < scenes.size()) {
     Scene& scene = scenes[sceneIndex];
     
+    focusedScene = sceneIndex;
     scene.onFocused();
   }
 }
@@ -46,6 +95,23 @@ Scene& SceneController::getFocused() {
   return scenes[focusedScene];
 }
 
+void SceneController::onBeforeEvent() {
+  if (hasFocused()) {
+    Scene& focused = getFocused();
+    
+    focused.onBeforeEvent();
+  }
+}
+
+void SceneController::onEvent(sf::Event& event) {
+  // TODO: filter key-events only ?
+  if (hasFocused()) {
+    Scene& focused = getFocused();
+    
+    focused.onEvent(event);
+  }
+}
+
 void SceneController::onBeforeRender() {
   for (Scene& scene: scenes) {
     scene.onBeforeRender();
@@ -55,5 +121,14 @@ void SceneController::onBeforeRender() {
 void SceneController::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   for (Scene& scene: scenes) {
     target.draw(scene);
+  }
+}
+
+void SceneController::clearFocused() {
+  if (hasFocused()) {
+    Scene& focused = getFocused();
+    
+    focused.onBlurred();
+    focusedScene = -1;
   }
 }

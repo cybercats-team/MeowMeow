@@ -19,8 +19,8 @@ Application* Application::create(std::string resourcePath) {
 Application::Application(std::string withResourcePath) :
   screen(),
   resourceManager(std::move(withResourcePath)),
-  spriteManager(resourceManager, screen),
-  levelManager(spriteManager, resourceManager, screen) {}
+  container(screen, resourceManager),
+  appState(container) {}
 
 bool Application::initialize() {
   using namespace std;
@@ -30,8 +30,7 @@ bool Application::initialize() {
 
   if (
     !screen.initialize() ||
-    !spriteManager.initialize() ||
-    !levelManager.initialize() ||
+    !container.initialize() ||
     !resourceManager.load(appIcon, "icons/appIcon")
   ) {
     return false;
@@ -49,53 +48,53 @@ bool Application::initialize() {
 void Application::run() {
   using namespace sf;
   using namespace std;
-
-  LevelMap level{};
   
-  if (!levelManager.load(level, 0, 0)) {
+  /* TODO: remove */
+  LevelMap level{};
+
+  if (!container.levelManager.load(level, 0, 0)) {
     window.close();
     return;
   }
-  
+
   LevelScene scene(level);
   
-  // Layout
-  //container.onMount();
-  
-  // push scene to the container
-  //container.pushScene(scene);
+  appState.activeController.present(scene);
+  /* /TODO: */
   
   // Start the game loop
   while (window.isOpen())
   {
-      //container.onBeforeEvent();
+    SceneController& controller = appState.activeController;
     
-      // Process events
-      Event event{};
+    controller.onBeforeEvent();
     
-      while (window.pollEvent(event))
-      {
-          // Close window: exit
-          if (event.type == Event::Closed) {
-              window.close();
-          }
-
-          // Escape pressed: exit
-          if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-              window.close();
-          }
-        
-          //container.onEvent(event);
+    // Process events
+    Event event{};
+    
+    while (window.pollEvent(event))
+    {
+      // Close window: exit
+      if (event.type == Event::Closed) {
+        window.close();
       }
 
-      window.clear();
+      // Escape pressed: exit
+      if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
+        window.close();
+      }
     
-      //container.onBeforeRender();
-    
-      // Draw the scenes
-      //window.draw(container);
-            
-      // Update the window
-      window.display();
+      controller.onEvent(event);
+    }
+
+    window.clear();
+  
+    controller.onBeforeRender();
+  
+    // Draw the scenes
+    window.draw(controller);
+          
+    // Update the window
+    window.display();
   }
 }

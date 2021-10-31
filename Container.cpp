@@ -8,36 +8,11 @@
 
 #include "Container.h"
 
-Container::Container(Screen& screen) :
-  screen(screen), scenes({}) {}
+Container::Container(Screen& screen, ResourceManager& resourceManager) :
+  screen(screen), resourceManager(resourceManager),
+  spriteManager(resourceManager, screen),
+  levelManager(spriteManager, resourceManager, screen) {}
 
-void Container::pushScene(Scene& scene) {
-  scenes.push_back(scene);
-  
-  scene.onPresented();
-  scene.layout(screen);
-}
-
-void Container::onBeforeEvent() {
-  for (Scene& scene: scenes) {
-    scene.onBeforeEvent();
-  }
-}
-
-void Container::onEvent(sf::Event& event) {
-  for (Scene& scene: scenes) {
-    scene.onEvent(event);
-  }
-}
-
-void Container::onBeforeRender() {
-  for (Scene& scene: scenes) {
-    scene.onBeforeRender();
-  }
-}
-
-void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-  for (Scene& scene: scenes) {
-    target.draw(scene);
-  }
+bool Container::initialize() {
+  return spriteManager.initialize() && levelManager.initialize();
 }

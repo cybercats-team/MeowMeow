@@ -13,36 +13,41 @@
 #include <functional>
 
 #include <SFML/Graphics.hpp>
-#include "Layoutable.h"
-#include "Presentable.h"
+#include "EventHandler.h"
 
 #include "../primitives/Screen.h"
 #include "Scene.h"
 
+#include "../utils/Array.h"
+
 class SceneController :
   public sf::Drawable,
-  public Layoutable,
-  public Presentable
+  public EventHandler
 {
   private:
     Screen& screen;
     std::vector<std::reference_wrapper<Scene>> scenes;
-    unsigned int focusedScene;
+    long focusedScene;
   
+    void clearFocused();
   public:
     SceneController(Screen& screen);
+    
     void present(Scene& scene);
     void pushScene(Scene& scene);
-    
-    // TODO: focus by instance
-    //void focus(Scene& scene);
   
-    void focus(unsigned long sceneIndex);
+    void removeAll();
+    void remove(Scene& scene);
+    void remove(long sceneIndex);
+    
+    void focusTop();
+    void focus(Scene& scene);
+    void focus(long sceneIndex);
     bool hasFocused();
     Scene& getFocused();
   
-    void onBeforeEvent() override {};
-    void onEvent(sf::Event& event) override {};
+    void onBeforeEvent() override;
+    void onEvent(sf::Event& event) override;
   
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
