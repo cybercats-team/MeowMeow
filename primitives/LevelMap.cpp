@@ -96,14 +96,15 @@ void LevelMap::drawMap(sf::RenderTarget &target, sf::RenderStates states) const 
 void LevelMap::drawBorders(sf::RenderTarget &target, sf::RenderStates states) const {
   using namespace sf;
   using namespace std;
-  
+
+  const auto maxRow = (unsigned int) borderView.height;
   const SpriteObject& border = sprites[borderTile];
   vector<Transformable> positions = { Transformable(), Transformable() };
   
   positions[0].setPosition(borderView.left, borderView.top);
   positions[1].setPosition(borderView.left, mapView.top + mapView.height);
   
-  for (unsigned int borderRow = 0; borderRow < borderView.height; borderRow++) {
+  for (unsigned int borderRow = 0; borderRow < maxRow; borderRow++) {
     while (positions[0].getPosition().x < screenView.width) {
       for (auto& position: positions) {
         target.draw(border, position.getTransform());
@@ -118,14 +119,15 @@ void LevelMap::drawBorders(sf::RenderTarget &target, sf::RenderStates states) co
 void LevelMap::drawSideBorders(sf::RenderTarget &target, sf::RenderStates states) const {
   using namespace sf;
   using namespace std;
-  
+
+  const auto maxCol = (unsigned int) borderView.width;
   const SpriteObject& border = sprites[borderTile];
   vector<Transformable> positions = { Transformable(), Transformable() };
   
   positions[0].setPosition(borderView.left, mapView.top);
   positions[1].setPosition(mapView.left + mapView.width, mapView.top);
   
-  for (unsigned int borderCol = 0; borderCol < borderView.width; borderCol++) {
+  for (unsigned int borderCol = 0; borderCol < maxCol; borderCol++) {
     while (positions[0].getPosition().y < borderColHeight) {
       for (auto& position: positions) {
         target.draw(border, position.getTransform());
