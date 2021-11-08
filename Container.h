@@ -10,6 +10,8 @@
 #define Container_h
 
 #include "primitives/Screen.h"
+#include "interfaces/SceneController.h"
+
 #include "services/ResourceManager.h"
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
@@ -22,6 +24,7 @@ class Container {
     LevelManager levelManager;
   
     friend class AppState;
+    friend class SceneController;
     friend class Application; // TODO: remove
   public:
     Container(Screen& screen, ResourceManager& resourceManager);

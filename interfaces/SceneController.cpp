@@ -8,8 +8,12 @@
 
 #include "SceneController.h"
 
-SceneController::SceneController(Screen& screen) :
-  screen(screen), scenes({}), focusedScene(-1) {}
+SceneController::SceneController(AppState& appState) :
+  appState(appState),
+  container(appState.container),
+  screen(container.screen),
+  focusedScene(-1),
+  scenes({}) {}
 
 void SceneController::present(Scene& scene) {
   pushScene(scene);
@@ -23,7 +27,7 @@ void SceneController::pushScene(Scene& scene) {
   scene.layout(screen);
 }
 
-[[maybe_unused]] void SceneController::removeAll() {
+void SceneController::removeAll() {
   clearFocused();
   
   for (Scene& scene: scenes) {
@@ -131,4 +135,8 @@ void SceneController::clearFocused() {
     focused.onBlurred();
     focusedScene = -1;
   }
+}
+
+void SceneController::onDisposed() {
+  removeAll();
 }

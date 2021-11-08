@@ -18,8 +18,9 @@ class AppState {
   private:
     Container& container;
     SceneController activeController;
-  
+
     friend class Application;
+    friend class SceneController;
   public:
     explicit AppState(Container& container);
 };

@@ -15,28 +15,32 @@
 #include <SFML/Graphics.hpp>
 #include "EventHandler.h"
 
-#include "../primitives/Screen.h"
+#include "../AppState.h"
 #include "Scene.h"
 
 #include "../utils/Array.h"
 
 class SceneController :
   public sf::Drawable,
-  public EventHandler
+  public EventHandler,
+  public Disposable
 {
   private:
+    [[maybe_unused]] AppState& appState;
+    Container& container;
     Screen& screen;
+
     std::vector<std::reference_wrapper<Scene>> scenes;
     long focusedScene;
   
     void clearFocused();
   public:
-    explicit SceneController(Screen& screen);
+    explicit SceneController(AppState& appState);
     
     void present(Scene& scene);
     void pushScene(Scene& scene);
 
-    [[maybe_unused]] void removeAll();
+    void removeAll();
     [[maybe_unused]] void remove(Scene& scene);
     void remove(long sceneIndex);
     
@@ -52,6 +56,8 @@ class SceneController :
   
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    void onDisposed() override;
 };
 
 #endif /* SceneController_h */

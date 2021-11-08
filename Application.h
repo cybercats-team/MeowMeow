@@ -39,5 +39,4 @@ class Application {
     void run();
 };
 
-
 #endif //Application_h

@@ -10,14 +10,16 @@
 #define Presentable_h
 
 #include "EventHandler.h"
+#include "Disposable.h"
 
-class Presentable : public EventHandler
+class Presentable :
+  public EventHandler,
+  public Disposable
 {
   public:
     virtual void onPresented() = 0;
     virtual void onFocused() = 0;
     virtual void onBlurred() = 0;    
-    virtual void onDisposed() = 0;
 };
 
 #endif /* Presentable_h */
