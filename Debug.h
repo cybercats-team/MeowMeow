@@ -14,7 +14,7 @@
 #include <iostream>
 #endif
 
-inline void debugPrint(std::string message) {
+inline void debugPrint(const std::string& message) {
 #ifdef DEBUG
   using namespace std;
   

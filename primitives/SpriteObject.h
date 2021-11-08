@@ -27,12 +27,13 @@ class SpriteObject :
     friend class SpriteSet;
   public:
     SpriteObject();
-    SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames);
+    SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, std::vector<sf::IntRect> frames);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setFrame(unsigned int frame) override;
     void nextFrame() override;
-    [[nodiscard]] unsigned int getWidth() const;
-    [[nodiscard]] unsigned int getHeight() const;
+
+    [[maybe_unused]] [[nodiscard]] unsigned int getWidth() const;
+    [[maybe_unused]] [[nodiscard]] unsigned int getHeight() const;
     [[nodiscard]] bool isAnimated() const;
     [[nodiscard]] unsigned int getAnimationDuration() const override;
     [[nodiscard]] unsigned int getFramesCount() const override;

@@ -24,9 +24,10 @@ class LevelRealm {
   public:
     LevelRealm();
     LevelRealm(std::string realmName, unsigned int levelsCount, std::vector<std::string>& levelNames);
-    [[nodiscard]] unsigned int getLevelsCount() const;
-    [[nodiscard]] std::string getName() const;
-    [[nodiscard]] std::string getLevelName(unsigned int level) const;
+
+    [[maybe_unused]] [[nodiscard]] unsigned int getLevelsCount() const;
+    [[maybe_unused]] [[nodiscard]] std::string getName() const;
+    [[maybe_unused]] [[nodiscard]] std::string getLevelName(unsigned int level) const;
 };
 
 #endif /* LevelRealm_h */

@@ -4,21 +4,22 @@
 
 #include "Application.h"
 
+#include <utility>
+
 Application* Application::instance = nullptr;
 
-Application* Application::create(std::string resourcePath) {
-  using namespace std;
-
+Application* Application::create(const std::string& appName, const std::string& resourcePath) {
   if (instance == nullptr) {
-    instance = new Application(move(resourcePath));
+    instance = new Application(appName, resourcePath);
   }
   
   return instance;
 }
 
-Application::Application(std::string withResourcePath) :
+Application::Application(std::string appName, const std::string& withResourcePath) :
   screen(),
-  resourceManager(std::move(withResourcePath)),
+  appName(std::move(appName)),
+  resourceManager(withResourcePath),
   container(screen, resourceManager),
   appState(container) {}
 
@@ -38,9 +39,16 @@ bool Application::initialize() {
   
   Vector2u size = appIcon.getSize();
     
-  window.create(screen.selectedMode, "SFML window", Style::Fullscreen);
+  window.create(screen.selectedMode, appName, Style::Fullscreen);
   window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
   window.setFramerateLimit(60);
+
+  debugPrint(
+    "Initialized app window " +
+    to_string(screen.getWidth()) + "x" +
+    to_string(screen.getHeight()) +
+    " \"" + appName +"\""
+  );
 
   return true;
 }

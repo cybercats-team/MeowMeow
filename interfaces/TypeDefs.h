@@ -32,8 +32,8 @@ enum class ResourceType {
 
 enum class BundleType {
   TexturesList,
-  TextureInfo,
-  LevelsList,
+  TextureInfo [[maybe_unused]],
+  LevelsList [[maybe_unused]],
   LevelMap
 };
 
@@ -44,7 +44,7 @@ enum class ObjectType {
 
 enum class TileType {
   Terrain,
-  Obstacle
+  Obstacle [[maybe_unused]]
 };
 
 typedef struct ResourceInfo {
@@ -54,8 +54,8 @@ typedef struct ResourceInfo {
 
 typedef struct BundleHeader {
   char magic[7] = TEXTURE_BUNDLE_MAGIC;
-  BundleType bundleType = BundleType::TexturesList;
-  ObjectType objectType = ObjectType::Terrain;
+  [[maybe_unused]] BundleType bundleType = BundleType::TexturesList;
+  [[maybe_unused]] ObjectType objectType = ObjectType::Terrain;
   unsigned int itemsCount = 0;
 } BundleHeader;
 
@@ -107,7 +107,7 @@ typedef struct AggregatedMapInfo: public Dimensions {
   Dimensions tileSize{};
 } AggregatedMapInfo;
 
-typedef struct TextureInfo {
+[[maybe_unused]] typedef struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
 } TextureItem;
 

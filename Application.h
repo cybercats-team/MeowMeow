@@ -19,7 +19,7 @@
 
 class Application {
   protected:
-    explicit Application(std::string withResourcePath);
+    Application(std::string appName, const std::string& withResourcePath);
   
     static Application* instance;
     
@@ -28,12 +28,13 @@ class Application {
     Container container;
     AppState appState;
     sf::RenderWindow window{};
+    std::string appName;
   
   public:
     Application(Application &other) = delete;
     void operator=(const Application &) = delete;
   
-    static Application* create(std::string resourcePath);
+    static Application* create(const std::string& appName, const std::string& resourcePath);
     bool initialize();
     void run();
 };

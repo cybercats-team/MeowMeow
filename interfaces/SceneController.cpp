@@ -17,13 +17,13 @@ void SceneController::present(Scene& scene) {
 }
 
 void SceneController::pushScene(Scene& scene) {
-  scenes.push_back(scene);
+  scenes.emplace_back(scene);
   
   scene.onPresented();
   scene.layout(screen);
 }
 
-void SceneController::removeAll() {
+[[maybe_unused]] void SceneController::removeAll() {
   clearFocused();
   
   for (Scene& scene: scenes) {
@@ -33,7 +33,7 @@ void SceneController::removeAll() {
   scenes.clear();
 }
 
-void SceneController::remove(Scene& scene) {
+[[maybe_unused]] void SceneController::remove(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
   
   if (sceneIndex >= 0) {
@@ -64,11 +64,11 @@ void SceneController::focusTop() {
   unsigned long scenesCount = scenes.size();
   
   if (scenesCount > 0) {
-    focus(scenesCount - 1);
+    focus((long) (scenesCount - 1));
   }
 }
 
-void SceneController::focus(Scene& scene) {
+[[maybe_unused]] void SceneController::focus(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
   
   if (sceneIndex >= 0) {
@@ -87,7 +87,7 @@ void SceneController::focus(long sceneIndex) {
   }
 }
 
-bool SceneController::hasFocused() {
+bool SceneController::hasFocused() const {
   return focusedScene >= 0;
 }
 

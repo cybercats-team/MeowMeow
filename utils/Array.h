@@ -21,7 +21,7 @@ class Array {
     }
   
     template<typename T>
-    static bool includes(std::vector<std::reference_wrapper<T>> list, T& item) {
+    [[maybe_unused]] static bool includes(std::vector<std::reference_wrapper<T>> list, T& item) {
       using namespace std;
       
       return count_if(list.begin(), list.end(), [&](const reference_wrapper<T> &listItem) {

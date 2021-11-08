@@ -44,10 +44,10 @@ class LevelManager: public BundleManager {
   public:
     LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen);
     bool initialize() override;
-    
-    unsigned long getRealmsCount();
-    void getRealm(LevelRealm& realm, unsigned int realmId);
-    LevelRealm getRealm(unsigned int realmId);
+
+    [[maybe_unused]] unsigned long getRealmsCount();
+    [[maybe_unused]] void getRealm(LevelRealm& realm, unsigned int realmId);
+    [[maybe_unused]] LevelRealm getRealm(unsigned int realmId);
   
     bool load(LevelMap& levelMap, unsigned int realmId, unsigned int levelId);
 };

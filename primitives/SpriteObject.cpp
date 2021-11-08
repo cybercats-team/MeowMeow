@@ -4,19 +4,21 @@
 
 #include "SpriteObject.h"
 
+#include <utility>
+
 SpriteObject::SpriteObject() : Dimensions({}), SpriteInfo({}), frames({}), sprite() {}
 
-SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, const std::vector<sf::IntRect>& frames)
+SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, std::vector<sf::IntRect> frames)
   : Dimensions(size), SpriteInfo(info), frames(std::move(frames)), sprite(texture)
 {
   setFrameRect(0);
 };
 
-unsigned int SpriteObject::getWidth() const {
+[[maybe_unused]] unsigned int SpriteObject::getWidth() const {
   return width;
 }
 
-unsigned int SpriteObject::getHeight() const {
+[[maybe_unused]] unsigned int SpriteObject::getHeight() const {
   return height;
 }
 

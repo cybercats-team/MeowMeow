@@ -48,11 +48,11 @@ bool LevelManager::initialize() {
   return true;
 }
 
-unsigned long LevelManager::getRealmsCount() {
+[[maybe_unused]] unsigned long LevelManager::getRealmsCount() {
   return realms.size();
 }
 
-void LevelManager::getRealm(LevelRealm& realm, unsigned int realmId) {
+[[maybe_unused]] void LevelManager::getRealm(LevelRealm& realm, unsigned int realmId) {
   using namespace std;
   
   RealmInfo& info = realms[realmId];
@@ -64,7 +64,7 @@ void LevelManager::getRealm(LevelRealm& realm, unsigned int realmId) {
   fillLevelNames(realm.levelNames, realmId);
 }
 
-LevelRealm LevelManager::getRealm(unsigned int realmId) {
+[[maybe_unused]] LevelRealm LevelManager::getRealm(unsigned int realmId) {
   using namespace std;
   
   RealmInfo& info = realms[realmId];

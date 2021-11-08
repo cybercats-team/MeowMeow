@@ -25,7 +25,7 @@ class LevelScene : public Scene {
     void pushAnimatable(Animatable& sprite);
     void onAnimate();
   public:
-    LevelScene(LevelMap& map);
+    explicit LevelScene(LevelMap& map);
     void onPresented() override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

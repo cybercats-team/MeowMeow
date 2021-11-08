@@ -4,6 +4,8 @@
 
 #include "LevelMap.h"
 
+#include <cmath>
+
 LevelMap::LevelMap():
   AggregatedMapInfo(),
   sprites(),
@@ -38,7 +40,9 @@ void LevelMap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 void LevelMap::layoutMap() {
-  const float tileWidth = (float) tileSize.width;
+  using namespace std;
+
+  const auto tileWidth = (float) tileSize.width;
   
   mapView.width = (float) width * tileWidth;
   mapView.height = (float) height * (float) tileSize.height;
@@ -51,8 +55,10 @@ void LevelMap::layoutMap() {
 }
 
 void LevelMap::layoutBorder() {
-  const float tileWidth = (float) tileSize.width;
-  const float tileHeight = (float) tileSize.height;
+  using namespace std;
+
+  const auto tileWidth = (float) tileSize.width;
+  const auto tileHeight = (float) tileSize.height;
   
   borderView.width = ceil(mapView.left / tileWidth);
   borderView.height = ceil(mapView.top / tileHeight);

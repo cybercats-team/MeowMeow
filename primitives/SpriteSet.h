@@ -22,10 +22,10 @@ class SpriteSet {
 
     friend class SpriteManager;
   public:
-    [[nodiscard]] unsigned int getSpritesCount() const;
-    [[nodiscard]] unsigned int getSpriteWidth() const;
-    [[nodiscard]] unsigned int getSpriteHeight() const;
-    SpriteObject getSprite(unsigned int index);
+    [[maybe_unused]] [[nodiscard]] unsigned int getSpritesCount() const;
+    [[maybe_unused]] [[nodiscard]] unsigned int getSpriteWidth() const;
+    [[maybe_unused]] [[nodiscard]] unsigned int getSpriteHeight() const;
+    [[maybe_unused]] SpriteObject getSprite(unsigned int index);
     void getSprite(SpriteObject& spriteObject, unsigned int index);
 };
 

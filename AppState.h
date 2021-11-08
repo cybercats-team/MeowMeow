@@ -21,7 +21,7 @@ class AppState {
   
     friend class Application;
   public:
-    AppState(Container& container);
+    explicit AppState(Container& container);
 };
 
 #endif /* AppState_h */

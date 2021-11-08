@@ -35,11 +35,11 @@ bool ResourceManager::load(sf::Texture& texture, const std::string& path) {
   return texture.loadFromFile(getResourcePath(path, ResourceType::Texture));
 }
 
-bool ResourceManager::load(sf::Font& font, const std::string& path) {
+[[maybe_unused]] bool ResourceManager::load(sf::Font& font, const std::string& path) {
   return font.loadFromFile(getResourcePath(path, ResourceType::Font));
 }
 
-bool ResourceManager::load(sf::Music& music, const std::string& path) {
+[[maybe_unused]] bool ResourceManager::load(sf::Music& music, const std::string& path) {
   return music.openFromFile(getResourcePath(path, ResourceType::Music));
 }
 

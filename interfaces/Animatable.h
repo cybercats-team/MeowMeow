@@ -15,8 +15,8 @@ class Animatable {
   public:
     virtual void setFrame(unsigned int frame) = 0;
     virtual void nextFrame() = 0;
-    virtual unsigned int getAnimationDuration() const = 0;
-    virtual unsigned int getFramesCount() const = 0;
+    [[nodiscard]] virtual unsigned int getAnimationDuration() const = 0;
+    [[nodiscard]] virtual unsigned int getFramesCount() const = 0;
 };
 
 typedef struct AnimationState {
@@ -24,7 +24,7 @@ typedef struct AnimationState {
   Animatable& animatable;  
   sf::Int64 lastFrame;
   
-  AnimationState(Animatable& animatable) :
+  explicit AnimationState(Animatable& animatable) :
     lastFrame(0),
     animatable(animatable),
     frameInterval((sf::Int64) (1000.0 * (

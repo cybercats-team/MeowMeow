@@ -31,19 +31,20 @@ class SceneController :
   
     void clearFocused();
   public:
-    SceneController(Screen& screen);
+    explicit SceneController(Screen& screen);
     
     void present(Scene& scene);
     void pushScene(Scene& scene);
-  
-    void removeAll();
-    void remove(Scene& scene);
+
+    [[maybe_unused]] void removeAll();
+    [[maybe_unused]] void remove(Scene& scene);
     void remove(long sceneIndex);
     
     void focusTop();
-    void focus(Scene& scene);
     void focus(long sceneIndex);
-    bool hasFocused();
+    [[maybe_unused]] void focus(Scene& scene);
+
+    [[nodiscard]] bool hasFocused() const;
     Scene& getFocused();
   
     void onBeforeEvent() override;
