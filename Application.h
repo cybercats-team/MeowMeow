@@ -9,13 +9,9 @@
 
 #include "primitives/Screen.h"
 #include "services/ResourceManager.h"
-#include "interfaces/SceneController.h"
 #include "AppState.h"
 
 #include "Debug.h"
-
-#include "primitives/LevelMap.h" // TODO: remove
-#include "scenes/LevelScene.h"  // TODO: remove
 
 class Application {
   protected:

@@ -9,7 +9,7 @@
 #ifndef SplashController_h
 #define SplashController_h
 
-#include "../interfaces/SceneController.h"
+#include "../ui/SceneController.h"
 
 class SplashController :
   public SceneController

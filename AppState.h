@@ -9,20 +9,23 @@
 #ifndef AppState_h
 #define AppState_h
 
-#include "Container.h"
-#include "./interfaces/SceneController.h"
+#include <functional>
 
-#include "./controllers/SplashController.h"
+#include "Container.h"
+
+#include "./interfaces/Controller.h"
 
 class AppState {
   private:
     Container& container;
-    SceneController activeController;
+    std::reference_wrapper<Controller> activeController;
 
-    friend class Application;
     friend class SceneController;
   public:
     explicit AppState(Container& container);
+    ~AppState();
+
+    Controller& getActiveController();
 };
 
 #endif /* AppState_h */

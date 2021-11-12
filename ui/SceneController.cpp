@@ -15,6 +15,14 @@ SceneController::SceneController(AppState& appState) :
   focusedScene(-1),
   scenes({}) {}
 
+SceneController::~SceneController() {
+  removeAll();
+}
+
+bool SceneController::loadResources() {
+  return true;
+}
+
 void SceneController::present(Scene& scene) {
   pushScene(scene);
   focusTop();
@@ -99,14 +107,6 @@ Scene& SceneController::getFocused() {
   return scenes[focusedScene];
 }
 
-void SceneController::onBeforeEvent() {
-  if (hasFocused()) {
-    Scene& focused = getFocused();
-    
-    focused.onBeforeEvent();
-  }
-}
-
 void SceneController::onEvent(sf::Event& event) {
   // TODO: filter key-events only ?
   if (hasFocused()) {
@@ -135,8 +135,4 @@ void SceneController::clearFocused() {
     focused.onBlurred();
     focusedScene = -1;
   }
-}
-
-void SceneController::onDisposed() {
-  removeAll();
 }

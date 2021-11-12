@@ -14,7 +14,6 @@
 class EventHandler
 {
   public:
-    virtual void onBeforeEvent() = 0;
     virtual void onEvent(sf::Event& event) = 0;
     virtual void onBeforeRender() = 0;
 };

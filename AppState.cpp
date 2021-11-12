@@ -8,6 +8,17 @@
 
 #include "AppState.h"
 
+#include "controllers/SplashController.h"
+#include "controllers/LevelController.h"
+
 AppState::AppState(Container& container) :
   container(container),
-  activeController(SplashController(container.screen)) {}
+  activeController(std::ref(*(new SplashController(*this)))) {}
+
+Controller& AppState::getActiveController() {
+  return (Controller&) activeController;
+}
+
+AppState::~AppState() {
+  delete (Controller*) &activeController.get();
+}

@@ -12,19 +12,14 @@
 #include <vector>
 #include <functional>
 
-#include <SFML/Graphics.hpp>
-#include "EventHandler.h"
-
 #include "../AppState.h"
-#include "Scene.h"
+
+#include "../interfaces/Controller.h"
+#include "../interfaces/Scene.h"
 
 #include "../utils/Array.h"
 
-class SceneController :
-  public sf::Drawable,
-  public EventHandler,
-  public Disposable
-{
+class SceneController : public Controller {
   private:
     [[maybe_unused]] AppState& appState;
     Container& container;
@@ -36,6 +31,8 @@ class SceneController :
     void clearFocused();
   public:
     explicit SceneController(AppState& appState);
+    bool loadResources() override;
+    ~SceneController() override;
     
     void present(Scene& scene);
     void pushScene(Scene& scene);
@@ -51,13 +48,10 @@ class SceneController :
     [[nodiscard]] bool hasFocused() const;
     Scene& getFocused();
   
-    void onBeforeEvent() override;
     void onEvent(sf::Event& event) override;
   
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-    void onDisposed() override;
 };
 
 #endif /* SceneController_h */

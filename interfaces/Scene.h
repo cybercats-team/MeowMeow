@@ -23,7 +23,6 @@ class Scene :
     void onPresented() override {}
     void onFocused() override {}
     void onBlurred() override {}
-    void onBeforeEvent() override {}
     void onEvent(sf::Event& event) override {}
     void onBeforeRender() override {}
     void onDisposed() override {}

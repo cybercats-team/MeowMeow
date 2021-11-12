@@ -58,7 +58,7 @@ void Application::run() {
   using namespace std;
   
   /* TODO: remove */
-  LevelMap level{};
+  /*LevelMap level{};
 
   if (!container.levelManager.load(level, 0, 0)) {
     window.close();
@@ -67,16 +67,12 @@ void Application::run() {
 
   LevelScene scene(level);
   
-  appState.activeController.present(scene);
+  appState.activeController.present(scene);*/
   /* /TODO: */
   
   // Start the game loop
   while (window.isOpen())
   {
-    SceneController& controller = appState.activeController;
-    
-    controller.onBeforeEvent();
-    
     // Process events
     Event event{};
     
@@ -91,16 +87,18 @@ void Application::run() {
       if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
         window.close();
       }
-    
-      controller.onEvent(event);
+
+      appState.getActiveController().onEvent(event);
     }
 
+    Controller& activeController = appState.getActiveController();
+
     window.clear();
-  
-    controller.onBeforeRender();
+
+    activeController.onBeforeRender();
   
     // Draw the scenes
-    window.draw(controller);
+    window.draw(activeController);
           
     // Update the window
     window.display();
