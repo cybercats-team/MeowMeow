@@ -23,7 +23,7 @@ class Application {
     std::string appName;
   
   public:
-    Application(const std::string& appName, const std::string& withResourcePath);
+    Application(std::string appName, const std::string& withResourcePath);
   
     bool initialize();
     void run();

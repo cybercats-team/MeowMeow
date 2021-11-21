@@ -16,19 +16,19 @@ AppState::AppState(Container& container) :
   activeController(std::ref(*(new SplashController(*this)))) {}
 
 bool AppState::initialize() {
-  Controller& activeController = getActiveController();
+  Controller& controller = getActiveController();
   
-  return initializeController(activeController);
+  return initializeController(controller);
 }
 
-bool AppState::showSplash() {
-  SplashController* splashController = new SplashController(*this);
+[[maybe_unused]] bool AppState::showSplash() {
+  auto* splashController = new SplashController(*this);
   
   return setActiveController(splashController);
 }
 
 bool AppState::loadLevel(unsigned int realmId, unsigned int levelId) {
-  LevelController* levelController = new LevelController(*this, realmId, levelId);
+  auto* levelController = new LevelController(*this, realmId, levelId);
   
   return setActiveController(levelController);
 }

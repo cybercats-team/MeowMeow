@@ -188,7 +188,7 @@ void LevelManager::loadTiles(std::ifstream& levelFile, LevelMap& levelMap) {
       
       vector<unsigned int> colSprites{};
       unsigned int layersCount = info.layers;
-      unsigned int* layers = new unsigned int[layersCount];
+      auto* layers = new unsigned int[layersCount];
       
       levelFile.read((char *) layers, sizeof(unsigned int) * layersCount);
       

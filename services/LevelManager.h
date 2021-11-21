@@ -39,7 +39,7 @@ class LevelManager: public BundleManager {
     Dimensions getTileSize(MapInfo &info) const;
     
     bool loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int count);
-    void loadTiles(std::ifstream& levelFile, LevelMap& levelMap);
+    static void loadTiles(std::ifstream& levelFile, LevelMap& levelMap);
     void disposeSpritesUnused(std::map<ObjectType, std::vector<unsigned int>>& spriteSetsUsed);
   public:
     LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen);

@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Application::Application(const std::string& appName, const std::string& withResourcePath) :
+Application::Application(std::string appName, const std::string& withResourcePath) :
   screen(),
   appName(std::move(appName)),
   resourceManager(withResourcePath),

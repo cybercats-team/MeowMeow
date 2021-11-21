@@ -21,7 +21,7 @@ class AppState {
     std::reference_wrapper<Controller> activeController;
   
     bool setActiveController(Controller* controller);
-    bool initializeController(Controller& controller);
+    static bool initializeController(Controller& controller);
     void disposeController();
 
     friend class SceneController;
@@ -31,8 +31,8 @@ class AppState {
 
     bool initialize();
     Controller& getActiveController();
-  
-    bool showSplash();
+
+    [[maybe_unused]] bool showSplash();
     bool loadLevel(unsigned int realmId, unsigned int levelId);
 };
 

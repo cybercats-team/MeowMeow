@@ -17,7 +17,7 @@ bool LevelController::loadResources() {
   
   if (loaded) {
     levelScene.onMapLoaded();
-    pushScene(levelScene);
+    present(levelScene);
   }
   
   return loaded;

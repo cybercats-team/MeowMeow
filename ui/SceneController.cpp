@@ -23,7 +23,7 @@ bool SceneController::loadResources() {
   return true;
 }
 
-void SceneController::present(Scene& scene) {
+[[maybe_unused]] void SceneController::present(Scene& scene) {
   pushScene(scene);
   focusTop();
 }

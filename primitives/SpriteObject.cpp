@@ -4,8 +4,6 @@
 
 #include "SpriteObject.h"
 
-#include <utility>
-
 SpriteObject::SpriteObject() : Dimensions({}), SpriteInfo({}), frames({}), sprite() {}
 
 SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, const SpriteInfo& info, std::vector<sf::IntRect> frames)

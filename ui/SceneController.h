@@ -29,7 +29,7 @@ class SceneController : public Controller {
     AppState& appState;
     Container& container;
     Screen& screen;
-  
+
     void present(Scene& scene);
     void pushScene(Scene& scene);
 
