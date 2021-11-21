@@ -6,17 +6,7 @@
 
 #include <utility>
 
-Application* Application::instance = nullptr;
-
-Application* Application::create(const std::string& appName, const std::string& resourcePath) {
-  if (instance == nullptr) {
-    instance = new Application(appName, resourcePath);
-  }
-  
-  return instance;
-}
-
-Application::Application(std::string appName, const std::string& withResourcePath) :
+Application::Application(const std::string& appName, const std::string& withResourcePath) :
   screen(),
   appName(std::move(appName)),
   resourceManager(withResourcePath),
@@ -30,9 +20,10 @@ bool Application::initialize() {
   Image appIcon;
 
   if (
+    !resourceManager.load(appIcon, "icons/appIcon") ||
     !screen.initialize() ||
     !container.initialize() ||
-    !resourceManager.load(appIcon, "icons/appIcon")
+    !appState.initialize()
   ) {
     return false;
   }
@@ -58,16 +49,10 @@ void Application::run() {
   using namespace std;
   
   /* TODO: remove */
-  /*LevelMap level{};
-
-  if (!container.levelManager.load(level, 0, 0)) {
+  if (!appState.loadLevel(0, 0)) {
     window.close();
     return;
   }
-
-  LevelScene scene(level);
-  
-  appState.activeController.present(scene);*/
   /* /TODO: */
   
   // Start the game loop

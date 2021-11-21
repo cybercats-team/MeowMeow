@@ -19,13 +19,21 @@ class AppState {
   private:
     Container& container;
     std::reference_wrapper<Controller> activeController;
+  
+    bool setActiveController(Controller* controller);
+    bool initializeController(Controller& controller);
+    void disposeController();
 
     friend class SceneController;
   public:
     explicit AppState(Container& container);
     ~AppState();
 
+    bool initialize();
     Controller& getActiveController();
+  
+    bool showSplash();
+    bool loadLevel(unsigned int realmId, unsigned int levelId);
 };
 
 #endif /* AppState_h */

@@ -24,6 +24,9 @@ class Container {
   
     friend class AppState;
     friend class SceneController;
+  
+    friend class SplashController;
+    friend class LevelController;
   public:
     Container(Screen& screen, ResourceManager& resourceManager);
     bool initialize();

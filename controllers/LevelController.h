@@ -9,4 +9,22 @@
 #ifndef LevelController_h
 #define LevelController_h
 
+#include "../primitives/LevelMap.h"
+#include "../scenes/LevelScene.h"
+#include "../ui/SceneController.h"
+
+class LevelController :
+  public SceneController
+{
+  private:
+    unsigned int realmId;
+    unsigned int levelId;
+    LevelMap levelMap;
+    LevelScene levelScene;
+  
+  public:
+    LevelController(AppState& appState, unsigned int realmId, unsigned int levelId);
+    bool loadResources() override;
+};
+
 #endif /* LevelController_h */

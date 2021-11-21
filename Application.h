@@ -15,10 +15,6 @@
 
 class Application {
   protected:
-    Application(std::string appName, const std::string& withResourcePath);
-  
-    static Application* instance;
-    
     Screen screen;
     ResourceManager resourceManager;
     Container container;
@@ -27,10 +23,8 @@ class Application {
     std::string appName;
   
   public:
-    Application(Application &other) = delete;
-    void operator=(const Application &) = delete;
+    Application(const std::string& appName, const std::string& withResourcePath);
   
-    static Application* create(const std::string& appName, const std::string& resourcePath);
     bool initialize();
     void run();
 };

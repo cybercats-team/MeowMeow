@@ -12,7 +12,8 @@ class Controller :
   public sf::Drawable,
   public EventHandler
 {
-  virtual bool loadResources() = 0;
+  public:
+    virtual bool loadResources() = 0;  
 };
 
 #endif //Controller_h

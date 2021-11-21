@@ -21,19 +21,15 @@
 
 class SceneController : public Controller {
   private:
-    [[maybe_unused]] AppState& appState;
+    std::vector<std::reference_wrapper<Scene>> scenes;
+    long focusedScene;  
+    void clearFocused();
+  
+  protected:
+    AppState& appState;
     Container& container;
     Screen& screen;
-
-    std::vector<std::reference_wrapper<Scene>> scenes;
-    long focusedScene;
   
-    void clearFocused();
-  public:
-    explicit SceneController(AppState& appState);
-    bool loadResources() override;
-    ~SceneController() override;
-    
     void present(Scene& scene);
     void pushScene(Scene& scene);
 
@@ -47,9 +43,13 @@ class SceneController : public Controller {
 
     [[nodiscard]] bool hasFocused() const;
     Scene& getFocused();
+    
+  public:
+    explicit SceneController(AppState& appState);
+    bool loadResources() override;
+    ~SceneController() override;
   
-    void onEvent(sf::Event& event) override;
-  
+    void onEvent(sf::Event& event) override;  
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

@@ -8,11 +8,17 @@
 
 #include "LevelController.h"
 
-/*LevelMap level{};
+LevelController::LevelController(AppState& appState, unsigned int realmId, unsigned int levelId) :
+  SceneController(appState), realmId(realmId), levelId(levelId), levelMap(), levelScene(levelMap) {}
 
-if (!levelManager.load(level, 0, 0)) {
-  window.close();
-  return;
+bool LevelController::loadResources() {
+  LevelManager& levelManager = container.levelManager;
+  bool loaded = levelManager.load(levelMap, realmId, levelId);
+  
+  if (loaded) {
+    levelScene.onMapLoaded();
+    pushScene(levelScene);
+  }
+  
+  return loaded;
 }
-
-LevelScene scene(level);*/

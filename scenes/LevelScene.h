@@ -24,6 +24,9 @@ class LevelScene : public Scene {
   
     void pushAnimatable(Animatable& sprite);
     void onAnimate();
+    void onMapLoaded();
+  
+  friend class LevelController;
   public:
     explicit LevelScene(LevelMap& map);
     void onPresented() override;

@@ -14,11 +14,7 @@ LevelScene::LevelScene(LevelMap& map) :
   animated({}),
   animateTimer()
 {
-  for (auto& sprite: map.sprites) {
-    if (sprite.isAnimated()) {
-      pushAnimatable(sprite);
-    }
-  }
+  onMapLoaded();
 }
 
 void LevelScene::onPresented() {
@@ -31,6 +27,14 @@ void LevelScene::layout(Screen& screen) {
 
 void LevelScene::onBeforeRender() {
   onAnimate();
+}
+
+void LevelScene::onMapLoaded() {
+  for (auto& sprite: map.sprites) {
+    if (sprite.isAnimated()) {
+      pushAnimatable(sprite);
+    }
+  }
 }
 
 void LevelScene::onAnimate() {
