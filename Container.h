@@ -15,16 +15,17 @@
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
 
+//TODO: merge app state here
 class Container {
   private:
     Screen& screen;
     ResourceManager& resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
-  
+
     friend class AppState;
     friend class SceneController;
-  
+
     friend class SplashController;
     friend class LevelController;
   public:

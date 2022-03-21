@@ -9,30 +9,36 @@
 #ifndef AppState_h
 #define AppState_h
 
-#include <functional>
+#include <memory>
+#include <SFML/Graphics.hpp>
 
 #include "Container.h"
-
 #include "./interfaces/Controller.h"
+#include "./interfaces/EventHandler.h"
 
-class AppState {
+class AppState :
+  public sf::Drawable,
+  public EventHandler
+{
   private:
     Container& container;
-    std::reference_wrapper<Controller> activeController;
-  
+    std::unique_ptr<Controller> activeController;
+
     bool setActiveController(Controller* controller);
-    static bool initializeController(Controller& controller);
-    void disposeController();
 
     friend class SceneController;
   public:
     explicit AppState(Container& container);
-    ~AppState();
 
     bool initialize();
-    Controller& getActiveController();
+    bool hasActiveController() const;
+    Controller& getActiveController() const;
 
-    [[maybe_unused]] bool showSplash();
+    void onEvent(sf::Event& event) override;
+    void onBeforeRender() override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    bool showSplash();
     bool loadLevel(unsigned int realmId, unsigned int levelId);
 };
 

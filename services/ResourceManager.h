@@ -36,7 +36,7 @@ class ResourceManager {
   public:
     explicit ResourceManager(std::string basePath);
     std::string getResourcePath(const std::string& resourcePath, ResourceType resourceType);
-  
+
     bool load(sf::Image& image, const std::string& path);
     bool load(sf::Texture& texture, const std::string& path);
     bool load(std::ifstream& file, const std::string& path, ResourceType resourceType);

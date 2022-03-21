@@ -13,52 +13,63 @@
 
 AppState::AppState(Container& container) :
   container(container),
-  activeController(std::ref(*(new SplashController(*this)))) {}
+  activeController(nullptr) {}
 
 bool AppState::initialize() {
-  Controller& controller = getActiveController();
-  
-  return initializeController(controller);
+  return showSplash();
 }
 
-[[maybe_unused]] bool AppState::showSplash() {
+bool AppState::hasActiveController() const {
+  return nullptr != activeController.get();
+}
+
+Controller& AppState::getActiveController() const {
+  return *activeController.get();
+}
+
+bool AppState::setActiveController(Controller* controller) {
+  std::unique_ptr<Controller> controllerPtr(controller);
+  bool initialized = controllerPtr->loadResources();
+
+  if (initialized) {
+    activeController.swap(controllerPtr);
+  }
+
+  return initialized;
+}
+
+void AppState::onEvent(sf::Event& event) {
+  if (!hasActiveController()) {
+    return;
+  }
+
+  getActiveController().onEvent(event);
+}
+
+void AppState::onBeforeRender() {
+  if (!hasActiveController()) {
+    return;
+  }
+
+  getActiveController().onBeforeRender();
+}
+
+void AppState::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+  if (!hasActiveController()) {
+    return;
+  }
+
+  target.draw(getActiveController());
+}
+
+bool AppState::showSplash() {
   auto* splashController = new SplashController(*this);
-  
+
   return setActiveController(splashController);
 }
 
 bool AppState::loadLevel(unsigned int realmId, unsigned int levelId) {
   auto* levelController = new LevelController(*this, realmId, levelId);
-  
+
   return setActiveController(levelController);
-}
-
-Controller& AppState::getActiveController() {
-  return (Controller&) activeController;
-}
-
-bool AppState::setActiveController(Controller* controller) {
-  std::reference_wrapper<Controller> controllerRef = std::ref(*controller);
-  bool initialized = initializeController((Controller&) controllerRef);
-  
-  if (initialized) {
-    disposeController();
-    activeController = controllerRef;
-  } else {
-    delete controller;
-  }
-  
-  return initialized;
-}
-
-bool AppState::initializeController(Controller& controller) {
-  return controller.loadResources();
-}
-
-void AppState::disposeController() {
-  delete (Controller*) &activeController.get();
-}
-
-AppState::~AppState() {
-  disposeController();
 }

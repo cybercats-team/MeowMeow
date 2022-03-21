@@ -16,7 +16,7 @@ Application::Application(std::string appName, const std::string& withResourcePat
 bool Application::initialize() {
   using namespace std;
   using namespace sf;
-  
+
   Image appIcon;
 
   if (
@@ -27,9 +27,9 @@ bool Application::initialize() {
   ) {
     return false;
   }
-  
+
   Vector2u size = appIcon.getSize();
-    
+
   window.create(screen.selectedMode, appName, Style::Fullscreen);
   window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
   window.setFramerateLimit(60);
@@ -47,20 +47,20 @@ bool Application::initialize() {
 void Application::run() {
   using namespace sf;
   using namespace std;
-  
+
   /* TODO: remove */
   if (!appState.loadLevel(0, 0)) {
     window.close();
     return;
   }
   /* /TODO: */
-  
+
   // Start the game loop
   while (window.isOpen())
   {
     // Process events
     Event event{};
-    
+
     while (window.pollEvent(event))
     {
       // Close window: exit
@@ -73,18 +73,16 @@ void Application::run() {
         window.close();
       }
 
-      appState.getActiveController().onEvent(event);
+      appState.onEvent(event);
     }
-
-    Controller& activeController = appState.getActiveController();
 
     window.clear();
 
-    activeController.onBeforeRender();
-  
+    appState.onBeforeRender();
+
     // Draw the scenes
-    window.draw(activeController);
-          
+    window.draw(appState);
+
     // Update the window
     window.display();
   }
