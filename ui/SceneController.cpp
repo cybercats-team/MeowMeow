@@ -16,6 +16,7 @@ SceneController::SceneController(AppState& appState) :
   scenes({}) {}
 
 SceneController::~SceneController() {
+  debugPrint("Scene controller destroyed");
   removeAll();
 }
 
@@ -30,24 +31,24 @@ bool SceneController::loadResources() {
 
 void SceneController::pushScene(Scene& scene) {
   scenes.emplace_back(scene);
-  
+
   scene.onPresented();
   scene.layout(screen);
 }
 
 void SceneController::removeAll() {
   clearFocused();
-  
+
   for (Scene& scene: scenes) {
     scene.onDisposed();
   }
-  
+
   scenes.clear();
 }
 
 [[maybe_unused]] void SceneController::remove(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
-  
+
   if (sceneIndex >= 0) {
     remove(sceneIndex);
   }
@@ -57,16 +58,16 @@ void SceneController::remove(long sceneIndex) {
   if (sceneIndex >= scenes.size()) {
     return;
   }
-  
+
   Scene& scene = scenes[sceneIndex];
-  
+
   if (hasFocused() && (sceneIndex == focusedScene)) {
     clearFocused();
   }
-  
+
   scene.onDisposed();
   Array::remove(scenes, sceneIndex);
-  
+
   if (!hasFocused()) {
     focusTop();
   }
@@ -74,7 +75,7 @@ void SceneController::remove(long sceneIndex) {
 
 void SceneController::focusTop() {
   unsigned long scenesCount = scenes.size();
-  
+
   if (scenesCount > 0) {
     focus((long) (scenesCount - 1));
   }
@@ -82,7 +83,7 @@ void SceneController::focusTop() {
 
 [[maybe_unused]] void SceneController::focus(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
-  
+
   if (sceneIndex >= 0) {
     focus(sceneIndex);
   }
@@ -90,10 +91,10 @@ void SceneController::focusTop() {
 
 void SceneController::focus(long sceneIndex) {
   clearFocused();
-  
+
   if (sceneIndex < scenes.size()) {
     Scene& scene = scenes[sceneIndex];
-    
+
     focusedScene = sceneIndex;
     scene.onFocused();
   }
@@ -111,7 +112,7 @@ void SceneController::onEvent(sf::Event& event) {
   // TODO: filter key-events only ?
   if (hasFocused()) {
     Scene& focused = getFocused();
-    
+
     focused.onEvent(event);
   }
 }
@@ -131,7 +132,7 @@ void SceneController::draw(sf::RenderTarget& target, sf::RenderStates states) co
 void SceneController::clearFocused() {
   if (hasFocused()) {
     Scene& focused = getFocused();
-    
+
     focused.onBlurred();
     focusedScene = -1;
   }

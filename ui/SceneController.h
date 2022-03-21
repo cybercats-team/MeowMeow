@@ -18,13 +18,14 @@
 #include "../interfaces/Scene.h"
 
 #include "../utils/Array.h"
+#include "../Debug.h"
 
 class SceneController : public Controller {
   private:
     std::vector<std::reference_wrapper<Scene>> scenes;
-    long focusedScene;  
+    long focusedScene;
     void clearFocused();
-  
+
   protected:
     AppState& appState;
     Container& container;
@@ -36,20 +37,20 @@ class SceneController : public Controller {
     void removeAll();
     [[maybe_unused]] void remove(Scene& scene);
     void remove(long sceneIndex);
-    
+
     void focusTop();
     void focus(long sceneIndex);
     [[maybe_unused]] void focus(Scene& scene);
 
     [[nodiscard]] bool hasFocused() const;
     Scene& getFocused();
-    
+
   public:
     explicit SceneController(AppState& appState);
     bool loadResources() override;
     ~SceneController() override;
-  
-    void onEvent(sf::Event& event) override;  
+
+    void onEvent(sf::Event& event) override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

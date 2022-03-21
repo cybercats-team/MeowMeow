@@ -16,6 +16,8 @@
 #include "./interfaces/Controller.h"
 #include "./interfaces/EventHandler.h"
 
+#include "Debug.h"
+
 class AppState :
   public sf::Drawable,
   public EventHandler

@@ -32,9 +32,10 @@ bool AppState::setActiveController(Controller* controller) {
   bool initialized = controllerPtr->loadResources();
 
   if (initialized) {
-    activeController.swap(controllerPtr);
+    activeController = std::move(controllerPtr);
   }
 
+  debugPrint("Active controller updated");
   return initialized;
 }
 
