@@ -8,10 +8,9 @@
 
 #include "SceneController.h"
 
-SceneController::SceneController(AppState& appState) :
-  appState(appState),
-  container(appState.container),
-  screen(container.screen),
+SceneController::SceneController(Container& container) :
+  container(container),
+  screen(container.getScreen()),
   focusedScene(-1),
   scenes({}) {}
 
@@ -24,7 +23,7 @@ bool SceneController::loadResources() {
   return true;
 }
 
-[[maybe_unused]] void SceneController::present(Scene& scene) {
+void SceneController::present(Scene& scene) {
   pushScene(scene);
   focusTop();
 }
@@ -46,7 +45,7 @@ void SceneController::removeAll() {
   scenes.clear();
 }
 
-[[maybe_unused]] void SceneController::remove(Scene& scene) {
+void SceneController::remove(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
 
   if (sceneIndex >= 0) {
@@ -81,7 +80,7 @@ void SceneController::focusTop() {
   }
 }
 
-[[maybe_unused]] void SceneController::focus(Scene& scene) {
+void SceneController::focus(Scene& scene) {
   long sceneIndex = Array::indexOf(scenes, scene);
 
   if (sceneIndex >= 0) {

@@ -8,11 +8,11 @@
 
 #include "LevelController.h"
 
-LevelController::LevelController(AppState& appState, unsigned int realmId, unsigned int levelId) :
-  SceneController(appState), realmId(realmId), levelId(levelId), levelMap(), levelScene(levelMap) {}
+LevelController::LevelController(Container& container, unsigned int realmId, unsigned int levelId) :
+  SceneController(container), realmId(realmId), levelId(levelId), levelMap(), levelScene(levelMap) {}
 
 bool LevelController::loadResources() {
-  LevelManager& levelManager = container.levelManager;
+  LevelManager& levelManager = container.getLevelManager();
   bool loaded = levelManager.load(levelMap, realmId, levelId);
   
   if (loaded) {

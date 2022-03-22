@@ -9,7 +9,7 @@
 
 #include "primitives/Screen.h"
 #include "services/ResourceManager.h"
-#include "AppState.h"
+#include "Container.h"
 
 #include "Debug.h"
 
@@ -18,7 +18,6 @@ class Application {
     Screen screen;
     ResourceManager resourceManager;
     Container container;
-    AppState appState;
     sf::RenderWindow window{};
     std::string appName;
   

@@ -32,7 +32,7 @@ class LevelScene : public Scene {
     void onPresented() override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void layout(Screen& screen) override;
+    void layout(const Screen& screen) override;
 };
 
 #endif /* LevelScene_h */

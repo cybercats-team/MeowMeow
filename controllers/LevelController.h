@@ -23,7 +23,7 @@ class LevelController :
     LevelScene levelScene;
   
   public:
-    LevelController(AppState& appState, unsigned int realmId, unsigned int levelId);
+    LevelController(Container& container, unsigned int realmId, unsigned int levelId);
     bool loadResources() override;
 };
 

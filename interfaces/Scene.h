@@ -19,7 +19,7 @@ class Scene :
   public Presentable
 {
   public:
-    void layout(Screen& screen) override {}
+    void layout(const Screen& screen) override {}
     void onPresented() override {}
     void onFocused() override {}
     void onBlurred() override {}

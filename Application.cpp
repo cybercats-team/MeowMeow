@@ -10,8 +10,7 @@ Application::Application(std::string appName, const std::string& withResourcePat
   screen(),
   appName(std::move(appName)),
   resourceManager(withResourcePath),
-  container(screen, resourceManager),
-  appState(container) {}
+  container(screen, resourceManager) {}
 
 bool Application::initialize() {
   using namespace std;
@@ -22,8 +21,7 @@ bool Application::initialize() {
   if (
     !resourceManager.load(appIcon, "icons/appIcon") ||
     !screen.initialize() ||
-    !container.initialize() ||
-    !appState.initialize()
+    !container.initialize()
   ) {
     return false;
   }
@@ -49,7 +47,7 @@ void Application::run() {
   using namespace std;
 
   /* TODO: remove */
-  if (!appState.loadLevel(0, 0)) {
+  if (!container.loadLevel(0, 0)) {
     window.close();
     return;
   }
@@ -73,15 +71,15 @@ void Application::run() {
         window.close();
       }
 
-      appState.onEvent(event);
+      container.onEvent(event);
     }
 
     window.clear();
 
-    appState.onBeforeRender();
+    container.onBeforeRender();
 
     // Draw the scenes
-    window.draw(appState);
+    window.draw(container);
 
     // Update the window
     window.display();

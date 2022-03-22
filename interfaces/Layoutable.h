@@ -13,7 +13,7 @@
 
 class Layoutable {
   public:
-    virtual void layout(Screen& screen) = 0;
+    virtual void layout(const Screen& screen) = 0;
 };
 
 #endif /* Layoutable_h */

@@ -9,28 +9,49 @@
 #ifndef Container_h
 #define Container_h
 
+#include <memory>
+#include <SFML/Graphics.hpp>
+
+#include "./interfaces/Controller.h"
+#include "./interfaces/EventHandler.h"
+
 #include "primitives/Screen.h"
 
 #include "services/ResourceManager.h"
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
 
-//TODO: merge app state here
-class Container {
+#include "Debug.h"
+
+class Container :
+  public sf::Drawable,
+  public EventHandler
+{
   private:
     Screen& screen;
     ResourceManager& resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
+    std::unique_ptr<Controller> activeController;
 
-    friend class AppState;
-    friend class SceneController;
-
-    friend class SplashController;
-    friend class LevelController;
+    bool setActiveController(Controller* controller);
   public:
     Container(Screen& screen, ResourceManager& resourceManager);
     bool initialize();
+  
+    void onEvent(sf::Event& event) override;
+    void onBeforeRender() override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  
+    bool hasActiveController() const;
+    Controller& getActiveController() const;
+    Screen& getScreen();
+    ResourceManager& getResourceManager();
+    SpriteManager& getSpriteManager();
+    LevelManager& getLevelManager();
+  
+    bool showSplash();
+    bool loadLevel(unsigned int realmId, unsigned int levelId);
 };
 
 #endif /* Container_h */

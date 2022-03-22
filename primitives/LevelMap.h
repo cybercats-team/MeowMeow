@@ -46,7 +46,7 @@ class LevelMap :
   public:
     LevelMap();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    void layout(Screen& screen) override;
+    void layout(const Screen& screen) override;
 };
 
 #endif //LevelMap_h

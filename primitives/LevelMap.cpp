@@ -21,7 +21,7 @@ LevelMap::LevelMap():
   nextBorderCol(),
   borderColHeight(0) {}
 
-void LevelMap::layout(Screen& screen) {
+void LevelMap::layout(const Screen& screen) {
   screenView.width = (float) screen.getWidth();
   screenView.height = (float) screen.getHeight();
   newLine.y = (float) tileSize.height;

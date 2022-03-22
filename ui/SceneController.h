@@ -12,7 +12,7 @@
 #include <vector>
 #include <functional>
 
-#include "../AppState.h"
+#include "../Container.h"
 
 #include "../interfaces/Controller.h"
 #include "../interfaces/Scene.h"
@@ -27,26 +27,25 @@ class SceneController : public Controller {
     void clearFocused();
 
   protected:
-    AppState& appState;
     Container& container;
-    Screen& screen;
+    const Screen& screen;
 
     void present(Scene& scene);
     void pushScene(Scene& scene);
 
     void removeAll();
-    [[maybe_unused]] void remove(Scene& scene);
+    void remove(Scene& scene);
     void remove(long sceneIndex);
 
     void focusTop();
     void focus(long sceneIndex);
-    [[maybe_unused]] void focus(Scene& scene);
+    void focus(Scene& scene);
 
-    [[nodiscard]] bool hasFocused() const;
+    bool hasFocused() const;
     Scene& getFocused();
 
   public:
-    explicit SceneController(AppState& appState);
+    explicit SceneController(Container& container);
     bool loadResources() override;
     ~SceneController() override;
 

@@ -21,7 +21,7 @@ void LevelScene::onPresented() {
   animateTimer.restart();
 }
 
-void LevelScene::layout(Screen& screen) {
+void LevelScene::layout(const Screen& screen) {
   map.layout(screen);
 }
 
