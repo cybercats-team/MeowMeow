@@ -66,15 +66,15 @@ void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(getActiveController());
 }
 
-Screen& Container::getScreen() {
+const Screen& Container::getScreen() const {
   return screen;
 }
 
-ResourceManager& Container::getResourceManager() {
+const ResourceManager& Container::getResourceManager() const {
   return resourceManager;
 }
 
-SpriteManager& Container::getSpriteManager() {
+const SpriteManager& Container::getSpriteManager() const {
   return spriteManager;
 }
 

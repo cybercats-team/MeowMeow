@@ -45,9 +45,9 @@ class Container :
   
     bool hasActiveController() const;
     Controller& getActiveController() const;
-    Screen& getScreen();
-    ResourceManager& getResourceManager();
-    SpriteManager& getSpriteManager();
+    const Screen& getScreen() const;
+    const ResourceManager& getResourceManager() const;
+    const SpriteManager& getSpriteManager() const;
     LevelManager& getLevelManager();
   
     bool showSplash();
