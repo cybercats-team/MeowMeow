@@ -12,11 +12,11 @@ SpriteObject::SpriteObject(const sf::Texture& texture, const Dimensions& size, c
   setFrameRect(0);
 };
 
-[[maybe_unused]] unsigned int SpriteObject::getWidth() const {
+unsigned int SpriteObject::getWidth() const {
   return width;
 }
 
-[[maybe_unused]] unsigned int SpriteObject::getHeight() const {
+unsigned int SpriteObject::getHeight() const {
   return height;
 }
 
@@ -43,11 +43,11 @@ void SpriteObject::setFrame(unsigned int frame) {
 
 void SpriteObject::nextFrame() {
   unsigned int next = currentFrame + 1;
-  
+
   if (next > (framesCount - 1)) {
     next = 0;
   }
-  
+
   setFrame(next);
 }
 

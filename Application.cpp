@@ -61,13 +61,13 @@ void Application::run() {
 
     while (window.pollEvent(event))
     {
-      // Close window: exit
-      if (event.type == Event::Closed) {
-        window.close();
-      }
 
-      // Escape pressed: exit
-      if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
+      if (
+        // Close window: exit
+        (event.type == Event::Closed) ||
+        // Escape pressed: exit
+        (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+      ) {
         window.close();
       }
 
@@ -84,4 +84,6 @@ void Application::run() {
     // Update the window
     window.display();
   }
+
+  container.onDisposed();
 }

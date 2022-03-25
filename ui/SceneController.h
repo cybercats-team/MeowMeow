@@ -47,7 +47,7 @@ class SceneController : public Controller {
   public:
     explicit SceneController(Container& container);
     bool loadResources() override;
-    ~SceneController() override;
+    void onDisposed() override;
 
     void onEvent(sf::Event& event) override;
     void onBeforeRender() override;

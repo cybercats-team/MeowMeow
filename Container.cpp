@@ -35,11 +35,23 @@ bool Container::setActiveController(Controller* controller) {
   bool initialized = controllerPtr->loadResources();
 
   if (initialized) {
+    disposeActiveController();
     activeController = std::move(controllerPtr);
+  } else {
+    controllerPtr->onDisposed();
   }
 
-  debugPrint("Active controller updated");
   return initialized;
+}
+
+void Container::disposeActiveController() {
+  if (hasActiveController()) {
+    getActiveController().onDisposed();
+  }
+}
+
+void Container::onDisposed() {
+  disposeActiveController();
 }
 
 void Container::onEvent(sf::Event& event) {

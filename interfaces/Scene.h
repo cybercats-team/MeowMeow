@@ -12,11 +12,13 @@
 #include <SFML/Graphics.hpp>
 #include "Layoutable.h"
 #include "Presentable.h"
+#include "Disposable.h"
 
 class Scene :
   public sf::Drawable,
   public Layoutable,
-  public Presentable
+  public Presentable,
+  public Disposable
 {
   public:
     void layout(const Screen& screen) override {}

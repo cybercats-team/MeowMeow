@@ -7,13 +7,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "../interfaces/EventHandler.h"
+#include "../interfaces/Disposable.h"
 
 class Controller :
   public sf::Drawable,
-  public EventHandler
+  public EventHandler,
+  public Disposable
 {
   public:
-    virtual bool loadResources() = 0;  
+    virtual bool loadResources() = 0;
 };
 
 #endif //Controller_h

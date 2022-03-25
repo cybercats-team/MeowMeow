@@ -14,6 +14,7 @@
 #include "../interfaces/Scene.h"
 #include "../primitives/LevelMap.h"
 #include "../utils/Math.h"
+#include "../Debug.h"
 
 class LevelScene : public Scene {
   private:
@@ -21,12 +22,12 @@ class LevelScene : public Scene {
     std::vector<AnimationState> animated;
     sf::Int64 maxFrameInterval;
     sf::Clock animateTimer;
-  
+
     void pushAnimatable(Animatable& sprite);
     void onAnimate();
     void onMapLoaded();
-  
-  friend class LevelController;
+
+    friend class LevelController;
   public:
     explicit LevelScene(LevelMap& map);
     void onPresented() override;

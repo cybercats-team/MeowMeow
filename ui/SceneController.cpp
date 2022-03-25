@@ -14,13 +14,12 @@ SceneController::SceneController(Container& container) :
   focusedScene(-1),
   scenes({}) {}
 
-SceneController::~SceneController() {
-  debugPrint("Scene controller destroyed");
-  removeAll();
-}
-
 bool SceneController::loadResources() {
   return true;
+}
+
+void SceneController::onDisposed() {
+  removeAll();
 }
 
 void SceneController::present(Scene& scene) {

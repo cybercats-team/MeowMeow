@@ -14,11 +14,11 @@ LevelController::LevelController(Container& container, unsigned int realmId, uns
 bool LevelController::loadResources() {
   LevelManager& levelManager = container.getLevelManager();
   bool loaded = levelManager.load(levelMap, realmId, levelId);
-  
+
   if (loaded) {
     levelScene.onMapLoaded();
     present(levelScene);
   }
-  
+
   return loaded;
 }

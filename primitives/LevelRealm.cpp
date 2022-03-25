@@ -17,14 +17,14 @@ LevelRealm::LevelRealm(std::string realmName, unsigned int levelsCount, std::vec
   realmName(std::move(realmName)),
   levelNames(std::move(levelNames)) {}
 
-[[maybe_unused]] unsigned int LevelRealm::getLevelsCount() const {
+unsigned int LevelRealm::getLevelsCount() const {
   return levelsCount;
 }
 
-[[maybe_unused]] std::string LevelRealm::getName() const {
+std::string LevelRealm::getName() const {
   return realmName;
 }
 
-[[maybe_unused]] std::string LevelRealm::getLevelName(unsigned int level) const {
+std::string LevelRealm::getLevelName(unsigned int level) const {
   return levelNames[level];
 }

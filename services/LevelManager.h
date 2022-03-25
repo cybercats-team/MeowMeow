@@ -27,7 +27,7 @@ class LevelManager: public BundleManager {
   private:
     const std::string bundlePath = "levels";
     SpriteManager& spriteManager;
-  
+
     std::vector<RealmInfo> realms;
     std::vector<std::vector<LevelInfo>> levels;
     std::map<ObjectType, std::map<unsigned int, SpriteSet>> spriteSets = {
@@ -37,7 +37,7 @@ class LevelManager: public BundleManager {
 
     void fillLevelNames(std::vector<std::string>& levelNames, unsigned int realmId);
     Dimensions getTileSize(MapInfo &info) const;
-    
+
     bool loadSprites(std::ifstream& levelFile, LevelMap& levelMap, unsigned int count);
     static void loadTiles(std::ifstream& levelFile, LevelMap& levelMap);
     void disposeSpritesUnused(std::map<ObjectType, std::vector<unsigned int>>& spriteSetsUsed);
@@ -45,10 +45,10 @@ class LevelManager: public BundleManager {
     LevelManager(SpriteManager& spriteManager, ResourceManager& resourceManager, Screen& screen);
     bool initialize() override;
 
-    [[maybe_unused]] unsigned long getRealmsCount();
-    [[maybe_unused]] void getRealm(LevelRealm& realm, unsigned int realmId);
-    [[maybe_unused]] LevelRealm getRealm(unsigned int realmId);
-  
+    unsigned long getRealmsCount();
+    void getRealm(LevelRealm& realm, unsigned int realmId);
+    LevelRealm getRealm(unsigned int realmId);
+
     bool load(LevelMap& levelMap, unsigned int realmId, unsigned int levelId);
 };
 

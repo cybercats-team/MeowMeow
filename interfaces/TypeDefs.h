@@ -54,8 +54,8 @@ typedef struct ResourceInfo {
 
 typedef struct BundleHeader {
   char magic[7] = TEXTURE_BUNDLE_MAGIC;
-  [[maybe_unused]] BundleType bundleType = BundleType::TexturesList;
-  [[maybe_unused]] ObjectType objectType = ObjectType::Terrain;
+  BundleType bundleType = BundleType::TexturesList;
+  ObjectType objectType = ObjectType::Terrain;
   unsigned int itemsCount = 0;
 } BundleHeader;
 
@@ -88,7 +88,7 @@ typedef struct RealmInfo {
 
 typedef struct LevelInfo {
   char levelName[RESOURCE_MAX_TITLE] = "";
-  char path[RESOURCE_MAX_PATH] = ""; 
+  char path[RESOURCE_MAX_PATH] = "";
 } LevelInfo;
 
 typedef struct SpriteRef {
@@ -107,7 +107,7 @@ typedef struct AggregatedMapInfo: public Dimensions {
   Dimensions tileSize{};
 } AggregatedMapInfo;
 
-[[maybe_unused]] typedef struct TextureInfo {
+typedef struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
 } TextureItem;
 

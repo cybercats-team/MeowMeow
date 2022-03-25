@@ -32,8 +32,8 @@ class SpriteObject :
     void setFrame(unsigned int frame) override;
     void nextFrame() override;
 
-    [[maybe_unused]] [[nodiscard]] unsigned int getWidth() const;
-    [[maybe_unused]] [[nodiscard]] unsigned int getHeight() const;
+    [[nodiscard]] unsigned int getWidth() const;
+    [[nodiscard]] unsigned int getHeight() const;
     [[nodiscard]] bool isAnimated() const;
     [[nodiscard]] unsigned int getAnimationDuration() const override;
     [[nodiscard]] unsigned int getFramesCount() const override;
