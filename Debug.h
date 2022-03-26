@@ -10,16 +10,25 @@
 #define Debug_h
 
 #include <string>
+#include <functional>
+
 #ifdef DEBUG
 #include <iostream>
 #endif
 
+typedef std::function<void(const std::string&)> CustomLogger;
+
+class DebugLogger {
+  private:
+    static CustomLogger customLogger;
+
+  public:
+    static void setCustomLogger(CustomLogger logger);
+    static void debug(const std::string& message);
+};
+
 inline void debugPrint(const std::string& message) {
-#ifdef DEBUG
-  using namespace std;
-  
-  cout << message << endl;
-#endif
+  DebugLogger::debug(message);
 }
 
 #endif /* Debug_h */
