@@ -7,21 +7,35 @@
 class Platform {
   private:
     std::string nlString;
-  public:
-    Platform(): nlString() {
+    std::string resourcePathString;
+
+    const std::string getNLString() {
       using namespace std;
 
       ostringstream nlStream;
-      
       nlStream << endl;
-      nlString = nlStream.str();
+
+      return nlStream.str();
     }
+
+  protected:
+    virtual const std::string getResourcePath() = 0;
+
+  public:
+    Platform() : resourcePathString(),
+      nlString(std::move(getNLString())) {}
 
     const std::string& nl() {
       return nlString;
     }
 
-    virtual const std::string& resourcePath() = 0;
+    const std::string& resourcePath() {
+      if (resourcePathString.length() == 0) {
+        resourcePathString = std::move(getResourcePath());
+      }
+
+      return resourcePathString;
+    }
 };
 
 #endif
