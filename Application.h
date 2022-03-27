@@ -7,11 +7,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "primitives/Screen.h"
-#include "services/ResourceManager.h"
 #include "Container.h"
+#include "primitives/Screen.h"
+#include "interfaces/Platform.h"
+#include "services/ResourceManager.h"
 
-#include "Debug.h"
+#include "utils/Debug.h"
 
 class Application {
   protected:

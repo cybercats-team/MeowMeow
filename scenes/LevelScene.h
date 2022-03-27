@@ -14,7 +14,7 @@
 #include "../interfaces/Scene.h"
 #include "../primitives/LevelMap.h"
 #include "../utils/Math.h"
-#include "../Debug.h"
+#include "../utils/Debug.h"
 
 class LevelScene : public Scene {
   private:

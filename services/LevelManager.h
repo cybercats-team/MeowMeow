@@ -12,7 +12,7 @@
 #include <vector>
 #include "../utils/Array.h"
 
-#include "../Debug.h"
+#include "../utils/Debug.h"
 #include "../interfaces/TypeDefs.h"
 
 #include "../primitives/LevelRealm.h"

@@ -9,7 +9,7 @@
 
 #include "../interfaces/Animatable.h"
 #include "../interfaces/TypeDefs.h"
-#include "../Debug.h"
+#include "../utils/Debug.h"
 
 class SpriteObject :
   private Dimensions,

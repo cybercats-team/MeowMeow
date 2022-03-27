@@ -22,7 +22,7 @@
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
 
-#include "Debug.h"
+#include "./utils/Debug.h"
 
 class Container :
   public sf::Drawable,

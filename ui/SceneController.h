@@ -18,7 +18,7 @@
 #include "../interfaces/Scene.h"
 
 #include "../utils/Array.h"
-#include "../Debug.h"
+#include "../utils/Debug.h"
 
 class SceneController : public Controller {
   private:

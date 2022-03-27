@@ -14,7 +14,7 @@
 #include "../interfaces/BundleManager.h"
 #include "../primitives/SpriteSet.h"
 #include "../interfaces/TypeDefs.h"
-#include "../Debug.h"
+#include "../utils/Debug.h"
 
 class SpriteManager: public BundleManager {
   private:

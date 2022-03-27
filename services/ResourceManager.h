@@ -15,7 +15,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../interfaces/TypeDefs.h"
-#include "../Debug.h"
+#include "../utils/Debug.h"
 
 class ResourceManager {
   private:
