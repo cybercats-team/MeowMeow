@@ -15,6 +15,7 @@
 #include "./interfaces/Controller.h"
 #include "./interfaces/EventHandler.h"
 #include "./interfaces/Disposable.h"
+#include "./interfaces/Platform.h"
 
 #include "primitives/Screen.h"
 
@@ -31,6 +32,7 @@ class Container :
 {
   private:
     Screen& screen;
+    Platform& platform;
     ResourceManager& resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
@@ -39,7 +41,7 @@ class Container :
     bool setActiveController(Controller* controller);
     void disposeActiveController();
   public:
-    Container(Screen& screen, ResourceManager& resourceManager);
+    Container(Platform& platform, Screen& screen, ResourceManager& resourceManager);
     bool initialize();
     void onDisposed() override;
 

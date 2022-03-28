@@ -8,25 +8,26 @@
 
 #include "ResourceManager.h"
 
-#include <utility>
+ResourceManager::ResourceManager(Platform& platform)
+  : platform(platform), basePath(platform.resourcePath()) {}
 
-ResourceManager::ResourceManager(std::string resourcesPath) : basePath(std::move(resourcesPath)) {}
-
-std::string ResourceManager::getResourcePath(const std::string& path, ResourceType resourceType) {
+std::string ResourceManager::getResourcePath(const std::string& resourcePath, ResourceType resourceType) {
   using namespace std;
+  using namespace std::filesystem;
 
-  string appendedPath = path;
   const ResourceInfo& info = typesInfo[resourceType];
+  path normalizedPath = path(resourcePath).lexically_normal();
 
-  if (!hasExtension(appendedPath)) {
-    appendedPath += info.defaultExtension;
+  if (!normalizedPath.has_extension()) {
+    normalizedPath += info.defaultExtension;
   }
 
-  if (ds() != '/') {
-    replace(appendedPath.begin(), appendedPath.end(), '/', ds());
-  }
+  path fullPath(basePath);
 
-  return basePath + info.resourceTypePath + ds() + appendedPath;
+  fullPath /= info.resourceTypePath;
+  fullPath /= normalizedPath;
+
+  return fullPath.string();
 }
 
 bool ResourceManager::load(sf::Image& image, const std::string& path) {
@@ -72,24 +73,4 @@ bool ResourceManager::load(std::ifstream& file, const std::string& path, Resourc
   }
 
   return true;
-}
-
-inline char ResourceManager::ds() {
-#ifdef _WIN32
-  return '\\';
-#else
-  return '/';
-#endif
-}
-
-inline bool ResourceManager::hasExtension(const std::string& resourcePath) {
-  using namespace std;
-
-  size_t dotPosition = resourcePath.rfind('.');
-
-  if (dotPosition == string::npos) {
-    return false;
-  }
-
-  return dotPosition >= (resourcePath.length() - 7);
 }

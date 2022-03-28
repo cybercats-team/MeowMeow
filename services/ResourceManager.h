@@ -11,10 +11,13 @@
 
 #include <fstream>
 #include <cstring>
+#include <utility>
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "../interfaces/TypeDefs.h"
+#include "../interfaces/Platform.h"
 #include "../utils/Debug.h"
 
 class ResourceManager {
@@ -28,13 +31,10 @@ class ResourceManager {
       {ResourceType::TextureBundle, { .resourceTypePath = "bundles", .defaultExtension = ".bundle" }}
     };
 
+    Platform& platform;
     std::string basePath;
-
-    // private FS helpers
-    static char ds();
-    static bool hasExtension(const std::string& resourcePath);
   public:
-    explicit ResourceManager(std::string basePath);
+    explicit ResourceManager(Platform& platform);
     std::string getResourcePath(const std::string& resourcePath, ResourceType resourceType);
 
     bool load(sf::Image& image, const std::string& path);

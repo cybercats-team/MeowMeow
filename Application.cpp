@@ -6,11 +6,12 @@
 
 #include <utility>
 
-Application::Application(std::string appName, const std::string& withResourcePath) :
+Application::Application(std::string appName, Platform& platform) :
   screen(),
+  platform(platform),
   appName(std::move(appName)),
-  resourceManager(withResourcePath),
-  container(screen, resourceManager) {}
+  resourceManager(platform),
+  container(platform, screen, resourceManager) {}
 
 bool Application::initialize() {
   using namespace std;

@@ -10,8 +10,8 @@
 #include "controllers/SplashController.h"
 #include "controllers/LevelController.h"
 
-Container::Container(Screen& screen, ResourceManager& resourceManager) :
-  screen(screen), resourceManager(resourceManager),
+Container::Container(Platform& platform, Screen& screen, ResourceManager& resourceManager) :
+  screen(screen), platform(platform), resourceManager(resourceManager),
   spriteManager(resourceManager, screen),
   levelManager(spriteManager, resourceManager, screen),
   activeController(nullptr) {}

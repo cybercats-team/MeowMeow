@@ -17,14 +17,15 @@
 class Application {
   protected:
     Screen screen;
+    Platform& platform;
     ResourceManager resourceManager;
     Container container;
     sf::RenderWindow window{};
     std::string appName;
-  
+
   public:
-    Application(std::string appName, const std::string& withResourcePath);
-  
+    Application(std::string appName, Platform& platform);
+
     bool initialize();
     void run();
 };

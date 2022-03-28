@@ -3,6 +3,7 @@
 
 #include <string>
 #include <sstream>
+#include <filesystem>
 
 class Platform {
   private:
@@ -27,6 +28,10 @@ class Platform {
 
     const std::string& nl() {
       return nlString;
+    }
+
+    const char ds() {
+      return std::filesystem::path::preferred_separator;
     }
 
     const std::string& resourcePath() {
