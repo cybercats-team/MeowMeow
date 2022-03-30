@@ -19,7 +19,7 @@ bool SpriteManager::initialize() {
     BundleHeader header {};
     TextureInfo textureItem {};
 
-    Debug::printf("Loading bundle " + path);
+    Debug::printf("Loading bundle %s", path);
     
     if (!resourceManager.load(listFile, header, path)) {
       return false;
@@ -30,7 +30,7 @@ bool SpriteManager::initialize() {
       
       string texturePath(textureItem.infoPath);
       spriteSetsPaths[objectType].push_back(texturePath);
-      Debug::printf("Added texture ref " + texturePath);
+      Debug::printf("Added texture ref %s", texturePath);
     }
     
     listFile.close();    
@@ -42,16 +42,15 @@ bool SpriteManager::initialize() {
 bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned int index) {
   using namespace std;
 
-  Debug::printf("Loading " +
-    (string) (objectType == ObjectType::Terrain ? "terrain" : "mobile object") +
-    " sprite set #" +
-    to_string(index)
+  Debug::printf("Loading %s sprite set #%d",
+    (objectType == ObjectType::Terrain ? "terrain" : "mobile object"), 
+    index
   );
 
   vector<string>& paths = spriteSetsPaths[objectType];
 
   if (index > paths.size()) {
-    Debug::printf("SpriteObject set #" + to_string(index) + "not exists");
+    Debug::printf("SpriteObject set #%d not exists", index);
     return false;
   }
 
@@ -59,7 +58,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
   BundleHeader header {};
   string& path = paths[index];
 
-  Debug::printf("Loading bundle " + path);
+  Debug::printf("Loading bundle %s", path);
 
   if (!resourceManager.load(spriteFile, header, path)) {
     return false;
@@ -95,7 +94,7 @@ bool SpriteManager::load(SpriteSet &spriteSet, ObjectType objectType, unsigned i
 
   spriteFile.close();
 
-  Debug::printf("Loading texture " + texturePath);
+  Debug::printf("Loading texture %s", texturePath);
 
   return resourceManager.load(spriteSet.texture, texturePath);
 }

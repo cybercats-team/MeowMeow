@@ -9,7 +9,7 @@
 Application::Application(std::string appName, Platform& platform) :
   screen(),
   platform(platform),
-  appName(std::move(appName)),
+  appName(appName),
   resourceManager(platform),
   container(platform, screen, resourceManager) {}
 
@@ -34,10 +34,8 @@ bool Application::initialize() {
   window.setFramerateLimit(60);
 
   Debug::printf(
-    "Initialized app window " +
-    to_string(screen.getWidth()) + "x" +
-    to_string(screen.getHeight()) +
-    " \"" + appName +"\""
+    "Initialized app window %dx%d \"%s\"", 
+    screen.getWidth(), screen.getHeight(), appName
   );
 
   return true;

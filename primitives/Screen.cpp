@@ -31,15 +31,13 @@ bool Screen::initialize() {
         ? ScreenScale::UltraHD
         : ScreenScale::RetinaOr2K;
   }
-  
+
   Debug::printf(
-    "Initialized video mode " +
-    to_string(screenWidth) + "x" +
-    to_string(selectedMode.height) + ", " +
-    to_string(selectedMode.bitsPerPixel) + "-bit colors " +
-    to_string(static_cast<int>(scale) + 1) + "x scale"
+    "Initialized video mode %dx%d, %d-bit colors %dx scale",
+    screenWidth, selectedMode.height, selectedMode.bitsPerPixel, 
+    static_cast<int>(scale) + 1
   );
-  
+
   return true;
 }
 
