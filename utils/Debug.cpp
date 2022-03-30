@@ -1,22 +1,24 @@
 #include "Debug.h"
 
-CustomLogger DebugLogger::customLogger = nullptr;
-
-void DebugLogger::setCustomLogger(CustomLogger logger) {
 #ifdef DEBUG
-  customLogger = std::move(logger);
+#include <iostream>
+#endif
+
+Debug::DefaultLogger Debug::defaultLogger{};
+std::reference_wrapper<CustomLogger> Debug::logger = std::ref(Debug::defaultLogger);
+
+void Debug::DefaultLogger::print(const std::string& message) {
+#ifdef DEBUG
+  using namespace std;
+  
+  cout << message << endl;
 #endif
 }
 
-void DebugLogger::debug(const std::string& message) {
-#ifdef DEBUG
-  using namespace std;
+void Debug::setCustomLogger(CustomLogger& customLogger) {
+  logger = std::ref(customLogger);
+}
 
-  if (customLogger == nullptr) {
-    cout << message << endl;
-  }
-  else {
-    customLogger(message);
-  }
-#endif
+void Debug::reset() {
+  logger = std::ref(defaultLogger);
 }

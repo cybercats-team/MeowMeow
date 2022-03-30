@@ -21,7 +21,7 @@ bool LevelManager::initialize() {
   BundleHeader header{};
   RealmInfo info{};
 
-  debugPrint("Loading bundle " + bundlePath);
+  Debug::printf("Loading bundle " + bundlePath);
 
   if (!resourceManager.load(listFile, header, bundlePath)) {
     return false;
@@ -38,7 +38,7 @@ bool LevelManager::initialize() {
       listFile.read((char *) &levelInfo, sizeof(levelInfo));
       levelsList.push_back(levelInfo);
 
-      debugPrint("Added level " + string(levelInfo.path));
+      Debug::printf("Added level " + string(levelInfo.path));
     }
 
     levels.push_back(levelsList);
@@ -79,14 +79,14 @@ bool LevelManager::load(LevelMap& levelMap, unsigned int realmId, unsigned int l
   using namespace std;
 
   if (realmId > levels.size()) {
-    debugPrint("Realm #" + to_string(realmId) + "not exists");
+    Debug::printf("Realm #" + to_string(realmId) + "not exists");
     return false;
   }
 
   vector<LevelInfo>& realmLevels = levels[realmId];
 
   if (levelId > realmLevels.size()) {
-    debugPrint("Level #" + to_string(realmId) + "." + to_string(levelId) + " not exists");
+    Debug::printf("Level #" + to_string(realmId) + "." + to_string(levelId) + " not exists");
     return false;
   }
 
@@ -94,7 +94,7 @@ bool LevelManager::load(LevelMap& levelMap, unsigned int realmId, unsigned int l
   BundleHeader header {};
   string path(realmLevels[levelId].path);
 
-  debugPrint("Loading bundle " + path);
+  Debug::printf("Loading bundle " + path);
 
   if (!resourceManager.load(levelFile, header, path)) {
     return false;

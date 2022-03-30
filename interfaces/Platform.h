@@ -24,7 +24,7 @@ class Platform {
 
   public:
     Platform() : resourcePathString(),
-      nlString(std::move(getNLString())) {}
+      nlString(getNLString()) {}
 
     const std::string& nl() {
       return nlString;
@@ -36,7 +36,7 @@ class Platform {
 
     const std::string& resourcePath() {
       if (resourcePathString.length() == 0) {
-        resourcePathString = std::move(getResourcePath());
+        resourcePathString = getResourcePath();
       }
 
       return resourcePathString;

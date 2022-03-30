@@ -32,7 +32,7 @@ bool Screen::initialize() {
         : ScreenScale::RetinaOr2K;
   }
   
-  debugPrint(
+  Debug::printf(
     "Initialized video mode " +
     to_string(screenWidth) + "x" +
     to_string(selectedMode.height) + ", " +

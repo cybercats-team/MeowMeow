@@ -33,7 +33,7 @@ bool Application::initialize() {
   window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
   window.setFramerateLimit(60);
 
-  debugPrint(
+  Debug::printf(
     "Initialized app window " +
     to_string(screen.getWidth()) + "x" +
     to_string(screen.getHeight()) +

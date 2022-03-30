@@ -48,14 +48,14 @@ bool ResourceManager::load(sf::Music& music, const std::string& path) {
 
 bool ResourceManager::load(std::ifstream& file, BundleHeader& header, const std::string& path) {
   if (!load(file, path, ResourceType::TextureBundle)) {
-    debugPrint("Failed to open bundle file");
+    Debug::printf("Failed to open bundle file");
     return false;
   }
 
   file.read((char *) &header, sizeof(header));
 
   if (strcmp(header.magic, TEXTURE_BUNDLE_MAGIC) != 0) {
-    debugPrint("Bundle signature not match");
+    Debug::printf("Bundle signature not match");
     file.close();
     return false;
   }

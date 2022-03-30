@@ -13,22 +13,36 @@
 #include <functional>
 
 #ifdef DEBUG
-#include <iostream>
+#include "String.h"
 #endif
 
-typedef std::function<void(const std::string&)> CustomLogger;
-
-class DebugLogger {
-  private:
-    static CustomLogger customLogger;
-
+class CustomLogger {
   public:
-    static void setCustomLogger(CustomLogger logger);
-    static void debug(const std::string& message);
+    virtual void print(const std::string& message) = 0;
 };
 
-inline void debugPrint(const std::string& message) {
-  DebugLogger::debug(message);
-}
+
+class Debug {
+  private:
+    class DefaultLogger : public CustomLogger {
+      void print(const std::string& message) override;
+    };
+
+    static DefaultLogger defaultLogger;
+    static std::reference_wrapper<CustomLogger> logger;
+
+  public:    
+    template<typename ... Args>
+    static void printf(const std::string& format, Args ... args) {
+#ifdef DEBUG
+      std::string formatted = String::format(format, args ...);
+
+      logger.get().print(formatted);
+#endif
+    }
+
+    static void setCustomLogger(CustomLogger& logger);
+    static void reset();
+};
 
 #endif /* Debug_h */
