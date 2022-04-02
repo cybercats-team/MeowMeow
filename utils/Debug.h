@@ -28,21 +28,29 @@ class Debug {
       void print(const std::string& message) override;
     };
 
-    static DefaultLogger defaultLogger;
-    static std::reference_wrapper<CustomLogger> logger;
-
-  public:    
+    DefaultLogger defaultLogger;
+    std::reference_wrapper<CustomLogger> logger;
+  
     template<typename ... Args>
-    static void printf(const std::string& format, Args ... args) {
-#ifdef DEBUG
+    void _printf(const std::string& format, Args ... args) {
+  #ifdef DEBUG
       std::string formatted = String::format(format, args ...);
 
       logger.get().print(formatted);
-#endif
+  #endif
     }
 
-    static void setCustomLogger(CustomLogger& logger);
-    static void reset();
+  public:
+    static Debug customize;
+    Debug();
+  
+    template<typename ... Args>
+    static void printf(const std::string& format, Args ... args) {
+      customize._printf(format, args ...);
+    }
+
+    void setCustomLogger(CustomLogger& logger);
+    void reset();
 };
 
 #endif /* Debug_h */

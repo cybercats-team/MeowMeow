@@ -4,9 +4,6 @@
 #include <iostream>
 #endif
 
-Debug::DefaultLogger Debug::defaultLogger{};
-std::reference_wrapper<CustomLogger> Debug::logger = std::ref(Debug::defaultLogger);
-
 void Debug::DefaultLogger::print(const std::string& message) {
 #ifdef DEBUG
   using namespace std;
@@ -15,10 +12,13 @@ void Debug::DefaultLogger::print(const std::string& message) {
 #endif
 }
 
+Debug Debug::customize{};
+Debug::Debug() : defaultLogger(), logger(std::ref(defaultLogger)) {}
+
 void Debug::setCustomLogger(CustomLogger& customLogger) {
-  logger = std::ref(customLogger);
+  logger.get() = customLogger;
 }
 
 void Debug::reset() {
-  logger = std::ref(defaultLogger);
+  logger.get() = defaultLogger;
 }
