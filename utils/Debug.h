@@ -28,6 +28,7 @@ class Debug {
       void print(const std::string& message) override;
     };
 
+    static Debug instance;
     DefaultLogger defaultLogger;
     std::reference_wrapper<CustomLogger> logger;
   
@@ -41,15 +42,16 @@ class Debug {
     }
 
   public:
-    static Debug customize;
+    static Debug& customize;
+  
     Debug();
   
     template<typename ... Args>
     static void printf(const std::string& format, Args ... args) {
-      customize._printf(format, args ...);
+      instance._printf(format, args ...);
     }
 
-    void setCustomLogger(CustomLogger& logger);
+    void setLogger(CustomLogger& logger);
     void reset();
 };
 

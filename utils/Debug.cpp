@@ -12,10 +12,14 @@ void Debug::DefaultLogger::print(const std::string& message) {
 #endif
 }
 
-Debug Debug::customize{};
-Debug::Debug() : defaultLogger(), logger(std::ref(defaultLogger)) {}
+Debug Debug::instance{};
+Debug& Debug::customize(Debug::instance);
 
-void Debug::setCustomLogger(CustomLogger& customLogger) {
+Debug::Debug()
+  : defaultLogger(),
+    logger(std::ref(defaultLogger)) {}
+
+void Debug::setLogger(CustomLogger& customLogger) {
   logger.get() = customLogger;
 }
 
