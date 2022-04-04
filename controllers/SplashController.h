@@ -15,7 +15,7 @@ class SplashController :
   public SceneController
 {
   public:
-    explicit SplashController(Container& container);
+    explicit SplashController(Application& app);
 };
 
 #endif /* SplashController_h */

@@ -8,13 +8,10 @@
 
 #include "SceneController.h"
 
-SceneController::SceneController(Container& container) :
-  container(container),
-  screen(container.getScreen()),
-  focusedScene(-1),
-  scenes({}) {}
+SceneController::SceneController(Application& app) :
+  app(app), focusedScene(-1), scenes({}) {}
 
-bool SceneController::loadResources() {
+bool SceneController::initialize() {
   return true;
 }
 
@@ -28,8 +25,9 @@ void SceneController::present(Scene& scene) {
 }
 
 void SceneController::pushScene(Scene& scene) {
+  const Screen& screen = app.getScreen();
+  
   scenes.emplace_back(scene);
-
   scene.onPresented();
   scene.layout(screen);
 }
@@ -106,8 +104,15 @@ Scene& SceneController::getFocused() {
   return scenes[focusedScene];
 }
 
+void SceneController::onBeforeEvents() {
+  if (hasFocused()) {
+    Scene& focused = getFocused();
+
+    focused.onBeforeEvents();
+  }
+}
+
 void SceneController::onEvent(sf::Event& event) {
-  // TODO: filter key-events only ?
   if (hasFocused()) {
     Scene& focused = getFocused();
 

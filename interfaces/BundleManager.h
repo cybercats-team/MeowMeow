@@ -9,10 +9,11 @@
 #ifndef BundleManager_h
 #define BundleManager_h
 
+#include "../interfaces/Initializable.h"
 #include "../primitives/Screen.h"
 #include "../services/ResourceManager.h"
 
-class BundleManager {
+class BundleManager : public Initializable {
   protected:
     Screen& screen;
     ResourceManager& resourceManager;
@@ -32,7 +33,6 @@ class BundleManager {
     BundleManager(ResourceManager& resourceManager, Screen& screen) :
       screen(screen),
       resourceManager(resourceManager) {}
-    virtual bool initialize() = 0;
 };
 
 #endif /* BundleManager_h */

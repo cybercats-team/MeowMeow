@@ -12,9 +12,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "../interfaces/TypeDefs.h"
+#include "../interfaces/Initializable.h"
 #include "../utils/Debug.h"
 
-class Screen {
+class Screen : public Initializable {
   private:
     sf::VideoMode selectedMode{};
     ScreenScale scale = ScreenScale::FullHD;
@@ -22,10 +23,10 @@ class Screen {
     friend class Application;
     friend class BundleManager;
   public:
-    bool initialize();
-    [[nodiscard]] ScreenScale getScale() const;
-    [[nodiscard]] unsigned int getWidth() const;
-    [[nodiscard]] unsigned int getHeight() const;
+    bool initialize() override;
+    ScreenScale getScale() const;
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
 };
 
 #endif /* Screen_h */

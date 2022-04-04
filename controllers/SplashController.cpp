@@ -8,5 +8,5 @@
 
 #include "SplashController.h"
 
-SplashController::SplashController(Container& container) :
-  SceneController(container) {}
+SplashController::SplashController(Application& app) :
+  SceneController(app) {}

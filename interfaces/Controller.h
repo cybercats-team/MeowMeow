@@ -6,16 +6,15 @@
 #define Controller_h
 
 #include <SFML/Graphics.hpp>
-#include "../interfaces/EventHandler.h"
-#include "../interfaces/Disposable.h"
+
+#include "EventHandler.h"
+#include "Disposable.h"
+#include "Initializable.h"
 
 class Controller :
   public sf::Drawable,
   public EventHandler,
-  public Disposable
-{
-  public:
-    virtual bool loadResources() = 0;
-};
+  public Disposable,
+  public Initializable {};
 
 #endif //Controller_h

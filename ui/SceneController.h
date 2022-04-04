@@ -12,13 +12,14 @@
 #include <vector>
 #include <functional>
 
-#include "../Container.h"
-
+#include "../Application.h"
 #include "../interfaces/Controller.h"
 #include "../interfaces/Scene.h"
 
 #include "../utils/Array.h"
 #include "../utils/Debug.h"
+
+
 
 class SceneController : public Controller {
   private:
@@ -27,8 +28,7 @@ class SceneController : public Controller {
     void clearFocused();
 
   protected:
-    Container& container;
-    const Screen& screen;
+    Application& app;
 
     void present(Scene& scene);
     void pushScene(Scene& scene);
@@ -45,10 +45,11 @@ class SceneController : public Controller {
     Scene& getFocused();
 
   public:
-    explicit SceneController(Container& container);
-    bool loadResources() override;
+    explicit SceneController(Application& app);
+    bool initialize() override;
     void onDisposed() override;
 
+    void onBeforeEvents() override;
     void onEvent(sf::Event& event) override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

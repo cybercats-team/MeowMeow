@@ -7,12 +7,13 @@
 //
 
 #include "LevelController.h"
+#include "../Application.h"
 
-LevelController::LevelController(Container& container, unsigned int realmId, unsigned int levelId) :
-  SceneController(container), realmId(realmId), levelId(levelId), levelMap(), levelScene(levelMap) {}
+LevelController::LevelController(Application& app, unsigned int realmId, unsigned int levelId) :
+  SceneController(app), realmId(realmId), levelId(levelId), levelMap(), levelScene(levelMap) {}
 
-bool LevelController::loadResources() {
-  LevelManager& levelManager = container.getLevelManager();
+bool LevelController::initialize() {
+  LevelManager& levelManager = app.getLevelManager();
   bool loaded = levelManager.load(levelMap, realmId, levelId);
 
   if (loaded) {

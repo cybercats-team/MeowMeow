@@ -9,8 +9,10 @@
 #ifndef LevelController_h
 #define LevelController_h
 
+#include "../services/LevelManager.h"
 #include "../primitives/LevelMap.h"
 #include "../scenes/LevelScene.h"
+
 #include "../ui/SceneController.h"
 
 class LevelController :
@@ -23,8 +25,8 @@ class LevelController :
     LevelScene levelScene;
   
   public:
-    LevelController(Container& container, unsigned int realmId, unsigned int levelId);
-    bool loadResources() override;
+    LevelController(Application& app, unsigned int realmId, unsigned int levelId);
+    bool initialize() override;
 };
 
 #endif /* LevelController_h */

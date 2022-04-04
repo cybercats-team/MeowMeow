@@ -11,34 +11,59 @@ Application::Application(std::string appName, Platform& platform) :
   platform(platform),
   appName(appName),
   resourceManager(platform),
-  container(platform, screen, resourceManager) {}
+  spriteManager(resourceManager, screen),
+  levelManager(spriteManager, resourceManager, screen),
+  stateManager(*this) {}
+
+sf::RenderWindow& Application::getWindow() {
+  return window;
+}
+
+const Screen& Application::getScreen() const {
+  return screen;
+}
+
+const ResourceManager& Application::getResourceManager() const {
+  return resourceManager;
+}
+
+const SpriteManager& Application::getSpriteManager() const {
+  return spriteManager;
+}
+
+LevelManager& Application::getLevelManager() {
+  return levelManager;
+}
 
 bool Application::initialize() {
   using namespace std;
   using namespace sf;
 
-  Image appIcon;
+  Image appIcon{};
+  
+  array<reference_wrapper<Initializable>, 4> modules = {
+    screen, spriteManager, levelManager, stateManager
+  };
+  
+  bool initialized = resourceManager.load(appIcon, "icons/appIcon")
+    && all_of(modules.begin(), modules.end(), [](Initializable& module) {
+      return module.initialize();
+    });
 
-  if (
-    !resourceManager.load(appIcon, "icons/appIcon") ||
-    !screen.initialize() ||
-    !container.initialize()
-  ) {
-    return false;
+  if (initialized) {
+    Vector2u size = appIcon.getSize();
+
+    window.create(screen.selectedMode, appName, Style::Fullscreen);
+    window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
+    window.setFramerateLimit(60);
+
+    Debug::printf(
+      "Initialized app window %dx%d \"%s\"",
+      screen.getWidth(), screen.getHeight(), appName
+    );
   }
 
-  Vector2u size = appIcon.getSize();
-
-  window.create(screen.selectedMode, appName, Style::Fullscreen);
-  window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
-  window.setFramerateLimit(60);
-
-  Debug::printf(
-    "Initialized app window %dx%d \"%s\"", 
-    screen.getWidth(), screen.getHeight(), appName
-  );
-
-  return true;
+  return initialized;
 }
 
 void Application::run() {
@@ -46,8 +71,8 @@ void Application::run() {
   using namespace std;
 
   /* TODO: remove */
-  if (!container.loadLevel(0, 0)) {
-    window.close();
+  if (!stateManager.loadLevel(0, 0)) {
+    stateManager.exitApp();
     return;
   }
   /* /TODO: */
@@ -57,32 +82,20 @@ void Application::run() {
   {
     // Process events
     Event event{};
-
-    while (window.pollEvent(event))
-    {
-
-      if (
-        // Close window: exit
-        (event.type == Event::Closed) ||
-        // Escape pressed: exit
-        (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-      ) {
-        window.close();
-      }
-
-      container.onEvent(event);
+    stateManager.onBeforeEvents();
+    
+    while (window.pollEvent(event)) {
+      stateManager.onEvent(event);
     }
-
+    
     window.clear();
-
-    container.onBeforeRender();
-
+    stateManager.onBeforeRender();
+    
     // Draw the scenes
-    window.draw(container);
-
+    window.draw(stateManager);
     // Update the window
     window.display();
   }
 
-  container.onDisposed();
+  stateManager.onDisposed();
 }
