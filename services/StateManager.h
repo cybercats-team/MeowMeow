@@ -10,12 +10,11 @@
 #define Container_h
 
 #include <memory>
-#include <SFML/Graphics.hpp>
 
 #include "../interfaces/Controller.h"
-#include "../interfaces/EventHandler.h"
 #include "../interfaces/Disposable.h"
 #include "../interfaces/Initializable.h"
+#include "../interfaces/Renderable.h"
 #include "../interfaces/Platform.h"
 
 #include "../primitives/Screen.h"
@@ -25,8 +24,7 @@
 class Application;
 
 class StateManager :
-  public sf::Drawable,
-  public EventHandler,
+  public Renderable,
   public Disposable,
   public Initializable
 {

@@ -13,7 +13,8 @@ Application::Application(std::string appName, Platform& platform) :
   resourceManager(platform),
   spriteManager(resourceManager, screen),
   levelManager(spriteManager, resourceManager, screen),
-  stateManager(*this) {}
+  stateManager(*this),
+  renderer(stateManager, window) {}
 
 sf::RenderWindow& Application::getWindow() {
   return window;
@@ -88,13 +89,7 @@ void Application::run() {
       stateManager.onEvent(event);
     }
     
-    window.clear();
-    stateManager.onBeforeRender();
-    
-    // Draw the scenes
-    window.draw(stateManager);
-    // Update the window
-    window.display();
+    renderer.render();
   }
 
   stateManager.onDisposed();

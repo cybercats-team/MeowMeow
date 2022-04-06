@@ -9,7 +9,13 @@
 #ifndef EventHandler_h
 #define EventHandler_h
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+
+#include "TypeDefs.h"
+
+class Action {
+  
+};
 
 class EventHandler
 {

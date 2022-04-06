@@ -15,6 +15,32 @@
 #define RESOURCE_MAX_TITLE 256
 #define TEXTURE_BUNDLE_MAGIC "BUNDLE"
 
+enum class ActionType {
+  MoveLeft,
+  MoveRight,
+  MoveUp,
+  MoveDown,
+  ButtonA,
+  ButtonB,
+  ButtonC,
+  ButtonD,
+  LeftShift,
+  LeftTrigger,
+  LeftClick,
+  RightShift,
+  RightTrigger,
+  RightClick,
+  Home,
+  Share,
+  Options,
+  AltOptions
+};
+
+enum class ActionEventType {
+  ActionPressed,
+  ActionReleased
+};
+
 enum class ScreenScale {
   FullHD,
   RetinaOr2K,

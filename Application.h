@@ -19,6 +19,7 @@
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
 #include "services/StateManager.h"
+#include "services/Renderer.h"
 
 #include "utils/Debug.h"
 
@@ -32,7 +33,8 @@ class Application {
     ResourceManager resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
-    StateManager stateManager;    
+    StateManager stateManager;
+    Renderer renderer;
   public:
     Application(std::string appName, Platform& platform);
   
