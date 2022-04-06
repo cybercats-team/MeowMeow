@@ -50,47 +50,33 @@ void StateManager::onDisposed() {
 }
 
 void StateManager::onBeforeEvents() {
-  if (!hasActiveController()) {
-    return;
+  if (hasActiveController()) {
+    getActiveController().onBeforeEvents();
   }
+}
 
-  getActiveController().onBeforeEvents();
+void StateManager::onAction(Action& action) {
+  if (hasActiveController()) {
+    getActiveController().onAction(action);
+  }
 }
 
 void StateManager::onEvent(sf::Event& event) {
-  using namespace sf;
-  
-  if (
-    // Close window: exit
-    (event.type == Event::Closed) ||
-    // Escape pressed: exit
-    (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-  ) {
-    exitApp();
-    return;
+  if (hasActiveController()) {
+    getActiveController().onEvent(event);
   }
-  
-  if (!hasActiveController()) {
-    return;
-  }
-
-  getActiveController().onEvent(event);
 }
 
 void StateManager::onBeforeRender() {
-  if (!hasActiveController()) {
-    return;
+  if (hasActiveController()) {
+    getActiveController().onBeforeRender();
   }
-
-  getActiveController().onBeforeRender();
 }
 
 void StateManager::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-  if (!hasActiveController()) {
-    return;
+  if (hasActiveController()) {
+    target.draw(getActiveController());
   }
-
-  target.draw(getActiveController());
 }
 
 bool StateManager::showSplash() {

@@ -11,15 +11,34 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include <string>
 
 #include "../interfaces/Renderable.h"
+#include "../interfaces/Initializable.h"
 
-class Renderer {
+#include "../primitives/Screen.h"
+#include "ResourceManager.h"
+
+#include "../utils/Debug.h"
+
+class Renderer : public Initializable {
   private:
-    sf::RenderWindow& target;
+    ResourceManager& resourceManager;
+    Screen& screen;
+    sf::RenderWindow& window;
+    std::string windowTitle;
     Renderable& subject;
+  
   public:
-    Renderer(Renderable& subject, sf::RenderWindow& target);
+    Renderer(
+      ResourceManager& resourceManager,
+      Screen& screen,
+      sf::RenderWindow& window,
+      std::string windowTitle,
+      Renderable& subject
+    );
+  
+    bool initialize() override;
     void render();
 };
 

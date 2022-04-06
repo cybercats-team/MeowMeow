@@ -106,17 +106,19 @@ Scene& SceneController::getFocused() {
 
 void SceneController::onBeforeEvents() {
   if (hasFocused()) {
-    Scene& focused = getFocused();
+    getFocused().onBeforeEvents();
+  }
+}
 
-    focused.onBeforeEvents();
+void SceneController::onAction(Action& action) {
+  if (hasFocused()) {
+    getFocused().onAction(action);
   }
 }
 
 void SceneController::onEvent(sf::Event& event) {
   if (hasFocused()) {
-    Scene& focused = getFocused();
-
-    focused.onEvent(event);
+    getFocused().onEvent(event);
   }
 }
 
@@ -134,9 +136,7 @@ void SceneController::draw(sf::RenderTarget& target, sf::RenderStates states) co
 
 void SceneController::clearFocused() {
   if (hasFocused()) {
-    Scene& focused = getFocused();
-
-    focused.onBlurred();
+    getFocused().onBlurred();
     focusedScene = -1;
   }
 }

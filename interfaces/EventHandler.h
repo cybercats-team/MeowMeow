@@ -14,13 +14,19 @@
 #include "TypeDefs.h"
 
 class Action {
+  ActionEventType event;
+  ActionType action;
+  sf::Event& originalEvent;
   
+  Action(sf::Event& originalEvent)
+    : originalEvent(originalEvent) {}
 };
 
 class EventHandler
 {
   public:
     virtual void onBeforeEvents() = 0;
+    virtual void onAction(Action& action) = 0;
     virtual void onEvent(sf::Event& event) = 0;
     virtual void onBeforeRender() = 0;
 };

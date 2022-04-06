@@ -40,6 +40,7 @@ class StateManager :
     void onDisposed() override;
 
     void onBeforeEvents() override;
+    void onAction(Action& action) override;
     void onEvent(sf::Event& event) override;
     void onBeforeRender() override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -20,7 +20,7 @@ class Screen : public Initializable {
     sf::VideoMode selectedMode{};
     ScreenScale scale = ScreenScale::FullHD;
   
-    friend class Application;
+    friend class Renderer;
     friend class BundleManager;
   public:
     bool initialize() override;

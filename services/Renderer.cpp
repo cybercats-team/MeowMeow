@@ -8,15 +8,48 @@
 
 #include "Renderer.h"
 
-Renderer::Renderer(Renderable& subject, sf::RenderWindow& target) :
-  subject(subject), target(target) {}
+Renderer::Renderer(
+  ResourceManager& resourceManager,
+  Screen& screen,
+  sf::RenderWindow& window,
+  std::string windowTitle,
+  Renderable& subject
+) :
+  resourceManager(resourceManager),
+  screen(screen),
+  window(window),
+  windowTitle(windowTitle),
+  subject(subject)
+{}
+
+bool Renderer::initialize() {
+  using namespace sf;
+  
+  Image appIcon{};
+  bool initialized = resourceManager.load(appIcon, "icons/appIcon");
+  
+  if (initialized) {
+    Vector2u size = appIcon.getSize();
+
+    window.create(screen.selectedMode, windowTitle, Style::Fullscreen);
+    window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
+    window.setFramerateLimit(60);
+
+    Debug::printf(
+      "Initialized app window %dx%d \"%s\"",
+      screen.getWidth(), screen.getHeight(), windowTitle
+    );
+  }
+  
+  return initialized;
+}
 
 void Renderer::render() {
-  target.clear();
+  window.clear();
   subject.onBeforeRender();
   
   // Draw the scenes
-  target.draw(subject);
+  window.draw(subject);
   // Update the window
-  target.display();
+  window.display();
 }

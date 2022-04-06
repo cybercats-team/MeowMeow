@@ -19,21 +19,21 @@
 #include "services/SpriteManager.h"
 #include "services/LevelManager.h"
 #include "services/StateManager.h"
+#include "services/EventManager.h"
 #include "services/Renderer.h"
 
 #include "utils/Debug.h"
 
 class Application {
   protected:
-    sf::RenderWindow window{};
-    std::string appName;
-  
+    sf::RenderWindow window{};    
     Screen screen;
     Platform& platform;
     ResourceManager resourceManager;
     SpriteManager spriteManager;
     LevelManager levelManager;
     StateManager stateManager;
+    EventManager eventManager;
     Renderer renderer;
   public:
     Application(std::string appName, Platform& platform);
@@ -43,6 +43,8 @@ class Application {
     const ResourceManager& getResourceManager() const;
     const SpriteManager& getSpriteManager() const;
     LevelManager& getLevelManager();
+    const Renderer& getRenderer() const;
+    const EventManager& getEventManager() const;
 
     bool initialize();
     void run();

@@ -24,6 +24,7 @@ class Scene :
     void onFocused() override {}
     void onBlurred() override {}
     void onBeforeEvents() override {}
+    void onAction(Action& action) override {}
     void onEvent(sf::Event& event) override {}
     void onBeforeRender() override {}
     void onDisposed() override {}

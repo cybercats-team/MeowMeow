@@ -9,12 +9,12 @@
 Application::Application(std::string appName, Platform& platform) :
   screen(),
   platform(platform),
-  appName(appName),
   resourceManager(platform),
   spriteManager(resourceManager, screen),
   levelManager(spriteManager, resourceManager, screen),
   stateManager(*this),
-  renderer(stateManager, window) {}
+  eventManager(window, stateManager),
+  renderer(resourceManager, screen, window, appName, stateManager) {}
 
 sf::RenderWindow& Application::getWindow() {
   return window;
@@ -36,41 +36,32 @@ LevelManager& Application::getLevelManager() {
   return levelManager;
 }
 
+const Renderer& Application::getRenderer() const {
+  return renderer;
+}
+
+const EventManager& Application::getEventManager() const {
+  return eventManager;
+}
+
 bool Application::initialize() {
   using namespace std;
-  using namespace sf;
-
-  Image appIcon{};
   
-  array<reference_wrapper<Initializable>, 4> modules = {
-    screen, spriteManager, levelManager, stateManager
+  array<reference_wrapper<Initializable>, 6> modules = {
+    screen,
+    renderer,
+    spriteManager,
+    levelManager,
+    stateManager,
+    eventManager
   };
   
-  bool initialized = resourceManager.load(appIcon, "icons/appIcon")
-    && all_of(modules.begin(), modules.end(), [](Initializable& module) {
-      return module.initialize();
-    });
-
-  if (initialized) {
-    Vector2u size = appIcon.getSize();
-
-    window.create(screen.selectedMode, appName, Style::Fullscreen);
-    window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
-    window.setFramerateLimit(60);
-
-    Debug::printf(
-      "Initialized app window %dx%d \"%s\"",
-      screen.getWidth(), screen.getHeight(), appName
-    );
-  }
-
-  return initialized;
+  return all_of(modules.begin(), modules.end(), [](Initializable& module) {
+    return module.initialize();
+  });
 }
 
 void Application::run() {
-  using namespace sf;
-  using namespace std;
-
   /* TODO: remove */
   if (!stateManager.loadLevel(0, 0)) {
     stateManager.exitApp();
@@ -82,13 +73,8 @@ void Application::run() {
   while (window.isOpen())
   {
     // Process events
-    Event event{};
-    stateManager.onBeforeEvents();
-    
-    while (window.pollEvent(event)) {
-      stateManager.onEvent(event);
-    }
-    
+    eventManager.processEvents();
+    // update window
     renderer.render();
   }
 
