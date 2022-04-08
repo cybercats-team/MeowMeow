@@ -24,5 +24,5 @@ void Debug::setLogger(CustomLogger& customLogger) {
 }
 
 void Debug::reset() {
-  logger = std::ref(defaultLogger);
+  logger = std::ref(static_cast<CustomLogger&>(defaultLogger));
 }
