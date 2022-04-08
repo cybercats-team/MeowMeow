@@ -20,9 +20,9 @@ Debug::Debug()
     logger(std::ref(defaultLogger)) {}
 
 void Debug::setLogger(CustomLogger& customLogger) {
-  logger.get() = customLogger;
+  logger = std::ref(customLogger);
 }
 
 void Debug::reset() {
-  logger.get() = defaultLogger;
+  logger = std::ref(defaultLogger);
 }
