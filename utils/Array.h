@@ -10,64 +10,52 @@
 #define Array_h
 
 #include <vector>
+#include <memory>
 #include <algorithm>
 #include <functional>
 
 class Array {
   public:
     template<typename T>
-    static bool includes(std::vector<T> list, T item) {
-      return std::count(list.begin(), list.end(), item) > 0;
+    static bool includes(std::vector<T>& list, T item) {
+      auto lastIndexId = list.end();
+
+      return std::find(list.begin(), lastIndexId, item) != lastIndexId;
     }
 
     template<typename T>
-    static bool includes(std::vector<std::reference_wrapper<T>> list, T& item) {
-      using namespace std;
+    static bool includes(std::vector<std::reference_wrapper<T>>& list, T& item) {
+      auto lastIndexId = list.end();
 
-      return count_if(list.begin(), list.end(), [&](const reference_wrapper<T> &listItem) {
-        T& wrappedItem = listItem.get();
-
-        return &wrappedItem == &item;
-      }) > 0;
-    }
-
-    template<typename T>
-    static long indexOf(std::vector<T> list, T item) {
-      auto indexId = std::find(list.begin(), list.end(), item);
-
-      return getIndex(indexId);
-    }
-
-    template<typename T>
-    static long indexOf(std::vector<std::reference_wrapper<T>> list, T& item) {
-      using namespace std;
-
-      auto indexId = find_if(list.begin(), list.end(), [&](const reference_wrapper<T> &listItem) {
-        T& wrappedItem = listItem.get();
-
-        return &wrappedItem == &item;
-      });
-
-      return getIndex<reference_wrapper<T>>(list, indexId);
+      return find_if(list.begin(), lastIndexId, predicateFor(item)) != lastIndexId;
     }
 
     template <typename T>
-    static void remove(std::vector<T>& list, size_t index)
+    static void remove(std::vector<T>& list, T item)
     {
-        auto indexId = list.begin();
+      auto itemMatches = std::remove(list.begin(), list.end(), item);
 
-        std::advance(indexId, index);
-        list.erase(indexId);
+      list.erase(itemMatches);
+    }
+
+    template <typename T>
+    static void remove(std::vector<std::reference_wrapper<T>>& list, T& item)
+    {
+      auto itemMatches = std::remove_if(list.begin(), list.end(), predicateFor(item));
+
+      list.erase(itemMatches);
     }
 
   private:
-    template<typename T>
-    static long getIndex(std::vector<T> list, typename std::vector<T>::iterator indexId) {
-      if (indexId == list.end()) {
-        return -1;
-      }
+    template <typename T>
+    static auto predicateFor(T& item) {
+      using namespace std;
 
-      return indexId - list.begin();
+      return [&](const reference_wrapper<T> &listItem) {
+        T& wrappedItem = listItem.get();
+
+        return addressof(wrappedItem) == addressof(item);
+      };
     }
 };
 

@@ -10,6 +10,7 @@
 #define SceneController_h
 
 #include <vector>
+#include <memory>
 #include <functional>
 
 #include "../Application.h"
@@ -20,11 +21,11 @@
 #include "../utils/Debug.h"
 
 
-
 class SceneController : public Controller {
   private:
     std::vector<std::reference_wrapper<Scene>> scenes;
-    long focusedScene;
+    std::unique_ptr<Scene> focusedScene;
+
     void clearFocused();
 
   protected:
@@ -35,10 +36,8 @@ class SceneController : public Controller {
 
     void removeAll();
     void remove(Scene& scene);
-    void remove(long sceneIndex);
 
     void focusTop();
-    void focus(long sceneIndex);
     void focus(Scene& scene);
 
     bool hasFocused() const;

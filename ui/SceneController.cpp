@@ -9,7 +9,7 @@
 #include "SceneController.h"
 
 SceneController::SceneController(Application& app) :
-  app(app), focusedScene(-1), scenes({}) {}
+  app(app), focusedScene(nullptr), scenes({}) {}
 
 bool SceneController::initialize() {
   return true;
@@ -26,7 +26,7 @@ void SceneController::present(Scene& scene) {
 
 void SceneController::pushScene(Scene& scene) {
   const Screen& screen = app.getScreen();
-  
+
   scenes.emplace_back(scene);
   scene.onPresented();
   scene.layout(screen);
@@ -43,26 +43,22 @@ void SceneController::removeAll() {
 }
 
 void SceneController::remove(Scene& scene) {
-  long sceneIndex = Array::indexOf(scenes, scene);
+  using namespace std;
 
-  if (sceneIndex >= 0) {
-    remove(sceneIndex);
-  }
-}
-
-void SceneController::remove(long sceneIndex) {
-  if (sceneIndex >= scenes.size()) {
+  if (!Array::includes(scenes, scene)) {
     return;
   }
 
-  Scene& scene = scenes[sceneIndex];
+  if (hasFocused()) {
+    Scene& focused = getFocused();
 
-  if (hasFocused() && (sceneIndex == focusedScene)) {
-    clearFocused();
+    if (addressof(focused) == addressof(scene)) {
+      clearFocused();
+    }
   }
 
   scene.onDisposed();
-  Array::remove(scenes, sceneIndex);
+  Array::remove(scenes, scene);
 
   if (!hasFocused()) {
     focusTop();
@@ -70,38 +66,33 @@ void SceneController::remove(long sceneIndex) {
 }
 
 void SceneController::focusTop() {
-  unsigned long scenesCount = scenes.size();
-
-  if (scenesCount > 0) {
-    focus((long) (scenesCount - 1));
+  if (scenes.empty()) {
+    return;
   }
+
+  focus((Scene&) scenes.back());
 }
 
 void SceneController::focus(Scene& scene) {
-  long sceneIndex = Array::indexOf(scenes, scene);
+  using namespace std;
 
-  if (sceneIndex >= 0) {
-    focus(sceneIndex);
+  if (!Array::includes(scenes, scene)) {
+    return;
   }
-}
 
-void SceneController::focus(long sceneIndex) {
+  unique_ptr<Scene> scenePtr(addressof(scene));
   clearFocused();
 
-  if (sceneIndex < scenes.size()) {
-    Scene& scene = scenes[sceneIndex];
-
-    focusedScene = sceneIndex;
-    scene.onFocused();
-  }
+  focusedScene = move(scenePtr);
+  scene.onFocused();
 }
 
 bool SceneController::hasFocused() const {
-  return focusedScene >= 0;
+  return focusedScene.get() != nullptr;
 }
 
 Scene& SceneController::getFocused() {
-  return scenes[focusedScene];
+  return *(focusedScene.get());
 }
 
 void SceneController::onBeforeEvents() {
@@ -137,6 +128,8 @@ void SceneController::draw(sf::RenderTarget& target, sf::RenderStates states) co
 void SceneController::clearFocused() {
   if (hasFocused()) {
     getFocused().onBlurred();
-    focusedScene = -1;
+
+    focusedScene.release();
+    focusedScene = nullptr;
   }
 }
