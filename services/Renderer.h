@@ -14,17 +14,13 @@
 #include <string>
 
 #include "../interfaces/Renderable.h"
-#include "../interfaces/Initializable.h"
+#include "../interfaces/BundleManager.h"
 
 #include "../primitives/Screen.h"
-#include "ResourceManager.h"
-
 #include "../utils/Debug.h"
 
-class Renderer : public Initializable {
+class Renderer : public BundleManager {
   private:
-    ResourceManager& resourceManager;
-    Screen& screen;
     sf::RenderWindow& window;
     std::string windowTitle;
     Renderable& subject;

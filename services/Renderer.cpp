@@ -15,8 +15,7 @@ Renderer::Renderer(
   std::string windowTitle,
   Renderable& subject
 ) :
-  resourceManager(resourceManager),
-  screen(screen),
+  BundleManager(resourceManager, screen),
   window(window),
   windowTitle(windowTitle),
   subject(subject)
