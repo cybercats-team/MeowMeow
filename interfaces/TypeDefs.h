@@ -9,37 +9,15 @@
 #ifndef TypeDefs_h
 #define TypeDefs_h
 
+#include <SFML/Window.hpp>
 #include <string>
+#include <variant>
+#include <vector>
+#include <map>
 
 #define RESOURCE_MAX_PATH 256
 #define RESOURCE_MAX_TITLE 256
 #define TEXTURE_BUNDLE_MAGIC "BUNDLE"
-
-enum class ActionType {
-  MoveLeft,
-  MoveRight,
-  MoveUp,
-  MoveDown,
-  ButtonA,
-  ButtonB,
-  ButtonC,
-  ButtonD,
-  LeftShift,
-  LeftTrigger,
-  LeftClick,
-  RightShift,
-  RightTrigger,
-  RightClick,
-  Home,
-  Share,
-  Options,
-  AltOptions
-};
-
-enum class ActionEventType {
-  ActionPressed,
-  ActionReleased
-};
 
 enum class ScreenScale {
   FullHD,
@@ -71,6 +49,35 @@ enum class ObjectType {
 enum class TileType {
   Terrain,
   Obstacle [[maybe_unused]]
+};
+
+enum class ActionType {
+  MoveLeft,
+  MoveRight,
+  MoveUp,
+  MoveDown,
+  ButtonA,
+  ButtonB,
+  ButtonC,
+  ButtonD,
+  LeftStick,
+  LeftShift,
+  LeftTrigger,
+  LeftClick,
+  RightStick,
+  RightShift,
+  RightTrigger,
+  RightClick,
+  Home,
+  Share,
+  Options,
+  AltOptions
+};
+
+enum class ActionEventType {
+  ActionPressed,
+  ActionReleased,
+  ActionStickMoved
 };
 
 typedef struct ResourceInfo {
@@ -151,5 +158,27 @@ typedef struct MapInfo: public AggregatedMapInfo {
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
 } MapInfo;
+
+typedef struct StickMoveDetails {
+  float positionX;
+  float positionY;
+} StickMoveDetails;
+
+typedef struct ActionBinding {
+  sf::Event::EventType event;
+
+  std::variant<
+    sf::Event::KeyEvent,
+    sf::Event::MouseButtonEvent,
+    sf::Event::MouseMoveEvent,
+    sf::Event::JoystickMoveEvent,
+    sf::Event::JoystickButtonEvent
+  > data{};
+} ActionBinding;
+
+typedef std::map<
+  ActionType,
+  std::vector<ActionBinding>
+> ActionsBindings;
 
 #endif /* TypeDefs_h */

@@ -9,7 +9,7 @@
 #include "EventManager.h"
 
 EventManager::EventManager(sf::Window& source, StateManager& stateManager) :
-  source(source), stateManager(stateManager) {}
+  source(source), stateManager(stateManager), bindings() {}
 
 bool EventManager::initialize() {
   return true;
@@ -17,21 +17,21 @@ bool EventManager::initialize() {
 
 void EventManager::processEvents() {
   sf::Event event{};
-  
+
   stateManager.onBeforeEvents();
-  
+
   while (source.pollEvent(event)) {
     if (processSystemEvents(event)) {
       break;
     }
-    
+
     stateManager.onEvent(event);
   }
 }
 
 bool EventManager::processSystemEvents(sf::Event& event) {
   using namespace sf;
-  
+
   if (
     // Close window: exit
     (event.type == Event::Closed) ||
@@ -41,6 +41,6 @@ bool EventManager::processSystemEvents(sf::Event& event) {
     stateManager.exitApp();
     return true;
   }
-  
+
   return false;
 }

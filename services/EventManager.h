@@ -11,14 +11,17 @@
 
 #include <SFML/Window.hpp>
 
+#include "../interfaces/TypeDefs.h"
 #include "../interfaces/Initializable.h"
+
 #include "StateManager.h"
 
 class EventManager : public Initializable {
   private:
     sf::Window& source;
     StateManager& stateManager;
-  
+    ActionsBindings bindings;
+
     bool processSystemEvents(sf::Event& event);
   public:
     EventManager(sf::Window& source, StateManager& stateManager);

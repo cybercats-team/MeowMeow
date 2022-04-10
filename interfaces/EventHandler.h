@@ -10,16 +10,24 @@
 #define EventHandler_h
 
 #include <SFML/Window.hpp>
+#include <variant>
 
 #include "TypeDefs.h"
 
 class Action {
-  ActionEventType event;
-  ActionType action;
-  sf::Event& originalEvent;
-  
-  Action(sf::Event& originalEvent)
-    : originalEvent(originalEvent) {}
+  public:
+    ActionEventType event;
+    ActionType action;
+    std::variant<StickMoveDetails> details;
+
+    const sf::Event& originalEvent;
+
+    Action(const sf::Event& originalEvent)
+      : originalEvent(originalEvent), details() {}
+
+    StickMoveDetails& getStickMoveDetails() {
+      return std::get<StickMoveDetails>(details);
+    }
 };
 
 class EventHandler
