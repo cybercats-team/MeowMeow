@@ -20,10 +20,10 @@
 #include "../primitives/SpriteSet.h"
 #include "../primitives/SpriteObject.h"
 
-#include "../interfaces/BundleManager.h"
+#include "../interfaces/UIManager.h"
 #include "SpriteManager.h"
 
-class LevelManager: public BundleManager {
+class LevelManager: public UIManager {
   private:
     const std::string bundlePath = "levels";
     SpriteManager& spriteManager;

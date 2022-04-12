@@ -4,17 +4,16 @@
 
 #include "Application.h"
 
-#include <utility>
-
-Application::Application(std::string appName, Platform& platform) :
+Application::Application(Platform& platform) :
   screen(),
   platform(platform),
   resourceManager(platform),
+  settingsManager(platform),
   spriteManager(resourceManager, screen),
   levelManager(spriteManager, resourceManager, screen),
   stateManager(*this),
-  eventManager(window, stateManager),
-  renderer(resourceManager, screen, window, appName, stateManager) {}
+  eventManager(window, stateManager, settingsManager),
+  renderer(*this) {}
 
 sf::RenderWindow& Application::getWindow() {
   return window;
@@ -24,7 +23,7 @@ const Screen& Application::getScreen() const {
   return screen;
 }
 
-const ResourceManager& Application::getResourceManager() const {
+ResourceManager& Application::getResourceManager() {
   return resourceManager;
 }
 
@@ -44,16 +43,27 @@ const EventManager& Application::getEventManager() const {
   return eventManager;
 }
 
+SettingsManager& Application::getSettingsManager()
+{
+  return settingsManager;
+}
+
+StateManager& Application::getStateManager()
+{
+  return stateManager;
+}
+
 bool Application::initialize() {
   using namespace std;
   
-  array<reference_wrapper<Initializable>, 6> modules = {
+  array<reference_wrapper<Initializable>, 7> modules = {
+    settingsManager,
     screen,
-    renderer,
     spriteManager,
     levelManager,
+    renderer,
     stateManager,
-    eventManager
+    eventManager,
   };
   
   return all_of(modules.begin(), modules.end(), [](Initializable& module) {

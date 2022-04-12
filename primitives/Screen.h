@@ -21,7 +21,7 @@ class Screen : public Initializable {
     ScreenScale scale = ScreenScale::FullHD;
   
     friend class Renderer;
-    friend class BundleManager;
+    friend class UIManager;
   public:
     bool initialize() override;
     ScreenScale getScale() const;

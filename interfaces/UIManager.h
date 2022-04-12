@@ -1,5 +1,5 @@
 //
-//  BundleManager.h
+//  UIManager.h
 //  MeowMeow
 //
 //  Created by Alex Serdukov on 16.02.2021.
@@ -13,7 +13,7 @@
 #include "../primitives/Screen.h"
 #include "../services/ResourceManager.h"
 
-class BundleManager : public Initializable {
+class UIManager : public Initializable {
   protected:
     Screen& screen;
     ResourceManager& resourceManager;
@@ -30,7 +30,7 @@ class BundleManager : public Initializable {
       }
     }
   public:
-    BundleManager(ResourceManager& resourceManager, Screen& screen) :
+    UIManager(ResourceManager& resourceManager, Screen& screen) :
       screen(screen),
       resourceManager(resourceManager) {}
 };

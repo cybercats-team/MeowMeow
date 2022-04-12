@@ -14,25 +14,25 @@
 #include <string>
 
 #include "../interfaces/Renderable.h"
-#include "../interfaces/BundleManager.h"
+#include "../interfaces/Initializable.h"
+#include "../interfaces/ForwardDecl.h"
 
 #include "../primitives/Screen.h"
+#include "../services/ResourceManager.h"
+#include "../services/SettingsManager.h"
+
 #include "../utils/Debug.h"
 
-class Renderer : public BundleManager {
+class Renderer : public Initializable {
   private:
+    const Screen& screen;
+    ResourceManager& resourceManager;
     sf::RenderWindow& window;
-    std::string windowTitle;
+    SettingsManager& settingsManager;
     Renderable& subject;
   
   public:
-    Renderer(
-      ResourceManager& resourceManager,
-      Screen& screen,
-      sf::RenderWindow& window,
-      std::string windowTitle,
-      Renderable& subject
-    );
+    explicit Renderer(Application& app);
   
     bool initialize() override;
     void render();

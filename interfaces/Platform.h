@@ -7,6 +7,7 @@
 
 class Platform {
   private:
+    std::string appName;
     std::string nlString;
     std::string resourcePathString;
 
@@ -25,6 +26,10 @@ class Platform {
   public:
     Platform() : resourcePathString(),
       nlString(getNLString()) {}
+      
+    void setAppName(const std::string& appName) {
+      this->appName = appName;
+    }  
 
     const std::string& nl() {
       return nlString;

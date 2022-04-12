@@ -11,12 +11,12 @@
 
 #include <fstream>
 
-#include "../interfaces/BundleManager.h"
+#include "../interfaces/UIManager.h"
 #include "../primitives/SpriteSet.h"
 #include "../interfaces/TypeDefs.h"
 #include "../utils/Debug.h"
 
-class SpriteManager: public BundleManager {
+class SpriteManager: public UIManager {
   private:
     const std::map<ObjectType, std::string> bundlesPath = {
       {ObjectType::Terrain, "terrain"},

@@ -9,7 +9,7 @@
 #include "SpriteManager.h"
 
 SpriteManager::SpriteManager(ResourceManager& resourceManager, Screen& screen) :
-  BundleManager(resourceManager, screen) {}
+  UIManager(resourceManager, screen) {}
 
 bool SpriteManager::initialize() {
   using namespace std;

@@ -7,19 +7,14 @@
 //
 
 #include "Renderer.h"
+#include "../Application.h"
 
-Renderer::Renderer(
-  ResourceManager& resourceManager,
-  Screen& screen,
-  sf::RenderWindow& window,
-  std::string windowTitle,
-  Renderable& subject
-) :
-  BundleManager(resourceManager, screen),
-  window(window),
-  windowTitle(windowTitle),
-  subject(subject)
-{}
+Renderer::Renderer(Application& app) :
+  resourceManager(app.getResourceManager()), 
+  screen(app.getScreen()),
+  window(app.getWindow()),
+  settingsManager(app.getSettingsManager()),
+  subject(app.getStateManager()) {}
 
 bool Renderer::initialize() {
   using namespace sf;
@@ -28,6 +23,7 @@ bool Renderer::initialize() {
   bool initialized = resourceManager.load(appIcon, "icons/appIcon");
   
   if (initialized) {
+    const std::string& windowTitle = settingsManager.windowTitle;
     Vector2u size = appIcon.getSize();
 
     window.create(screen.selectedMode, windowTitle, Style::Fullscreen);

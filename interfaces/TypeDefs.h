@@ -181,4 +181,8 @@ typedef std::map<
   std::vector<ActionBinding>
 > ActionsBindings;
 
+typedef struct Settings {
+  ActionsBindings bindings{};
+} Settings;
+
 #endif /* TypeDefs_h */

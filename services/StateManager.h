@@ -16,12 +16,11 @@
 #include "../interfaces/Initializable.h"
 #include "../interfaces/Renderable.h"
 #include "../interfaces/Platform.h"
+#include "../interfaces/ForwardDecl.h"
 
 #include "../primitives/Screen.h"
 
 #include "../utils/Debug.h"
-
-class Application;
 
 class StateManager :
   public Renderable,

@@ -8,11 +8,26 @@
 
 #include "EventManager.h"
 
-EventManager::EventManager(sf::Window& source, StateManager& stateManager) :
-  source(source), stateManager(stateManager), bindings() {}
-
+EventManager::EventManager(
+  sf::Window& source, 
+  StateManager& stateManager, 
+  SettingsManager& settingsManager
+) : 
+  source(source), 
+  stateManager(stateManager), 
+  settingsManager(settingsManager) 
+{}
+  
 bool EventManager::initialize() {
+  const Settings& settings = settingsManager.getSettings();
+  
+  bindings = std::ref(settings.bindings);
   return true;
+}
+
+const ActionsBindings& EventManager::getBindings()
+{
+  return (const ActionsBindings&) bindings;
 }
 
 void EventManager::processEvents() {
