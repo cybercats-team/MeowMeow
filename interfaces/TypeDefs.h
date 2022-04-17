@@ -80,6 +80,15 @@ enum class ActionEventType {
   ActionStickMoved
 };
 
+enum class BindingType {
+  None,
+  Key,
+  MouseButton,
+  MouseMove,
+  JoystickButton,
+  JoystickMove
+};    
+
 typedef struct ResourceInfo {
   std::string resourceTypePath{};
   std::string defaultExtension{};
@@ -165,7 +174,7 @@ typedef struct StickMoveDetails {
 } StickMoveDetails;
 
 typedef struct ActionBinding {
-  sf::Event::EventType event;
+  BindingType type;
 
   std::variant<
     sf::Event::KeyEvent,

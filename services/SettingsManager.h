@@ -1,17 +1,30 @@
 #ifndef SETTINGS_MANAGER_H
 #define SETTINGS_MANAGER_H
 
+#include <SFML/Window.hpp>
+#include <map>
 #include <string>
+#include <functional>
+#include <vector>
 
 #include "../interfaces/TypeDefs.h"
 #include "../interfaces/Platform.h"
 #include "../interfaces/Initializable.h"
 
+class SettingsListener {
+  public:
+    virtual void onSettingsUpdated(const Settings& settings) = 0;
+};
+
 class SettingsManager : public Initializable
 { 
-  private:
-    Settings settings;       
+  private:    
+    Settings settings;
+    std::vector<std::reference_wrapper<SettingsListener>> listeners;
+    
+    void emitSettingsUpdated();
   
+    static const std::map<sf::Event::EventType, BindingType> bindingTypesByEvent;
   public:
     const std::string appName;
     const std::string windowTitle;
@@ -19,10 +32,14 @@ class SettingsManager : public Initializable
   
     explicit SettingsManager(Platform& platform);
     bool initialize() override;
+    void addListener(SettingsListener& listener);
     
     const Settings& getSettings();
+    const ActionsBindings& getBindings();
   
-    static const Settings defaultSettings;  
+    static const Settings defaultSettings;
+    static BindingType getBingingType(sf::Event event);
+    static BindingType getBingingType(sf::Event::EventType eventType);
 };
 
 #endif // SETTINGS_MANAGER_H

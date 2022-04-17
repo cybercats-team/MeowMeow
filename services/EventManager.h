@@ -10,26 +10,25 @@
 #define EventManager_hpp
 
 #include <SFML/Window.hpp>
-#include <functional>
+#include <map>
 
-#include "../interfaces/Initializable.h"
 #include "../interfaces/TypeDefs.h"
 
-#include "StateManager.h"
 #include "SettingsManager.h"
+#include "StateManager.h"
 
-class EventManager : public Initializable {
+class EventManager : public SettingsListener
+{
   private:
     sf::Window& source;
     StateManager& stateManager;
-    SettingsManager& settingsManager;
-    std::reference_wrapper<const ActionsBindings> bindings = std::ref(SettingsManager::defaultSettings.bindings);
+    ActionsBindings bindings;
 
     bool processSystemEvents(sf::Event& event);
-    const ActionsBindings& getBindings();
-  public:
+
+  public:  
     EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager);
-    bool initialize() override;
+    void onSettingsUpdated(const Settings& settings) override;
     void processEvents();
 };
 

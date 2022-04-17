@@ -56,14 +56,13 @@ StateManager& Application::getStateManager()
 bool Application::initialize() {
   using namespace std;
   
-  array<reference_wrapper<Initializable>, 7> modules = {
+  array<reference_wrapper<Initializable>, 6> modules = {
     settingsManager,
     screen,
     spriteManager,
     levelManager,
     renderer,
-    stateManager,
-    eventManager,
+    stateManager,    
   };
   
   return all_of(modules.begin(), modules.end(), [](Initializable& module) {

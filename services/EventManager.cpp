@@ -8,29 +8,14 @@
 
 #include "EventManager.h"
 
-EventManager::EventManager(
-  sf::Window& source, 
-  StateManager& stateManager, 
-  SettingsManager& settingsManager
-) : 
-  source(source), 
-  stateManager(stateManager), 
-  settingsManager(settingsManager) 
-{}
-  
-bool EventManager::initialize() {
-  const Settings& settings = settingsManager.getSettings();
-  
-  bindings = std::ref(settings.bindings);
-  return true;
-}
-
-const ActionsBindings& EventManager::getBindings()
+EventManager::EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager) : 
+  source(source), stateManager(stateManager), bindings() 
 {
-  return (const ActionsBindings&) bindings;
+  settingsManager.addListener(*this);
 }
 
-void EventManager::processEvents() {
+void EventManager::processEvents()
+{
   sf::Event event{};
 
   stateManager.onBeforeEvents();
@@ -44,7 +29,8 @@ void EventManager::processEvents() {
   }
 }
 
-bool EventManager::processSystemEvents(sf::Event& event) {
+bool EventManager::processSystemEvents(sf::Event& event)
+{
   using namespace sf;
 
   if (
@@ -58,4 +44,10 @@ bool EventManager::processSystemEvents(sf::Event& event) {
   }
 
   return false;
+}
+
+void EventManager::onSettingsUpdated(const Settings& settings)
+{
+  bindings = settings.bindings;
+  //TODO: update binding map
 }

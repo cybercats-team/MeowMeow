@@ -29,6 +29,7 @@ bool Renderer::initialize() {
     window.create(screen.selectedMode, windowTitle, Style::Fullscreen);
     window.setIcon(size.x, size.y, appIcon.getPixelsPtr());
     window.setFramerateLimit(60);
+    window.setMouseCursorVisible(false);
 
     Debug::printf(
       "Initialized app window %dx%d \"%s\"",
