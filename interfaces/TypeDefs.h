@@ -81,7 +81,6 @@ enum class ActionEventType {
 };
 
 enum class BindingType {
-  None,
   Key,
   MouseButton,
   MouseMove,
@@ -89,109 +88,132 @@ enum class BindingType {
   JoystickMove
 };    
 
-typedef struct ResourceInfo {
+using ResourceInfo = struct ResourceInfo {
   std::string resourceTypePath{};
   std::string defaultExtension{};
-} ResourceInfo;
+};
 
-typedef struct BundleHeader {
+using BundleHeader = struct BundleHeader {
   char magic[7] = TEXTURE_BUNDLE_MAGIC;
   BundleType bundleType = BundleType::TexturesList;
   ObjectType objectType = ObjectType::Terrain;
   unsigned int itemsCount = 0;
-} BundleHeader;
+};
 
-typedef struct Dimensions {
+using Dimensions = struct Dimensions {
   unsigned int width = 0;
   unsigned int height = 0;
-} Dimensions;
+};
 
-typedef struct SpriteInfo {
+using SpriteInfo = struct SpriteInfo {
   bool animated = false;
   unsigned int animationDuration = 0;
   unsigned int framesCount = 1;
-} SpriteInfo;
+};
 
-typedef struct Rectangle: public Dimensions {
+using Rectangle = struct Rectangle
+  : public Dimensions 
+{
   unsigned int left = 0;
   unsigned int top = 0;
-} Rectangle;
+};
 
-typedef struct SpriteFrame {
+using SpriteFrame = struct SpriteFrame {
   Rectangle rect{};
   Rectangle rect2k{};
   Rectangle rect4k{};
-} SpriteFrame;
+};
 
-typedef struct RealmInfo {
+using RealmInfo = struct RealmInfo {
   char realmName[RESOURCE_MAX_TITLE] = "";
   unsigned int levelsCount = 0;
-} RealmInfo;
+};
 
-typedef struct LevelInfo {
+using LevelInfo = struct LevelInfo {
   char levelName[RESOURCE_MAX_TITLE] = "";
   char path[RESOURCE_MAX_PATH] = "";
-} LevelInfo;
+};
 
-typedef struct SpriteRef {
+using SpriteRef = struct SpriteRef {
   ObjectType objectType = ObjectType::Terrain;
   unsigned int spriteSetIndex = 0;
   unsigned int spriteIndex = 0;
-} SpriteRef;
+};
 
-typedef struct TileInfo {
+using TileInfo = struct TileInfo {
   unsigned int layers = 1;
   TileType type = TileType::Terrain;
-} TileInfo;
+};
 
-typedef struct AggregatedMapInfo: public Dimensions {
+using AggregatedMapInfo = struct AggregatedMapInfo
+  : public Dimensions 
+{
   unsigned int borderTile = 0;
   Dimensions tileSize{};
-} AggregatedMapInfo;
+};
 
-typedef struct TextureInfo {
+using TextureItem = struct TextureInfo {
   char infoPath[RESOURCE_MAX_PATH] = "";
-} TextureItem;
+};
 
-typedef struct SpriteSetInfo {
+using SpriteSetInfo = struct SpriteSetInfo {
   char path[RESOURCE_MAX_PATH] = "";
   char path2k[RESOURCE_MAX_PATH] = "";
   char path4k[RESOURCE_MAX_PATH] = "";
   Dimensions spriteSize{};
   Dimensions spriteSize2k{};
   Dimensions spriteSize4k{};
-} SpriteSetInfo;
+};
 
-typedef struct MapInfo: public AggregatedMapInfo {
+using MapInfo = struct MapInfo
+  : public AggregatedMapInfo 
+{
   unsigned int spriteRefsCount = 0;
   Dimensions tileSize2k{};
   Dimensions tileSize4k{};
-} MapInfo;
+};
 
-typedef struct StickMoveDetails {
+using StickMoveDetails = struct StickMoveDetails {
   float positionX;
   float positionY;
-} StickMoveDetails;
+};
 
-typedef struct ActionBinding {
+using BindingData = std::variant<
+  sf::Event::KeyEvent,
+  sf::Event::MouseButtonEvent,
+  sf::Event::MouseMoveEvent,
+  sf::Event::JoystickMoveEvent,
+  sf::Event::JoystickButtonEvent
+>;
+
+using ActionBinding = struct ActionBinding {
   BindingType type;
+  BindingData data{};
+};
 
-  std::variant<
-    sf::Event::KeyEvent,
-    sf::Event::MouseButtonEvent,
-    sf::Event::MouseMoveEvent,
-    sf::Event::JoystickMoveEvent,
-    sf::Event::JoystickButtonEvent
-  > data{};
-} ActionBinding;
-
-typedef std::map<
+using ActionsBindings = std::map<
   ActionType,
   std::vector<ActionBinding>
-> ActionsBindings;
+>;
 
-typedef struct Settings {
+using Settings = struct Settings {
   ActionsBindings bindings{};
-} Settings;
+};
+
+using ActionMapping = struct ActionMapping {
+  ActionType action;
+  BindingData data{};
+};
+
+using EventActionMapping = struct EventActionMapping {
+  sf::Event::EventType event; 
+  ActionEventType action;
+};
+
+using AggregatedActionMapping = struct AggregatedActionMapping {
+  BindingType bindingType;
+  ActionEventType actionType;
+  std::vector<ActionMapping> bindings{};
+};
 
 #endif /* TypeDefs_h */

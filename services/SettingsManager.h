@@ -24,7 +24,7 @@ class SettingsManager : public Initializable
     
     void emitSettingsUpdated();
   
-    static const std::map<sf::Event::EventType, BindingType> bindingTypesByEvent;
+    static const Settings defaultSettings;    
   public:
     const std::string appName;
     const std::string windowTitle;
@@ -37,9 +37,7 @@ class SettingsManager : public Initializable
     const Settings& getSettings();
     const ActionsBindings& getBindings();
   
-    static const Settings defaultSettings;
-    static BindingType getBingingType(sf::Event event);
-    static BindingType getBingingType(sf::Event::EventType eventType);
+    
 };
 
 #endif // SETTINGS_MANAGER_H

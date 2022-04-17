@@ -10,6 +10,7 @@
 #define EventManager_hpp
 
 #include <SFML/Window.hpp>
+#include <vector>
 #include <map>
 
 #include "../interfaces/TypeDefs.h"
@@ -23,9 +24,11 @@ class EventManager : public SettingsListener
     sf::Window& source;
     StateManager& stateManager;
     ActionsBindings bindings;
+    std::map<sf::Event::EventType, AggregatedActionMapping> mappings;
 
     bool processSystemEvents(sf::Event& event);
 
+    static const std::map<BindingType, std::vector<EventActionMapping>> eventActionMappings;
   public:  
     EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager);
     void onSettingsUpdated(const Settings& settings) override;

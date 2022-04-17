@@ -8,8 +8,29 @@
 
 #include "EventManager.h"
 
+const std::map<BindingType, std::vector<EventActionMapping>> EventManager::eventActionMappings = {
+  { BindingType::Key, {
+    { .event = sf::Event::EventType::KeyPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::EventType::KeyReleased, .action = ActionEventType::ActionReleased }
+  }},
+  { BindingType::MouseButton, {
+    { .event = sf::Event::EventType::MouseButtonPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::EventType::MouseButtonReleased, .action = ActionEventType::ActionReleased }
+  }},
+  { BindingType::JoystickButton, {
+    { .event = sf::Event::EventType::JoystickButtonPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::EventType::JoystickButtonReleased, .action = ActionEventType::ActionReleased }
+  }},
+  { BindingType::MouseMove, {
+    { .event = sf::Event::EventType::MouseMoved, .action = ActionEventType::ActionStickMoved }
+  }},
+  { BindingType::JoystickMove, {
+    { .event = sf::Event::EventType::JoystickMoved, .action = ActionEventType::ActionStickMoved }
+  }}
+};
+
 EventManager::EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager) : 
-  source(source), stateManager(stateManager), bindings() 
+  source(source), stateManager(stateManager), bindings(), mappings() 
 {
   settingsManager.addListener(*this);
 }

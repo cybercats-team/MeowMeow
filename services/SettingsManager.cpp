@@ -16,31 +16,6 @@ const Settings SettingsManager::defaultSettings = {
   }
 };
 
-const std::map<sf::Event::EventType, BindingType> SettingsManager::bindingTypesByEvent = {
-  { sf::Event::EventType::KeyPressed, BindingType::Key },
-  { sf::Event::EventType::KeyReleased, BindingType::Key },
-  { sf::Event::EventType::MouseButtonPressed, BindingType::MouseButton },
-  { sf::Event::EventType::MouseButtonReleased, BindingType::MouseButton },
-  { sf::Event::EventType::JoystickButtonPressed, BindingType::JoystickButton },
-  { sf::Event::EventType::JoystickButtonReleased, BindingType::JoystickButton },
-  { sf::Event::EventType::MouseMoved, BindingType::MouseMove },
-  { sf::Event::EventType::JoystickMoved, BindingType::JoystickMove }
-};
-
-BindingType SettingsManager::getBingingType(sf::Event event) {
-  return getBingingType(event.type);
-}
-
-BindingType SettingsManager::getBingingType(sf::Event::EventType eventType) {
-  auto keyValuePair = bindingTypesByEvent.find(eventType);
-  
-  if (keyValuePair == bindingTypesByEvent.end()) {
-    return BindingType::None;
-  }
-  
-  return keyValuePair->second;
-}
-
 SettingsManager::SettingsManager(Platform& platform) :
   settings(SettingsManager::defaultSettings),
   platform(platform),
