@@ -3,15 +3,31 @@
 const Settings SettingsManager::defaultSettings = {
   .bindings = {
     { ActionType::MoveLeft, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::A}}
     }},
     
     { ActionType::MoveRight, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::D }}
     }},
     
     { ActionType::MoveUp, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::W }}
     }},
     
     { ActionType::MoveDown, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::S }}
+    }},
+    
+    { ActionType::ButtonA, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::O }},
+      { .type = BindingType::MouseButton, .data = sf::Event::MouseButtonEvent{ .button = sf::Mouse::Left }},
+      { .type = BindingType::JoystickButton, .data = sf::Event::JoystickButtonEvent{ .button = 0 }}
+    }},
+    
+    { ActionType::ButtonB, {
+      { .type = BindingType::Key, .data = sf::Event::KeyEvent{ .code = sf::Keyboard::P }},
+      { .type = BindingType::MouseButton, .data = sf::Event::MouseButtonEvent{ .button = sf::Mouse::Right }},
+      { .type = BindingType::JoystickButton, .data = sf::Event::JoystickButtonEvent{ .button = 1 }}
     }}
   }
 };
@@ -34,7 +50,7 @@ bool SettingsManager::initialize()
 
 void SettingsManager::addListener(SettingsListener& listener)
 {
-  listeners.push_back(std::ref(listener));
+  listeners.emplace_back(std::ref(listener));
 }
 
 void SettingsManager::emitSettingsUpdated() {

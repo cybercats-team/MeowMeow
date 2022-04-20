@@ -10,22 +10,22 @@
 
 const std::map<BindingType, std::vector<EventActionMapping>> EventManager::eventActionMappings = {
   { BindingType::Key, {
-    { .event = sf::Event::EventType::KeyPressed, .action = ActionEventType::ActionPressed },
-    { .event = sf::Event::EventType::KeyReleased, .action = ActionEventType::ActionReleased }
+    { .event = sf::Event::KeyPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::KeyReleased, .action = ActionEventType::ActionReleased }
   }},
   { BindingType::MouseButton, {
-    { .event = sf::Event::EventType::MouseButtonPressed, .action = ActionEventType::ActionPressed },
-    { .event = sf::Event::EventType::MouseButtonReleased, .action = ActionEventType::ActionReleased }
+    { .event = sf::Event::MouseButtonPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::MouseButtonReleased, .action = ActionEventType::ActionReleased }
   }},
   { BindingType::JoystickButton, {
-    { .event = sf::Event::EventType::JoystickButtonPressed, .action = ActionEventType::ActionPressed },
-    { .event = sf::Event::EventType::JoystickButtonReleased, .action = ActionEventType::ActionReleased }
+    { .event = sf::Event::JoystickButtonPressed, .action = ActionEventType::ActionPressed },
+    { .event = sf::Event::JoystickButtonReleased, .action = ActionEventType::ActionReleased }
   }},
   { BindingType::MouseMove, {
-    { .event = sf::Event::EventType::MouseMoved, .action = ActionEventType::ActionStickMoved }
+    { .event = sf::Event::MouseMoved, .action = ActionEventType::ActionStickMoved }
   }},
   { BindingType::JoystickMove, {
-    { .event = sf::Event::EventType::JoystickMoved, .action = ActionEventType::ActionStickMoved }
+    { .event = sf::Event::JoystickMoved, .action = ActionEventType::ActionStickMoved }
   }}
 };
 
@@ -53,6 +53,10 @@ void EventManager::processEvents()
 bool EventManager::processSystemEvents(sf::Event& event)
 {
   using namespace sf;
+  
+  /*if (event.type == Event::JoystickMoved) {
+    Debug::printf("Joystick axis: %d %f", event.joystickMove.axis, event.joystickMove.position);
+  }*/
 
   if (
     // Close window: exit

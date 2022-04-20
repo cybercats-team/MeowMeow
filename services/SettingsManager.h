@@ -11,6 +11,8 @@
 #include "../interfaces/Platform.h"
 #include "../interfaces/Initializable.h"
 
+#include "../utils/Debug.h"
+
 class SettingsListener {
   public:
     virtual void onSettingsUpdated(const Settings& settings) = 0;
@@ -36,8 +38,6 @@ class SettingsManager : public Initializable
     
     const Settings& getSettings();
     const ActionsBindings& getBindings();
-  
-    
 };
 
 #endif // SETTINGS_MANAGER_H
