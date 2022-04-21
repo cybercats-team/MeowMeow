@@ -11,9 +11,14 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../interfaces/TypeDefs.h"
 #include "../interfaces/Initializable.h"
 #include "../utils/Debug.h"
+
+enum class ScreenScale {
+  FullHD,
+  RetinaOr2K,
+  UltraHD
+};
 
 class Screen : public Initializable {
   private:

@@ -8,8 +8,19 @@
 #include <SFML/Graphics.hpp>
 
 #include "../interfaces/Animatable.h"
-#include "../interfaces/TypeDefs.h"
 #include "../utils/Debug.h"
+
+using Dimensions = struct Dimensions {
+  unsigned int width = 0;
+  unsigned int height = 0;
+};
+
+using SpriteInfo = struct SpriteInfo {
+  bool animated = false;
+  unsigned int animationDuration = 0;
+  unsigned int framesCount = 1;
+};
+
 
 class SpriteObject :
   private Dimensions,

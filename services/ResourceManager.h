@@ -16,9 +16,52 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "../interfaces/TypeDefs.h"
 #include "../interfaces/Platform.h"
 #include "../utils/Debug.h"
+
+extern const char* TEXTURE_BUNDLE_MAGIC;
+
+enum {
+  RESOURCE_MAX_PATH = 256,
+  RESOURCE_MAX_TITLE = 256
+};
+
+enum class ResourceType {
+  Image,
+  Texture,
+  Font,
+  Music,
+  Sfx,
+  TextureBundle
+};
+
+enum class BundleType {
+  TexturesList,
+  TextureInfo,
+  LevelsList,
+  LevelMap
+};
+
+enum class ObjectType {
+  Terrain,
+  MobileObject
+};
+
+using ResourceInfo = struct ResourceInfo {
+  std::string resourceTypePath{};
+  std::string defaultExtension{};
+};
+
+using BundleHeader = struct BundleHeader {
+  char magic[7];
+  BundleType bundleType = BundleType::TexturesList;
+  ObjectType objectType = ObjectType::Terrain;
+  unsigned int itemsCount = 0;
+  
+  BundleHeader() { 
+    strcpy(magic, TEXTURE_BUNDLE_MAGIC); 
+  }
+};
 
 class ResourceManager {
   private:

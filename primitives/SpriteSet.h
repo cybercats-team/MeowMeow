@@ -7,8 +7,20 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../interfaces/TypeDefs.h"
 #include "SpriteObject.h"
+
+using Rectangle = struct Rectangle
+  : public Dimensions 
+{
+  unsigned int left = 0;
+  unsigned int top = 0;
+};
+
+using SpriteFrame = struct SpriteFrame {
+  Rectangle rect{};
+  Rectangle rect2k{};
+  Rectangle rect4k{};
+};
 
 class SpriteSet {
   private:

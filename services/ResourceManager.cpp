@@ -8,6 +8,8 @@
 
 #include "ResourceManager.h"
 
+const char* TEXTURE_BUNDLE_MAGIC = "BUNDLE";
+
 std::map<ResourceType, const ResourceInfo> ResourceManager::typesInfo {
   { ResourceType::Image, { .resourceTypePath = "images", .defaultExtension = ".png" } },
   { ResourceType::Texture, { .resourceTypePath = "textures", .defaultExtension = ".png" } },

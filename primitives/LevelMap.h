@@ -11,9 +11,25 @@
 #include <SFML/Graphics.hpp>
 #include "../interfaces/Layoutable.h"
 
-#include "../interfaces/TypeDefs.h"
 #include "SpriteObject.h"
 #include "Screen.h"
+
+enum class TileType {
+  Terrain,
+  Obstacle
+};
+
+using TileInfo = struct TileInfo {
+  unsigned int layers = 1;
+  TileType type = TileType::Terrain;
+};
+
+using AggregatedMapInfo = struct AggregatedMapInfo
+  : public Dimensions 
+{
+  unsigned int borderTile = 0;
+  Dimensions tileSize{};
+};
 
 class LevelMap :
   private AggregatedMapInfo,

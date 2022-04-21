@@ -17,7 +17,7 @@ bool SpriteManager::initialize() {
   for (auto& [objectType, path]: bundlesPath) {
     ifstream listFile;
     BundleHeader header {};
-    TextureInfo textureItem {};
+    TextureItem textureItem {};
 
     Debug::printf("Loading bundle %s", path);
     

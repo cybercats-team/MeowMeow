@@ -12,7 +12,39 @@
 #include <SFML/Window.hpp>
 #include <variant>
 
-#include "TypeDefs.h"
+enum class ActionType {
+  MoveLeft,
+  MoveRight,
+  MoveUp,
+  MoveDown,
+  ButtonA,
+  ButtonB,
+  ButtonC,
+  ButtonD,
+  LeftStick,
+  LeftShift,
+  LeftTrigger,
+  LeftClick,
+  RightStick,
+  RightShift,
+  RightTrigger,
+  RightClick,
+  Home,
+  Share,
+  Options,
+  AltOptions
+};
+
+enum class ActionEventType {
+  ActionPressed,
+  ActionReleased,
+  ActionStickMoved
+};
+
+using StickMoveDetails = struct StickMoveDetails {
+  float positionX;
+  float positionY;
+};
 
 class Action {
   public:

@@ -13,8 +13,21 @@
 
 #include "../interfaces/UIManager.h"
 #include "../primitives/SpriteSet.h"
-#include "../interfaces/TypeDefs.h"
 #include "../utils/Debug.h"
+
+
+using SpriteSetInfo = struct SpriteSetInfo {
+  char path[RESOURCE_MAX_PATH] = "";
+  char path2k[RESOURCE_MAX_PATH] = "";
+  char path4k[RESOURCE_MAX_PATH] = "";
+  Dimensions spriteSize{};
+  Dimensions spriteSize2k{};
+  Dimensions spriteSize4k{};
+};
+
+using TextureItem = struct TextureItem {
+  char infoPath[RESOURCE_MAX_PATH] = "";
+};
 
 class SpriteManager: public UIManager {
   private:

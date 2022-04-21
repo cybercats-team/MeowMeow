@@ -13,7 +13,6 @@
 #include "../utils/Array.h"
 
 #include "../utils/Debug.h"
-#include "../interfaces/TypeDefs.h"
 
 #include "../primitives/LevelRealm.h"
 #include "../primitives/LevelMap.h"
@@ -22,6 +21,30 @@
 
 #include "../interfaces/UIManager.h"
 #include "SpriteManager.h"
+
+using RealmInfo = struct RealmInfo {
+  char realmName[RESOURCE_MAX_TITLE] = "";
+  unsigned int levelsCount = 0;
+};
+
+using LevelInfo = struct LevelInfo {
+  char levelName[RESOURCE_MAX_TITLE] = "";
+  char path[RESOURCE_MAX_PATH] = "";
+};
+
+using SpriteRef = struct SpriteRef {
+  ObjectType objectType = ObjectType::Terrain;
+  unsigned int spriteSetIndex = 0;
+  unsigned int spriteIndex = 0;
+};
+
+using MapInfo = struct MapInfo
+  : public AggregatedMapInfo 
+{
+  unsigned int spriteRefsCount = 0;
+  Dimensions tileSize2k{};
+  Dimensions tileSize4k{};
+};
 
 class LevelManager: public UIManager {
   private:

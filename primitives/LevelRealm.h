@@ -12,8 +12,6 @@
 #include <string>
 #include <vector>
 
-#include "../interfaces/TypeDefs.h"
-
 class LevelRealm {
   private:
     std::string realmName;

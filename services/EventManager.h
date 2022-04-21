@@ -13,10 +13,24 @@
 #include <vector>
 #include <map>
 
-#include "../interfaces/TypeDefs.h"
-
 #include "SettingsManager.h"
 #include "StateManager.h"
+
+using ActionMapping = struct ActionMapping {
+  ActionType action;
+  BindingData data{};
+};
+
+using EventActionMapping = struct EventActionMapping {
+  sf::Event::EventType event; 
+  ActionEventType action;
+};
+
+using AggregatedActionMapping = struct AggregatedActionMapping {
+  BindingType bindingType;
+  ActionEventType actionType;
+  std::vector<ActionMapping> bindings{};
+};
 
 class EventManager : public SettingsListener
 {

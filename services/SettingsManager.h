@@ -6,12 +6,44 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <variant>
 
-#include "../interfaces/TypeDefs.h"
 #include "../interfaces/Platform.h"
 #include "../interfaces/Initializable.h"
+#include "../interfaces/EventHandler.h"
 
 #include "../utils/Debug.h"
+
+enum class BindingType {
+  Key,
+  MouseButton,
+  MouseMove,
+  JoystickButton,
+  JoystickMove,
+  JoystickAxis
+};    
+
+using BindingData = std::variant<
+  sf::Event::KeyEvent,
+  sf::Event::MouseButtonEvent,
+  sf::Event::MouseMoveEvent,
+  sf::Event::JoystickMoveEvent,
+  sf::Event::JoystickButtonEvent
+>;
+
+using ActionBinding = struct ActionBinding {
+  BindingType type;
+  BindingData data{};
+};
+
+using ActionsBindings = std::map<
+  ActionType,
+  std::vector<ActionBinding>
+>;
+
+using Settings = struct Settings {
+  ActionsBindings bindings{};
+};
 
 class SettingsListener {
   public:
