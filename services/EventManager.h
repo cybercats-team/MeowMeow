@@ -21,12 +21,12 @@ using ActionMapping = struct ActionMapping {
   BindingData data{};
 };
 
-using EventActionMapping = struct EventActionMapping {
+using ButtonAction = struct ButtonAction {
   sf::Event::EventType event; 
   ActionEventType action;
 };
 
-using AggregatedActionMapping = struct AggregatedActionMapping {
+using ButtonMapping = struct AggregatedActionMapping {
   BindingType bindingType;
   ActionEventType actionType;
   std::vector<ActionMapping> bindings{};
@@ -38,11 +38,11 @@ class EventManager : public SettingsListener
     sf::Window& source;
     StateManager& stateManager;
     ActionsBindings bindings;
-    std::map<sf::Event::EventType, AggregatedActionMapping> mappings;
+    std::map<sf::Event::EventType, ButtonMapping> buttonsMapping;
 
     bool processSystemEvents(sf::Event& event);
 
-    static const std::map<BindingType, std::vector<EventActionMapping>> eventActionMappings;
+    static const std::map<BindingType, std::vector<ButtonAction>> buttonActions;
   public:  
     EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager);
     void onSettingsUpdated(const Settings& settings) override;

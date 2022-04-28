@@ -8,7 +8,7 @@
 
 #include "EventManager.h"
 
-const std::map<BindingType, std::vector<EventActionMapping>> EventManager::eventActionMappings = {
+const std::map<BindingType, std::vector<ButtonAction>> EventManager::buttonActions = {
   { BindingType::Key, {
     { .event = sf::Event::KeyPressed, .action = ActionEventType::ActionPressed },
     { .event = sf::Event::KeyReleased, .action = ActionEventType::ActionReleased }
@@ -20,17 +20,11 @@ const std::map<BindingType, std::vector<EventActionMapping>> EventManager::event
   { BindingType::JoystickButton, {
     { .event = sf::Event::JoystickButtonPressed, .action = ActionEventType::ActionPressed },
     { .event = sf::Event::JoystickButtonReleased, .action = ActionEventType::ActionReleased }
-  }},
-  { BindingType::MouseMove, {
-    { .event = sf::Event::MouseMoved, .action = ActionEventType::ActionStickMoved }
-  }},
-  { BindingType::JoystickMove, {
-    { .event = sf::Event::JoystickMoved, .action = ActionEventType::ActionStickMoved }
   }}
 };
 
 EventManager::EventManager(sf::Window& source, StateManager& stateManager, SettingsManager& settingsManager) : 
-  source(source), stateManager(stateManager), bindings(), mappings() 
+  source(source), stateManager(stateManager), bindings(), buttonsMapping() 
 {
   settingsManager.addListener(*this);
 }

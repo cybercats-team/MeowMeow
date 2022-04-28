@@ -17,18 +17,29 @@
 enum class BindingType {
   Key,
   MouseButton,
-  MouseMove,
   JoystickButton,
+  JoystickAxis,
   JoystickMove,
-  JoystickAxis
-};    
+  MouseMove
+};
+
+using KeyBinding = sf::Event::KeyEvent;
+using MouseBinding = sf::Event::MouseButtonEvent;
+using JoystickBinding = sf::Event::JoystickButtonEvent;
+using JoystickAxisBinding = sf::Event::JoystickMoveEvent;
+
+using JoystickMoveBinding = struct JoystickMoveBinding {
+  unsigned int joystickId;
+  sf::Joystick::Axis axisX;
+  sf::Joystick::Axis axisY;
+};
 
 using BindingData = std::variant<
-  sf::Event::KeyEvent,
-  sf::Event::MouseButtonEvent,
-  sf::Event::MouseMoveEvent,
-  sf::Event::JoystickMoveEvent,
-  sf::Event::JoystickButtonEvent
+  KeyBinding,
+  MouseBinding,
+  JoystickBinding,
+  JoystickMoveBinding,
+  JoystickAxisBinding
 >;
 
 using ActionBinding = struct ActionBinding {
