@@ -32,12 +32,17 @@ EventManager::EventManager(sf::Window& source, StateManager& stateManager, Setti
 void EventManager::processEvents()
 {
   sf::Event event{};
+  Action action(event);
 
   stateManager.onBeforeEvents();
 
   while (source.pollEvent(event)) {
     if (processSystemEvents(event)) {
-      break;
+      continue;
+    }
+    
+    if (processActionEvents(event, action)) {
+      stateManager.onAction(action);
     }
 
     stateManager.onEvent(event);
@@ -62,6 +67,42 @@ bool EventManager::processSystemEvents(sf::Event& event)
     return true;
   }
 
+  return false;
+}
+
+bool EventManager::processActionEvents(sf::Event& event, Action& action) 
+{
+  using EventType = sf::Event::EventType;
+  
+  switch (event.type) {
+    case EventType::KeyPressed:
+    case EventType::KeyReleased:
+    case EventType::MouseButtonPressed:
+    case EventType::MouseButtonReleased:
+    case EventType::JoystickButtonPressed:
+    case EventType::JoystickButtonReleased:
+      return processButtonEvents(event, action);
+    case EventType::JoystickMoved:
+      return processJoystickEvents(event, action);
+    case EventType::MouseMoved:
+      return processMouseEvents(event, action);
+    default:
+      return false;
+  }
+}
+
+bool EventManager::processButtonEvents(sf::Event& event, Action& action)
+{
+  return false;
+}
+
+bool EventManager::processJoystickEvents(sf::Event& event, Action& action)
+{
+  return false;
+}
+  
+bool EventManager::processMouseEvents(sf::Event& event, Action& action) 
+{
   return false;
 }
 

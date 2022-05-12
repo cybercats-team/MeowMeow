@@ -41,6 +41,10 @@ class EventManager : public SettingsListener
     std::map<sf::Event::EventType, ButtonMapping> buttonsMapping;
 
     bool processSystemEvents(sf::Event& event);
+    bool processActionEvents(sf::Event& event, Action& action);
+    bool processButtonEvents(sf::Event& event, Action& action);
+    bool processJoystickEvents(sf::Event& event, Action& action);
+    bool processMouseEvents(sf::Event& event, Action& action);
 
     static const std::map<BindingType, std::vector<ButtonAction>> buttonActions;
   public:  
